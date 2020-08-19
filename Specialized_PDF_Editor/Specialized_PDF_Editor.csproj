@@ -126,6 +126,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -143,6 +144,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="pdf.ico" />
+    <None Include="Resources\ValidationSummary_16x.png" />
+    <None Include="Resources\LocalFileSites_16x.png" />
+    <None Include="Resources\AnalyzeTrace_16x.png" />
+    <None Include="Resources\FSHelpApplication_16x.png" />
+    <None Include="Resources\Close_red_16x.png" />
+    <None Include="Resources\Save_grey_16x.png" />
+    <None Include="Resources\Save_16x.png" />
+    <None Include="Resources\OpenFile_16x.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.8">

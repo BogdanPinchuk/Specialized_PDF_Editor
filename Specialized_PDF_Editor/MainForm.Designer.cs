@@ -32,13 +32,6 @@ namespace Specialized_PDF_Editor
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menu = new System.Windows.Forms.MenuStrip();
-            this.fileMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.openMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.exitMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.analyseMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.statusM = new System.Windows.Forms.StatusStrip();
             this.status = new System.Windows.Forms.ToolStripStatusLabel();
             this.openFD = new System.Windows.Forms.OpenFileDialog();
@@ -47,6 +40,13 @@ namespace Specialized_PDF_Editor
             this.pdfViewerL = new PdfiumViewer.PdfViewer();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.pdfViewerC = new PdfiumViewer.PdfViewer();
+            this.fileMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.openMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.exitMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.analyseMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.statusM.SuspendLayout();
             this.tabC.SuspendLayout();
@@ -65,58 +65,6 @@ namespace Specialized_PDF_Editor
             this.menu.Size = new System.Drawing.Size(800, 24);
             this.menu.TabIndex = 0;
             this.menu.Text = "menu";
-            // 
-            // fileMenu
-            // 
-            this.fileMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openMenu,
-            this.saveMenu,
-            this.toolStripSeparator1,
-            this.exitMenu});
-            this.fileMenu.Name = "fileMenu";
-            this.fileMenu.Size = new System.Drawing.Size(37, 20);
-            this.fileMenu.Text = "File";
-            // 
-            // openMenu
-            // 
-            this.openMenu.Name = "openMenu";
-            this.openMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openMenu.Size = new System.Drawing.Size(146, 22);
-            this.openMenu.Text = "Open";
-            this.openMenu.Click += new System.EventHandler(this.OpenMenu_Click);
-            // 
-            // saveMenu
-            // 
-            this.saveMenu.Name = "saveMenu";
-            this.saveMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveMenu.Size = new System.Drawing.Size(146, 22);
-            this.saveMenu.Text = "Save";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(143, 6);
-            // 
-            // exitMenu
-            // 
-            this.exitMenu.Name = "exitMenu";
-            this.exitMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitMenu.Size = new System.Drawing.Size(146, 22);
-            this.exitMenu.Text = "Exit";
-            this.exitMenu.Click += new System.EventHandler(this.ExitMenu_Click);
-            // 
-            // analyseMenu
-            // 
-            this.analyseMenu.Name = "analyseMenu";
-            this.analyseMenu.Size = new System.Drawing.Size(60, 20);
-            this.analyseMenu.Text = "Analyse";
-            this.analyseMenu.Click += new System.EventHandler(this.AnalyseMenu_Click);
-            // 
-            // helpMenu
-            // 
-            this.helpMenu.Name = "helpMenu";
-            this.helpMenu.Size = new System.Drawing.Size(44, 20);
-            this.helpMenu.Text = "Help";
             // 
             // statusM
             // 
@@ -166,7 +114,6 @@ namespace Specialized_PDF_Editor
             this.pdfViewerL.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pdfViewerL.Location = new System.Drawing.Point(3, 3);
             this.pdfViewerL.Name = "pdfViewerL";
-            this.pdfViewerL.ShowToolbar = false;
             this.pdfViewerL.Size = new System.Drawing.Size(786, 372);
             this.pdfViewerL.TabIndex = 0;
             this.pdfViewerL.ZoomMode = PdfiumViewer.PdfViewerZoomMode.FitBest;
@@ -191,6 +138,66 @@ namespace Specialized_PDF_Editor
             this.pdfViewerC.Size = new System.Drawing.Size(786, 372);
             this.pdfViewerC.TabIndex = 0;
             this.pdfViewerC.ZoomMode = PdfiumViewer.PdfViewerZoomMode.FitBest;
+            // 
+            // fileMenu
+            // 
+            this.fileMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openMenu,
+            this.saveMenu,
+            this.toolStripSeparator1,
+            this.exitMenu});
+            this.fileMenu.Image = global::Specialized_PDF_Editor.Properties.Resources.LocalFileSites_16x;
+            this.fileMenu.Name = "fileMenu";
+            this.fileMenu.Size = new System.Drawing.Size(53, 20);
+            this.fileMenu.Text = "File";
+            // 
+            // openMenu
+            // 
+            this.openMenu.Image = global::Specialized_PDF_Editor.Properties.Resources.OpenFile_16x;
+            this.openMenu.Name = "openMenu";
+            this.openMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.openMenu.Size = new System.Drawing.Size(146, 22);
+            this.openMenu.Text = "Open";
+            this.openMenu.Click += new System.EventHandler(this.OpenMenu_Click);
+            // 
+            // saveMenu
+            // 
+            this.saveMenu.Enabled = false;
+            this.saveMenu.Image = global::Specialized_PDF_Editor.Properties.Resources.Save_16x;
+            this.saveMenu.Name = "saveMenu";
+            this.saveMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.saveMenu.Size = new System.Drawing.Size(146, 22);
+            this.saveMenu.Text = "Save";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(143, 6);
+            // 
+            // exitMenu
+            // 
+            this.exitMenu.Image = global::Specialized_PDF_Editor.Properties.Resources.Close_red_16x;
+            this.exitMenu.Name = "exitMenu";
+            this.exitMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
+            this.exitMenu.Size = new System.Drawing.Size(146, 22);
+            this.exitMenu.Text = "Exit";
+            this.exitMenu.Click += new System.EventHandler(this.ExitMenu_Click);
+            // 
+            // analyseMenu
+            // 
+            this.analyseMenu.Image = global::Specialized_PDF_Editor.Properties.Resources.AnalyzeTrace_16x;
+            this.analyseMenu.Name = "analyseMenu";
+            this.analyseMenu.Size = new System.Drawing.Size(76, 20);
+            this.analyseMenu.Text = "Analyse";
+            this.analyseMenu.Click += new System.EventHandler(this.AnalyseMenu_Click);
+            // 
+            // helpMenu
+            // 
+            this.helpMenu.Image = global::Specialized_PDF_Editor.Properties.Resources.FSHelpApplication_16x;
+            this.helpMenu.Name = "helpMenu";
+            this.helpMenu.Size = new System.Drawing.Size(60, 20);
+            this.helpMenu.Text = "Help";
+            this.helpMenu.Click += new System.EventHandler(this.HelpMenu_Click);
             // 
             // MainForm
             // 

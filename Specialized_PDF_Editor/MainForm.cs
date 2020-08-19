@@ -149,5 +149,10 @@ namespace Specialized_PDF_Editor
             e.Effect = e.AllowedEffect;
         }
 
+        private void HelpMenu_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("in development...", "Additional information",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }
