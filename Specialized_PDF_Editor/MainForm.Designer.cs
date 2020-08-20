@@ -42,6 +42,7 @@ namespace Specialized_PDF_Editor
             this.helpMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.statusM = new System.Windows.Forms.StatusStrip();
             this.status = new System.Windows.Forms.ToolStripStatusLabel();
+            this.nameOfDoc = new System.Windows.Forms.ToolStripStatusLabel();
             this.openFD = new System.Windows.Forms.OpenFileDialog();
             this.tabC = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -50,7 +51,6 @@ namespace Specialized_PDF_Editor
             this.pdfViewerC = new PdfiumViewer.PdfViewer();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.nameOfDoc = new System.Windows.Forms.ToolStripStatusLabel();
             this.menu.SuspendLayout();
             this.statusM.SuspendLayout();
             this.tabC.SuspendLayout();
@@ -87,7 +87,7 @@ namespace Specialized_PDF_Editor
             this.openMenu.Image = global::Specialized_PDF_Editor.Properties.Resources.OpenFile_16x;
             this.openMenu.Name = "openMenu";
             this.openMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openMenu.Size = new System.Drawing.Size(180, 22);
+            this.openMenu.Size = new System.Drawing.Size(146, 22);
             this.openMenu.Text = "Open";
             this.openMenu.Click += new System.EventHandler(this.OpenMenu_Click);
             // 
@@ -97,20 +97,20 @@ namespace Specialized_PDF_Editor
             this.saveMenu.Image = global::Specialized_PDF_Editor.Properties.Resources.Save_16x;
             this.saveMenu.Name = "saveMenu";
             this.saveMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveMenu.Size = new System.Drawing.Size(180, 22);
+            this.saveMenu.Size = new System.Drawing.Size(146, 22);
             this.saveMenu.Text = "Save";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(143, 6);
             // 
             // exitMenu
             // 
             this.exitMenu.Image = global::Specialized_PDF_Editor.Properties.Resources.Close_red_16x;
             this.exitMenu.Name = "exitMenu";
             this.exitMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitMenu.Size = new System.Drawing.Size(180, 22);
+            this.exitMenu.Size = new System.Drawing.Size(146, 22);
             this.exitMenu.Text = "Exit";
             this.exitMenu.Click += new System.EventHandler(this.ExitMenu_Click);
             // 
@@ -147,6 +147,14 @@ namespace Specialized_PDF_Editor
             this.status.Size = new System.Drawing.Size(28, 17);
             this.status.Text = "Info";
             // 
+            // nameOfDoc
+            // 
+            this.nameOfDoc.Name = "nameOfDoc";
+            this.nameOfDoc.Size = new System.Drawing.Size(757, 17);
+            this.nameOfDoc.Spring = true;
+            this.nameOfDoc.Text = "Name of document";
+            this.nameOfDoc.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // openFD
             // 
             this.openFD.FileName = "file";
@@ -181,7 +189,7 @@ namespace Specialized_PDF_Editor
             this.pdfViewerL.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pdfViewerL.Location = new System.Drawing.Point(3, 3);
             this.pdfViewerL.Name = "pdfViewerL";
-            this.pdfViewerL.ShowToolbar = false;
+            this.pdfViewerL.ShowToolbar = true;
             this.pdfViewerL.Size = new System.Drawing.Size(786, 372);
             this.pdfViewerL.TabIndex = 0;
             this.pdfViewerL.ZoomMode = PdfiumViewer.PdfViewerZoomMode.FitBest;
@@ -203,7 +211,7 @@ namespace Specialized_PDF_Editor
             this.pdfViewerC.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pdfViewerC.Location = new System.Drawing.Point(3, 3);
             this.pdfViewerC.Name = "pdfViewerC";
-            this.pdfViewerC.ShowToolbar = false;
+            this.pdfViewerC.ShowToolbar = true;
             this.pdfViewerC.Size = new System.Drawing.Size(786, 372);
             this.pdfViewerC.TabIndex = 0;
             this.pdfViewerC.ZoomMode = PdfiumViewer.PdfViewerZoomMode.FitBest;
@@ -217,14 +225,6 @@ namespace Specialized_PDF_Editor
             this.tabPage3.Text = "Correction";
             this.tabPage3.ToolTipText = "Page for make changes";
             this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // nameOfDoc
-            // 
-            this.nameOfDoc.Name = "nameOfDoc";
-            this.nameOfDoc.Size = new System.Drawing.Size(757, 17);
-            this.nameOfDoc.Spring = true;
-            this.nameOfDoc.Text = "Name of document";
-            this.nameOfDoc.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // MainForm
             // 

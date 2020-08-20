@@ -17,22 +17,24 @@ namespace Specialized_PDF_Editor
         /// <summary>
         /// Stream for created file
         /// </summary>
-        private MemoryStream streamC;
+        internal MemoryStream streamC;
+        /// <summary>
+        /// Path for base-file
+        /// </summary>
+        private string path;
         /// <summary>
         /// Path for temp-file
         /// </summary>
-        private string path;
+        private string tpath;
 
-        public MainForm(string[] pathes)
+        internal MainForm(string[] pathes)
         {
             InitializeComponent();
 
-            if (pathes.Length > 0)
+            if (pathes.Length > 0 && !string.IsNullOrEmpty(pathes[0]))
             {
-                status.Text = pathes[0];
-
-                if (!string.IsNullOrEmpty(pathes[0]))
-                    LoadPdfToMemory(pathes[0], ref streamL, pdfViewerL);
+                path = pathes[0];
+                LoadPdfToMemory(path, ref streamL, pdfViewerL);
             }
         }
 
@@ -42,11 +44,11 @@ namespace Specialized_PDF_Editor
         /// <param name="path">path for file</param>
         /// <param name="stream">stream for document</param>
         /// <param name="pdfViewer">Component with view the document</param>
-        private void LoadPdfToMemory(string path, ref MemoryStream stream, PdfiumViewer.PdfViewer pdfViewer)
+        internal void LoadPdfToMemory(string path, ref MemoryStream stream, PdfiumViewer.PdfViewer pdfViewer)
         {
             try
             {
-                if (new DirectoryInfo(path).Extension != ".pdf")
+                if (new FileInfo(path).Extension != ".pdf")
                     throw new InvalidOperationException("File not in PDF format or corrupted");
 
                 byte[] bytes = File.ReadAllBytes(path);
@@ -56,7 +58,7 @@ namespace Specialized_PDF_Editor
                 pdfViewer.ShowBookmarks = true;
 
                 if (pdfViewer.Equals(pdfViewerL))
-                    nameOfDoc.Text = new DirectoryInfo(path).Name;
+                    nameOfDoc.Text = new FileInfo(path).Name;
             }
             catch (Exception ex)
             {
@@ -80,7 +82,8 @@ namespace Specialized_PDF_Editor
 
                 if (pdfViewer.Equals(pdfViewerL))
                 {
-                    if (pdfViewerC.Document == null)
+                    if (pdfViewerC.Document == null ||
+                        pdfViewerC.Document.PageCount < 1)
                         return;
 
                     do
@@ -107,8 +110,8 @@ namespace Specialized_PDF_Editor
             pdfViewerL?.Dispose();
             pdfViewerC?.Dispose();
 
-            if (!string.IsNullOrEmpty(path))
-                File.Delete(path);
+            if (!string.IsNullOrEmpty(tpath))
+                File.Delete(tpath);
 
             Dispose();
 
@@ -129,12 +132,12 @@ namespace Specialized_PDF_Editor
 
         private void AnalyseMenu_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(path))
-                File.Delete(path);
+            if (!string.IsNullOrEmpty(tpath))
+                File.Delete(tpath);
 
-            path = Directory.GetCurrentDirectory() + "\\temp.pdf";
+            tpath = Directory.GetCurrentDirectory() + "\\temp.pdf";
 
-            if (new FileInfo(path).Exists)
+            if (new FileInfo(tpath).Exists)
             {
                 status.Text = "Creating temp-file";
 
@@ -142,21 +145,21 @@ namespace Specialized_PDF_Editor
 
                 do
                 {
-                    path = Directory.GetCurrentDirectory() + "\\temp " +
+                    tpath = Directory.GetCurrentDirectory() + "\\temp " +
                         time.AddSeconds(1).ToString().Replace(":", ".") + ".pdf";
-                } while (new FileInfo(path).Exists);
-                
+                } while (new FileInfo(tpath).Exists);
+
                 status.Text = string.Empty;
             }
 
             try
             {
-                using (var stream = new FileStream(path, FileMode.Create, FileAccess.ReadWrite))
+                using (var stream = new FileStream(tpath, FileMode.Create, FileAccess.ReadWrite))
                 using (var writer = new PdfWriter(stream))
                 using (var pdf = new PdfDocument(writer))
                 using (var doc = new Document(pdf))
                 {
-                    doc.Add(new Paragraph("I'm Bogdan, I`m ccreated this test-file."))
+                    doc.Add(new Paragraph("I'm Bogdan, I`m created this test-file."))
                         .Add(new Paragraph("Life is beautiful"));
                 }
             }
@@ -165,7 +168,7 @@ namespace Specialized_PDF_Editor
                 status.Text = ex.Message;
             }
 
-            LoadPdfToMemory(path, ref streamC, pdfViewerC);
+            LoadPdfToMemory(tpath, ref streamC, pdfViewerC);
 
             status.Text = "Analysis is completed";
         }
@@ -186,6 +189,25 @@ namespace Specialized_PDF_Editor
         {
             MessageBox.Show("in development...", "Additional information",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        /// <summary>
+        /// Load PDF file in stream
+        /// </summary>
+        internal void LoadPdfForRead()
+        {
+            try
+            {
+                if (new FileInfo(path).Extension != ".pdf")
+                    throw new InvalidOperationException("File not in PDF format or corrupted");
+
+                byte[] bytes = File.ReadAllBytes(path);
+                streamC = new MemoryStream(bytes);
+            }
+            catch (Exception ex)
+            {
+                status.Text = ex.Message;
+            }
         }
 
     }
