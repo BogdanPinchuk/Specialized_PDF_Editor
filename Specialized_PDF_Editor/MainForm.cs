@@ -46,11 +46,17 @@ namespace Specialized_PDF_Editor
         {
             try
             {
+                if (new DirectoryInfo(path).Extension != ".pdf")
+                    throw new InvalidOperationException("File not in PDF format or corrupted");
+
                 byte[] bytes = File.ReadAllBytes(path);
                 stream = new MemoryStream(bytes);
                 ShowDocument(stream, pdfViewer);
                 pdfViewer.ShowToolbar = true;
                 pdfViewer.ShowBookmarks = true;
+
+                if (pdfViewer.Equals(pdfViewerL))
+                    nameOfDoc.Text = new DirectoryInfo(path).Name;
             }
             catch (Exception ex)
             {
@@ -104,6 +110,8 @@ namespace Specialized_PDF_Editor
             if (!string.IsNullOrEmpty(path))
                 File.Delete(path);
 
+            Dispose();
+
             Environment.Exit(0);
         }
 
@@ -121,20 +129,45 @@ namespace Specialized_PDF_Editor
 
         private void AnalyseMenu_Click(object sender, EventArgs e)
         {
+            if (!string.IsNullOrEmpty(path))
+                File.Delete(path);
+
             path = Directory.GetCurrentDirectory() + "\\temp.pdf";
 
-            using (var stream = new FileStream(path, FileMode.Create, FileAccess.ReadWrite))
-            using (var writer = new PdfWriter(stream))
-            using (var pdf = new PdfDocument(writer))
-            using (var doc = new Document(pdf))
+            if (new FileInfo(path).Exists)
             {
-                doc.Add(new Paragraph("I'm Bogdan, I`m ccreated this test-file."))
-                    .Add(new Paragraph("Life is beautiful"));
+                status.Text = "Creating temp-file";
+
+                var time = DateTime.Now.AddSeconds(-1);
+
+                do
+                {
+                    path = Directory.GetCurrentDirectory() + "\\temp " +
+                        time.AddSeconds(1).ToString().Replace(":", ".") + ".pdf";
+                } while (new FileInfo(path).Exists);
+                
+                status.Text = string.Empty;
+            }
+
+            try
+            {
+                using (var stream = new FileStream(path, FileMode.Create, FileAccess.ReadWrite))
+                using (var writer = new PdfWriter(stream))
+                using (var pdf = new PdfDocument(writer))
+                using (var doc = new Document(pdf))
+                {
+                    doc.Add(new Paragraph("I'm Bogdan, I`m ccreated this test-file."))
+                        .Add(new Paragraph("Life is beautiful"));
+                }
+            }
+            catch (Exception ex)
+            {
+                status.Text = ex.Message;
             }
 
             LoadPdfToMemory(path, ref streamC, pdfViewerC);
 
-            status.Text = "This work is completed.";
+            status.Text = "Analysis is completed";
         }
 
         private void MainForm_DragDrop(object sender, DragEventArgs e)
@@ -154,5 +187,6 @@ namespace Specialized_PDF_Editor
             MessageBox.Show("in development...", "Additional information",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
     }
 }
