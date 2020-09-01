@@ -78,7 +78,7 @@ namespace Specialized_PDF_Editor.Tests
         /// Testing pdf size in "mm"
         /// </summary>
         [TestMethod]
-        public void PageSize_297x210()
+        public void PageSize_297x210mm()
         {
             // arrange
             double expected_w = 297,
@@ -87,21 +87,42 @@ namespace Specialized_PDF_Editor.Tests
             // act
             analysis.ExtractData();
             var actual = analysis.Pages;
-            double height, winth;
 
             // assert
             for (int i = 0; i < actual.Length; i++)
             {
-                height = Utilities.PointsToMillimeters(actual[i].Size.GetHeight());
-                winth = Utilities.PointsToMillimeters(actual[0].Size.GetWidth());
-                Assert.AreEqual(expected_h, height, 1);
-                Assert.AreEqual(expected_w, winth, 1);
+                Assert.AreEqual(expected_h, actual[i].Size.HeightUU, 1);
+                Assert.AreEqual(expected_w, actual[i].Size.WidthUU, 1);
 
                 Debug.WriteLine($"\nPage {i + 1}:\n");
-                Debug.WriteLine($"\theight: {height:G4}");
-                Debug.WriteLine($"\twinth: {winth:G4}");
+                Debug.WriteLine($"\theight: {actual[i].Size.HeightUU:G4}");
+                Debug.WriteLine($"\twinth: {actual[i].Size.WidthUU:G4}");
             }
         }
+
+        /// <summary>
+        /// Testing pdf border size in "mm"
+        /// </summary>
+        [TestMethod]
+        public void Margin_36()
+        {
+            // arrange
+            double expected = 36;
+
+            // act
+            analysis.ExtractData();
+            var actual = analysis.Margin;
+
+            // assert
+            Assert.AreEqual(expected, actual.Top, 1);
+            Assert.AreEqual(expected, actual.Bottom, 1);
+            Assert.AreEqual(expected, actual.Left, 1);
+            Assert.AreEqual(expected, actual.Right, 1);
+
+            Debug.WriteLine("\n" + actual);
+        }
+
+
 
         /// <summary>
         /// Method for other review of document
@@ -111,15 +132,15 @@ namespace Specialized_PDF_Editor.Tests
         {
             analysis.ExtractData();
 
-            foreach (var s in analysis.Pages)
-                Debug.WriteLine("\n" + s.ToString() + "\n");
+            //foreach (var s in analysis.Pages)
+            //    Debug.WriteLine("\n" + s.ToString() + "\n");
+
+            Debug.WriteLine("\n" + analysis.Metadata);
+
         }
     }
 }
 
-//TODO: 1. Orientation of page
-//TODO: 2. Size of page
-//TODO: 3. Size of rectangle or board
 //TODO: 4. Metadata of file
 //TODO: 4.1. Date of create
 //TODO: 4.2. Creator

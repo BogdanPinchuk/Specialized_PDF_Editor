@@ -1,8 +1,15 @@
 ﻿using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
+using iText.Kernel.Pdf.Action;
+using iText.Kernel.Pdf.Annot;
 using iText.Layout;
 
+//using iTextSharp.text;
+
+//using iTextSharp.text;
+
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -29,6 +36,14 @@ namespace Specialized_PDF_Editor
         /// Page numbers of loaded documents
         /// </summary>
         internal int PageCount { get; private set; }
+        /// <summary>
+        /// Margin of document
+        /// </summary>
+        internal MarginInfo Margin { get; set; }
+        /// <summary>
+        /// Metadata of document
+        /// </summary>
+        internal MetaData Metadata { get; set; }
 
         /// <summary>
         /// Create instance for analysis
@@ -77,16 +92,48 @@ namespace Specialized_PDF_Editor
 
                 // create array for save information about every page
                 Pages = new PageInfo[pages.Length];
+                var size = new SizeInfo();
 
                 for (int i = 0; i < pages.Length; i++)
                 {
                     Pages[i].Id = i + 1;
                     Pages[i].Rotation = pages[i].GetRotation();
-                    Pages[i].Size = pages[i].GetPageSize();
-
-                    var dictionary = pdf.GetPage(i + 1).GetPdfObject().GetAsRectangle(PdfName.UserUnit);
+                    {
+                        size.X = pages[i].GetPageSize().GetX();
+                        size.Y = pages[i].GetPageSize().GetY();
+                        size.Height = pages[i].GetPageSize().GetHeight();
+                        size.Width = pages[i].GetPageSize().GetWidth();
+                        size.HeightUU = iTextSharp.text.Utilities.PointsToMillimeters(size.Height);
+                        size.WidthUU = iTextSharp.text.Utilities.PointsToMillimeters(size.Width);
+                        size.Top = pages[i].GetPageSize().GetTop();
+                        size.Bottom = pages[i].GetPageSize().GetBottom();
+                        size.Left = pages[i].GetPageSize().GetLeft();
+                        size.Right = pages[i].GetPageSize().GetRight();
+                    }
+                    Pages[i].Size = size;
                 }
 
+                {
+                    var margin = new MarginInfo();
+                    margin.Top = doc.GetTopMargin();
+                    margin.Bottom = doc.GetBottomMargin();
+                    margin.Left = doc.GetLeftMargin();
+                    margin.Right = doc.GetRightMargin();
+                    Margin = margin;
+                }
+
+                {
+                    var metadata = new MetaData();
+                    var data = pdf.GetDocumentInfo();
+
+                    metadata.Title = data.GetTitle();
+                    metadata.Author = data.GetAuthor();
+                    metadata.Subject = data.GetSubject();
+                    metadata.Keywords = data.GetKeywords();
+                    metadata.Created = data.GetCreator();
+                    metadata.Producer = data.GetProducer();
+                    Metadata = metadata;
+                }
 
             }
         }
@@ -97,6 +144,9 @@ namespace Specialized_PDF_Editor
         }
     }
 
+    /// <summary>
+    /// General page info
+    /// </summary>
     internal struct PageInfo
     {
         /// <summary>
@@ -112,20 +162,155 @@ namespace Specialized_PDF_Editor
         /// <summary>
         /// Size of page
         /// </summary>
-        internal Rectangle Size { get; set; }
+        internal SizeInfo Size { get; set; }
 
         public override string ToString()
             => new StringBuilder($"Number of page: {Id};")
             .Append($"\nPage orientation: {Rotation} degree;")
-            .Append($"\nPage size:")
-            .Append($"\n\t - X: {Size.GetX()}")
-            .Append($"\n\t - Y: {Size.GetY()}")
-            .Append($"\n\t - Width: {Size.GetWidth()}")
-            .Append($"\n\t - Height: {Size.GetHeight()}")
-            .Append($"\n\t - Top: {Size.GetTop()}")
-            .Append($"\n\t - Bottom: {Size.GetBottom()}")
-            .Append($"\n\t - Left: {Size.GetLeft()}")
-            .Append($"\n\t - Right: {Size.GetRight()}")
+            .Append($"\n{Size}")
+            .ToString();
+
+    }
+
+    /// <summary>
+    /// General size info
+    /// </summary>
+    internal struct SizeInfo
+    {
+        /// <summary>
+        /// X pixels
+        /// </summary>
+        internal float X { get; set; }
+        /// <summary>
+        /// Y pixels
+        /// </summary>
+        internal float Y { get; set; }
+        /// <summary>
+        /// Height in user units
+        /// </summary>
+        internal float Height { get; set; }
+        /// <summary>
+        /// Width in pixels
+        /// </summary>
+        internal float Width { get; set; }
+        /// <summary>
+        /// Height in pixels
+        /// </summary>
+        internal float HeightUU { get; set; }
+        /// <summary>
+        /// Width in user units
+        /// </summary>
+        internal float WidthUU { get; set; }
+        /// <summary>
+        /// Top in pixels
+        /// </summary>
+        internal float Top { get; set; }
+        /// <summary>
+        /// Bottom in pixels
+        /// </summary>
+        internal float Bottom { get; set; }
+        /// <summary>
+        /// Left in pixels
+        /// </summary>
+        internal float Left { get; set; }
+        /// <summary>
+        /// Right in pixels
+        /// </summary>
+        internal float Right { get; set; }
+
+        public override string ToString()
+            => new StringBuilder($"Page size:")
+            .Append($"\n\t - X: {X}")
+            .Append($"\n\t - Y: {Y}")
+            .Append($"\n\t - Width: {Width}")
+            .Append($"\n\t - Height: {Height}")
+            .Append($"\n\t - Width: {WidthUU} mm")
+            .Append($"\n\t - Height: {HeightUU} mm")
+            .Append($"\n\t - Top: {Top}")
+            .Append($"\n\t - Bottom: {Bottom}")
+            .Append($"\n\t - Left: {Left}")
+            .Append($"\n\t - Right: {Right}")
+            .ToString();
+
+    }
+
+    /// <summary>
+    /// General margin info
+    /// </summary>
+    internal struct MarginInfo
+    {
+        internal float Top { get; set; }
+        /// <summary>
+        /// Bottom in pixels
+        /// </summary>
+        internal float Bottom { get; set; }
+        /// <summary>
+        /// Left in pixels
+        /// </summary>
+        internal float Left { get; set; }
+        /// <summary>
+        /// Right in pixels
+        /// </summary>
+        internal float Right { get; set; }
+
+        public override string ToString()
+            => new StringBuilder($"Margin value:")
+            .Append($"\n\t - Top: {Top}")
+            .Append($"\n\t - Bottom: {Bottom}")
+            .Append($"\n\t - Left: {Left}")
+            .Append($"\n\t - Right: {Right}")
             .ToString();
     }
+
+    /// <summary>
+    /// General info about pad-file
+    /// </summary>
+    internal struct MetaData
+    {
+        /// <summary>
+        /// Title
+        /// </summary>
+        internal string Title { get; set; }
+        /// <summary>
+        /// Author
+        /// </summary>
+        internal string Author { get; set; }
+        /// <summary>
+        /// Theme
+        /// </summary>
+        internal string Subject { get; set; }
+        /// <summary>
+        /// Key words
+        /// </summary>
+        internal string Keywords { get; set; }
+        /// <summary>
+        /// Time created of fiel
+        /// </summary>
+        internal string Created { get; set; }
+        /// <summary>
+        /// Creator
+        /// </summary>
+        internal string Producer { get; set; }
+        ///// <summary>
+        ///// Version of pdf
+        ///// </summary>
+        //internal string Version { get; set; }
+        
+        ///// <summary>
+        ///// Fonts in file
+        ///// </summary>
+        //internal List<Font> Fonts { get; set; }
+
+        public override string ToString()
+            => new StringBuilder($"PDF description:")
+            .Append($"\n\t - Title: {Title}")
+            .Append($"\n\t - Author: {Author}")
+            .Append($"\n\t - Subject: {Subject}")
+            .Append($"\n\t - Keywords: {Keywords}")
+            .Append($"\n\t - Created: {Created}")
+            .Append($"\n\t - Producer: {Producer}")
+            //.Append($"\n\t - Version: {Version}")
+            .ToString();
+    }
+
 }
