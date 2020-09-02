@@ -4,10 +4,6 @@ using iText.Kernel.Pdf.Action;
 using iText.Kernel.Pdf.Annot;
 using iText.Layout;
 
-//using iTextSharp.text;
-
-//using iTextSharp.text;
-
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -98,43 +94,43 @@ namespace Specialized_PDF_Editor
                 {
                     Pages[i].Id = i + 1;
                     Pages[i].Rotation = pages[i].GetRotation();
+
+                    Pages[i].Size = new SizeInfo
                     {
-                        size.X = pages[i].GetPageSize().GetX();
-                        size.Y = pages[i].GetPageSize().GetY();
-                        size.Height = pages[i].GetPageSize().GetHeight();
-                        size.Width = pages[i].GetPageSize().GetWidth();
-                        size.HeightUU = iTextSharp.text.Utilities.PointsToMillimeters(size.Height);
-                        size.WidthUU = iTextSharp.text.Utilities.PointsToMillimeters(size.Width);
-                        size.Top = pages[i].GetPageSize().GetTop();
-                        size.Bottom = pages[i].GetPageSize().GetBottom();
-                        size.Left = pages[i].GetPageSize().GetLeft();
-                        size.Right = pages[i].GetPageSize().GetRight();
-                    }
-                    Pages[i].Size = size;
+                        X = pages[i].GetPageSize().GetX(),
+                        Y = pages[i].GetPageSize().GetY(),
+                        Height = pages[i].GetPageSize().GetHeight(),
+                        Width = pages[i].GetPageSize().GetWidth(),
+                        HeightUU = iTextSharp.text.Utilities.PointsToMillimeters(size.Height),
+                        WidthUU = iTextSharp.text.Utilities.PointsToMillimeters(size.Width),
+                        Top = pages[i].GetPageSize().GetTop(),
+                        Bottom = pages[i].GetPageSize().GetBottom(),
+                        Left = pages[i].GetPageSize().GetLeft(),
+                        Right = pages[i].GetPageSize().GetRight(),
+                    };
                 }
 
+                Margin = new MarginInfo
                 {
-                    var margin = new MarginInfo();
-                    margin.Top = doc.GetTopMargin();
-                    margin.Bottom = doc.GetBottomMargin();
-                    margin.Left = doc.GetLeftMargin();
-                    margin.Right = doc.GetRightMargin();
-                    Margin = margin;
-                }
+                    Top = doc.GetTopMargin(),
+                    Bottom = doc.GetBottomMargin(),
+                    Left = doc.GetLeftMargin(),
+                    Right = doc.GetRightMargin()
+                };
 
+                var data = pdf.GetDocumentInfo();
+                Metadata = new MetaData
                 {
-                    var metadata = new MetaData();
-                    var data = pdf.GetDocumentInfo();
-
-                    metadata.Title = data.GetTitle();
-                    metadata.Author = data.GetAuthor();
-                    metadata.Subject = data.GetSubject();
-                    metadata.Keywords = data.GetKeywords();
-                    metadata.Created = data.GetCreator();
-                    metadata.Producer = data.GetProducer();
-                    Metadata = metadata;
-                }
-
+                    Title = data.GetTitle(),
+                    Author = data.GetAuthor(),
+                    Subject = data.GetSubject(),
+                    Keywords = data.GetKeywords(),
+                    Creator = data.GetCreator(),
+                    Producer = data.GetProducer(),
+                    Version = pdf.GetPdfVersion(),
+                    CreationDate = data.GetMoreInfo(PdfName.CreationDate.GetValue()),
+                    ModificationDate = data.GetMoreInfo(PdfName.ModDate.GetValue()),
+                };
             }
         }
 
@@ -286,16 +282,23 @@ namespace Specialized_PDF_Editor
         /// <summary>
         /// Time created of fiel
         /// </summary>
-        internal string Created { get; set; }
+        internal string Creator { get; set; }
         /// <summary>
         /// Creator
         /// </summary>
         internal string Producer { get; set; }
-        ///// <summary>
-        ///// Version of pdf
-        ///// </summary>
-        //internal string Version { get; set; }
-        
+        /// <summary>
+        /// Version of pdf
+        /// </summary>
+        internal PdfVersion Version { get; set; }
+        /// <summary>
+        /// Creation date of file
+        /// </summary>
+        internal string CreationDate { get; set; }
+        /// <summary>
+        /// Modification date of file
+        /// </summary>
+        internal string ModificationDate { get; set; }
         ///// <summary>
         ///// Fonts in file
         ///// </summary>
@@ -307,9 +310,13 @@ namespace Specialized_PDF_Editor
             .Append($"\n\t - Author: {Author}")
             .Append($"\n\t - Subject: {Subject}")
             .Append($"\n\t - Keywords: {Keywords}")
-            .Append($"\n\t - Created: {Created}")
+            .Append($"\n\t - Creator: {Creator}")
             .Append($"\n\t - Producer: {Producer}")
-            //.Append($"\n\t - Version: {Version}")
+            .Append($"\n\t - Version: {Version}")
+            .Append($"\n\t - Creatioan date: " +
+                $"{(string.IsNullOrEmpty(CreationDate)? string.Empty : PdfDate.Decode(CreationDate).ToString())}")
+            .Append($"\n\t - Modification date: " +
+                $"{(string.IsNullOrEmpty(ModificationDate)? string.Empty : PdfDate.Decode(ModificationDate).ToString())}")
             .ToString();
     }
 

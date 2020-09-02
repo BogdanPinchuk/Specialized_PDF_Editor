@@ -132,17 +132,14 @@ namespace Specialized_PDF_Editor.Tests
         {
             analysis.ExtractData();
 
-            //foreach (var s in analysis.Pages)
-            //    Debug.WriteLine("\n" + s.ToString() + "\n");
-
             Debug.WriteLine("\n" + analysis.Metadata);
 
         }
     }
 }
 
-//TODO: 4. Metadata of file
-//TODO: 4.1. Date of create
-//TODO: 4.2. Creator
-//TODO: 4.3. Version of PDF
 //TODO: 4.4. Font in file ???
+//TODO: 4.4. Size of font
+//TODO: 5. Size of picture
+//TODO: 5. Size of tables
+
