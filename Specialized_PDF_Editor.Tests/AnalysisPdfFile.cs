@@ -142,4 +142,5 @@ namespace Specialized_PDF_Editor.Tests
 //TODO: 4.4. Size of font
 //TODO: 5. Size of picture
 //TODO: 5. Size of tables
+//TODO: 6. Create file in RAM https://www.cyberforum.ru/csharp-beginners/thread987138.html
 
