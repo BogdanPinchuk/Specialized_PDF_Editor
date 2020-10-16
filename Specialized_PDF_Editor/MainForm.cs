@@ -132,6 +132,60 @@ namespace Specialized_PDF_Editor
 
         private void AnalyseMenu_Click(object sender, EventArgs e)
         {
+            CreateLocalFile();
+        }
+
+        /// <summary>
+        /// Create local temp file for save result
+        /// </summary>
+        private void CreateLocalFile()
+        {
+            if (!string.IsNullOrEmpty(tpath))
+                File.Delete(tpath);
+
+            tpath = Directory.GetCurrentDirectory() + "\\temp.pdf";
+
+            if (new FileInfo(tpath).Exists)
+            {
+                status.Text = "Creating temp-file";
+
+                var time = DateTime.Now.AddSeconds(-1);
+
+                do
+                {
+                    tpath = Directory.GetCurrentDirectory() + "\\temp " +
+                        time.AddSeconds(1).ToString().Replace(":", ".") + ".pdf";
+                } while (new FileInfo(tpath).Exists);
+
+                status.Text = string.Empty;
+            }
+
+            try
+            {
+                using (var stream = new FileStream(tpath, FileMode.Create, FileAccess.ReadWrite))
+                using (var writer = new PdfWriter(stream))
+                using (var pdf = new PdfDocument(writer))
+                using (var doc = new Document(pdf))
+                {
+                    doc.Add(new Paragraph("I'm Bogdan, I`m created this test-file."))
+                        .Add(new Paragraph("Life is beautiful"));
+                }
+            }
+            catch (Exception ex)
+            {
+                status.Text = ex.Message;
+            }
+
+            LoadPdfToMemory(tpath, ref streamC, pdfViewerC);
+
+            status.Text = "Analysis is completed";
+        }
+
+        /// <summary>
+        /// Create RAM temp file for save result
+        /// </summary>
+        private void CreateRAMFile()
+        {
             if (!string.IsNullOrEmpty(tpath))
                 File.Delete(tpath);
 

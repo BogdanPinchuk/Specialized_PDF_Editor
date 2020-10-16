@@ -88,7 +88,6 @@ namespace Specialized_PDF_Editor
 
                 // create array for save information about every page
                 Pages = new PageInfo[pages.Length];
-                var size = new SizeInfo();
 
                 for (int i = 0; i < pages.Length; i++)
                 {
@@ -101,8 +100,10 @@ namespace Specialized_PDF_Editor
                         Y = pages[i].GetPageSize().GetY(),
                         Height = pages[i].GetPageSize().GetHeight(),
                         Width = pages[i].GetPageSize().GetWidth(),
-                        HeightUU = iTextSharp.text.Utilities.PointsToMillimeters(size.Height),
-                        WidthUU = iTextSharp.text.Utilities.PointsToMillimeters(size.Width),
+                        HeightUU = iTextSharp.text.Utilities
+                            .PointsToMillimeters(pages[i].GetPageSize().GetHeight()),
+                        WidthUU = iTextSharp.text.Utilities
+                            .PointsToMillimeters(pages[i].GetPageSize().GetWidth()),
                         Top = pages[i].GetPageSize().GetTop(),
                         Bottom = pages[i].GetPageSize().GetBottom(),
                         Left = pages[i].GetPageSize().GetLeft(),
@@ -314,10 +315,11 @@ namespace Specialized_PDF_Editor
             .Append($"\n\t - Producer: {Producer}")
             .Append($"\n\t - Version: {Version}")
             .Append($"\n\t - Creatioan date: " +
-                $"{(string.IsNullOrEmpty(CreationDate)? string.Empty : PdfDate.Decode(CreationDate).ToString())}")
+                $"{(string.IsNullOrEmpty(CreationDate) ? string.Empty : PdfDate.Decode(CreationDate).ToString())}")
             .Append($"\n\t - Modification date: " +
-                $"{(string.IsNullOrEmpty(ModificationDate)? string.Empty : PdfDate.Decode(ModificationDate).ToString())}")
+                $"{(string.IsNullOrEmpty(ModificationDate) ? string.Empty : PdfDate.Decode(ModificationDate).ToString())}")
             .ToString();
+
     }
 
 }

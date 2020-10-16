@@ -143,4 +143,5 @@ namespace Specialized_PDF_Editor.Tests
 //TODO: 5. Size of picture
 //TODO: 5. Size of tables
 //TODO: 6. Create file in RAM https://www.cyberforum.ru/csharp-beginners/thread987138.html
+//TODO: 7. Realise the dynamic MemoryMappedFile
 
