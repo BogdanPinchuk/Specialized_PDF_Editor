@@ -277,6 +277,8 @@ namespace Specialized_PDF_Editor
                     //streamMMF.Position = 0;
                     //writer.Flush();
                     //streamMMF.Flush();
+                    doc.Flush();
+                    doc.Close();    // write data in RAM after close this
                 }
 
             }
