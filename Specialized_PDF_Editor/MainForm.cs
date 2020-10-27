@@ -4,12 +4,22 @@ using iText.Layout.Element;
 
 using System;
 using System.IO;
+using System.IO.MemoryMappedFiles;
 using System.Windows.Forms;
 
 namespace Specialized_PDF_Editor
 {
     public partial class MainForm : Form
     {
+        /// <summary>
+        /// File in RAM
+        /// </summary>
+        private MemoryMappedFile mmFile;
+        /// <summary>
+        /// Stream for file in RAM
+        /// </summary>
+        private MemoryMappedViewStream streamMMF;
+
         /// <summary>
         /// Stream for loaded file
         /// </summary>
@@ -59,6 +69,26 @@ namespace Specialized_PDF_Editor
 
                 if (pdfViewer.Equals(pdfViewerL))
                     nameOfDoc.Text = new FileInfo(path).Name;
+            }
+            catch (Exception ex)
+            {
+                status.Text = ex.Message;
+            }
+        }
+
+        /// <summary>
+        /// Load pdf-file to RAM
+        /// </summary>
+        /// <param name="path">path for file</param>
+        /// <param name="stream">stream for document</param>
+        /// <param name="pdfViewer">Component with view the document</param>
+        internal void LoadPdfToMemory(string path, MemoryMappedViewStream stream, PdfiumViewer.PdfViewer pdfViewer)
+        {
+            try
+            {
+                ShowDocument(stream, pdfViewer);
+                pdfViewer.ShowToolbar = true;
+                pdfViewer.ShowBookmarks = true;
             }
             catch (Exception ex)
             {
@@ -132,7 +162,8 @@ namespace Specialized_PDF_Editor
 
         private void AnalyseMenu_Click(object sender, EventArgs e)
         {
-            CreateLocalFile();
+            //CreateLocalFile();
+            CreateRAMFile();
         }
 
         /// <summary>
@@ -145,7 +176,7 @@ namespace Specialized_PDF_Editor
 
             tpath = Directory.GetCurrentDirectory() + "\\temp.pdf";
 
-            if (new FileInfo(tpath).Exists)
+            if (File.Exists(tpath))
             {
                 status.Text = "Creating temp-file";
 
@@ -155,7 +186,7 @@ namespace Specialized_PDF_Editor
                 {
                     tpath = Directory.GetCurrentDirectory() + "\\temp " +
                         time.AddSeconds(1).ToString().Replace(":", ".") + ".pdf";
-                } while (new FileInfo(tpath).Exists);
+                } while (File.Exists(tpath));
 
                 status.Text = string.Empty;
             }
@@ -169,6 +200,9 @@ namespace Specialized_PDF_Editor
                 {
                     doc.Add(new Paragraph("I'm Bogdan, I`m created this test-file."))
                         .Add(new Paragraph("Life is beautiful"));
+
+                    writer.Flush();
+                    stream.Flush();
                 }
             }
             catch (Exception ex)
@@ -186,12 +220,13 @@ namespace Specialized_PDF_Editor
         /// </summary>
         private void CreateRAMFile()
         {
-            if (!string.IsNullOrEmpty(tpath))
-                File.Delete(tpath);
+            //if (!string.IsNullOrEmpty(tpath))
+            //    File.Delete(tpath);
 
-            tpath = Directory.GetCurrentDirectory() + "\\temp.pdf";
+            //tpath = Directory.GetCurrentDirectory() + "\\temp.pdf";
 
-            if (new FileInfo(tpath).Exists)
+            /*
+            if (File.Exists(tpath))
             {
                 status.Text = "Creating temp-file";
 
@@ -201,28 +236,56 @@ namespace Specialized_PDF_Editor
                 {
                     tpath = Directory.GetCurrentDirectory() + "\\temp " +
                         time.AddSeconds(1).ToString().Replace(":", ".") + ".pdf";
-                } while (new FileInfo(tpath).Exists);
+                } while (File.Exists(tpath));
 
                 status.Text = string.Empty;
             }
+            */
+
+            string name = string.Empty;
+
+            if (string.IsNullOrEmpty(tpath))
+            {
+                tpath = Directory.GetCurrentDirectory() + "\\temp " +
+                        DateTime.Now.ToString().Replace(":", ".") + ".pdf";
+            }
+            name = "temp.pdf";
 
             try
             {
-                using (var stream = new FileStream(tpath, FileMode.Create, FileAccess.ReadWrite))
-                using (var writer = new PdfWriter(stream))
+                mmFile = MemoryMappedFile.CreateNew(name, 4096, MemoryMappedFileAccess.ReadWrite);
+                streamMMF = mmFile.CreateViewStream(0, 0, MemoryMappedFileAccess.ReadWrite);
+
+                //using (mmFile = MemoryMappedFile.CreateNew(name, 4096, MemoryMappedFileAccess.ReadWrite))
+                //using (var stream = new FileStream(tpath, FileMode.Create, FileAccess.ReadWrite))
+                //using (streamMMF = mmFile.CreateViewStream(0, 0, MemoryMappedFileAccess.ReadWrite))
+                using (var writer = new PdfWriter(streamMMF))
                 using (var pdf = new PdfDocument(writer))
                 using (var doc = new Document(pdf))
                 {
+                    writer.SetCloseStream(false);
+
                     doc.Add(new Paragraph("I'm Bogdan, I`m created this test-file."))
                         .Add(new Paragraph("Life is beautiful"));
+
+                    // create file in RAM
+                    //mmFile = MemoryMappedFile.CreateNew(name, stream.Length, MemoryMappedFileAccess.ReadWrite);
+                    // create stream from file
+                    //streamMMF = mmFile.CreateViewStream(0, stream.Length, MemoryMappedFileAccess.ReadWrite);
+                    // copy data to stream in RAM
+                    //stream.CopyTo(streamMMF);
+                    //streamMMF.Position = 0;
+                    //writer.Flush();
+                    //streamMMF.Flush();
                 }
+
             }
             catch (Exception ex)
             {
                 status.Text = ex.Message;
             }
 
-            LoadPdfToMemory(tpath, ref streamC, pdfViewerC);
+            LoadPdfToMemory(name, streamMMF, pdfViewerC);
 
             status.Text = "Analysis is completed";
         }
