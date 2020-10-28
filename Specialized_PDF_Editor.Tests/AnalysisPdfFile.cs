@@ -3,6 +3,8 @@ using System.IO;
 using System.Diagnostics;
 using iTextSharp.text;
 using System.Runtime.InteropServices;
+using System.Text;
+using System.Windows.Forms;
 
 namespace Specialized_PDF_Editor.Tests
 {
@@ -25,7 +27,6 @@ namespace Specialized_PDF_Editor.Tests
             {
                 new FileInfo(@"Resources\File_3_pages.pdf").FullName
             });
-            //Visual.LoadPdfForRead();
             streamL = Visual.StreamL;
         }
 
@@ -120,6 +121,37 @@ namespace Specialized_PDF_Editor.Tests
             Assert.AreEqual(expected, actual.Right, 1);
 
             Debug.WriteLine("\n" + actual);
+        }
+
+        /// <summary>
+        /// Testing create and upload pdf-file into RAM memory
+        /// </summary>
+        [TestMethod]
+        public void TestSpeed_LoadToRamMemory()
+        {
+            Stopwatch time = new Stopwatch();
+            var str = new StringBuilder("\n");
+
+            time.Start();
+            Visual.CreateLocalFile();
+            time.Stop();
+            str.Append($"CreateLocalFile: {time.Elapsed.TotalMilliseconds} ms\n");
+
+            time.Restart();
+            Visual.CreateRAMFile();
+            time.Stop();
+            str.Append($"CreateRAMFile: {time.Elapsed.TotalMilliseconds} ms\n");
+
+            time.Restart();
+            Visual.CreateRAMData();
+            time.Stop();
+            str.Append($"CreateRAMData: {time.Elapsed.TotalMilliseconds} ms\n");
+
+            Debug.WriteLine(str.ToString());
+            // My result:
+            // CreateLocalFile: 7933.13 ms
+            // CreateRAMFile:   39.78 ms
+            // CreateRAMData:   2.1 ms
         }
 
 

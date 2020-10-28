@@ -77,34 +77,6 @@ namespace Specialized_PDF_Editor
         private void AnalyseMenu_Click(object sender, EventArgs e)
         {
             Visual.CreateRAMData();
-
-            #region Testing speed of different methods
-#if false
-            Stopwatch time = new Stopwatch();
-            var str = new StringBuilder();
-
-            time.Start();
-            CreateLocalFile();
-            time.Stop();
-            str.Append($"CreateLocalFile: {time.Elapsed.TotalMilliseconds} ms\n");
-
-            time.Restart();
-            CreateRAMFile();
-            time.Stop();
-            str.Append($"CreateRAMFile: {time.Elapsed.TotalMilliseconds} ms\n");
-
-            time.Restart();
-            CreateRAMData();
-            time.Stop();
-            str.Append($"CreateRAMData: {time.Elapsed.TotalMilliseconds} ms\n");
-
-            MessageBox.Show(str.ToString());
-            // My result:
-            // CreateLocalFile: 7933.13 ms
-            // CreateRAMFile:   39.78 ms
-            // CreateRAMData:   2.1 ms
-#endif
-            #endregion
         }
 
         private void MainForm_DragDrop(object sender, DragEventArgs e)

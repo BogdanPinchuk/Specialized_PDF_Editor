@@ -116,47 +116,6 @@ namespace Specialized_PDF_Editor
             }
         }
         
-        /*
-        /// <summary>
-        /// Load pdf-file to RAM
-        /// </summary>
-        /// <param name="name">Path for file</param>
-        /// <param name="stream">stream for document</param>
-        /// <param name="pdfViewer">Component with view the document</param>
-        internal static void LoadPdfToMemory(MemoryMappedViewStream stream, PdfiumViewer.PdfViewer pdfViewer)
-        {
-            try
-            {
-                ShowDocument(stream, pdfViewer);
-                pdfViewer.ShowToolbar = true;
-                pdfViewer.ShowBookmarks = true;
-            }
-            catch (Exception ex)
-            {
-                Status.Text = ex.Message;
-            }
-        }
-        */
-
-        /// <summary>
-        /// Load PDF file in stream
-        /// </summary>
-        internal static void LoadPdfForRead()
-        {
-            try
-            {
-                if (new FileInfo(BPath).Extension != ".pdf")
-                    throw new InvalidOperationException("File not in PDF format or corrupted");
-
-                byte[] bytes = File.ReadAllBytes(BPath);
-                StreamC = new MemoryStream(bytes);
-            }
-            catch (Exception ex)
-            {
-                Status.Text = ex.Message;
-            }
-        }
-
         /// <summary>
         /// Show document
         /// </summary>
@@ -328,11 +287,9 @@ namespace Specialized_PDF_Editor
         {
             Unload();
 
-            mmFile.Dispose();
-            streamMMF.Dispose();
+            mmFile?.Dispose();
+            streamMMF?.Dispose();
         }
-
-
 
     }
 }
