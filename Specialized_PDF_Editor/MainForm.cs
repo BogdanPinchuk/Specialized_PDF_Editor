@@ -3,8 +3,10 @@ using iText.Layout;
 using iText.Layout.Element;
 
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.IO.MemoryMappedFiles;
+using System.Text;
 using System.Windows.Forms;
 
 namespace Specialized_PDF_Editor
@@ -63,6 +65,29 @@ namespace Specialized_PDF_Editor
 
                 byte[] bytes = File.ReadAllBytes(path);
                 stream = new MemoryStream(bytes);
+                ShowDocument(stream, pdfViewer);
+                pdfViewer.ShowToolbar = true;
+                pdfViewer.ShowBookmarks = true;
+
+                if (pdfViewer.Equals(pdfViewerL))
+                    nameOfDoc.Text = new FileInfo(path).Name;
+            }
+            catch (Exception ex)
+            {
+                status.Text = ex.Message;
+            }
+        }
+
+        /// <summary>
+        /// Load pdf-file to RAM
+        /// </summary>
+        /// <param name="path">path for file</param>
+        /// <param name="stream">stream for document</param>
+        /// <param name="pdfViewer">Component with view the document</param>
+        internal void LoadPdfToMemory(MemoryStream stream, PdfiumViewer.PdfViewer pdfViewer)
+        {
+            try
+            {
                 ShowDocument(stream, pdfViewer);
                 pdfViewer.ShowToolbar = true;
                 pdfViewer.ShowBookmarks = true;
@@ -162,8 +187,35 @@ namespace Specialized_PDF_Editor
 
         private void AnalyseMenu_Click(object sender, EventArgs e)
         {
-            //CreateLocalFile();
+            CreateRAMData();
+
+            #region Testing speed of different methods
+#if false
+            Stopwatch time = new Stopwatch();
+            var str = new StringBuilder();
+
+            time.Start();
+            CreateLocalFile();
+            time.Stop();
+            str.Append($"CreateLocalFile: {time.Elapsed.TotalMilliseconds} ms\n");
+
+            time.Restart();
             CreateRAMFile();
+            time.Stop();
+            str.Append($"CreateRAMFile: {time.Elapsed.TotalMilliseconds} ms\n");
+
+            time.Restart();
+            CreateRAMData();
+            time.Stop();
+            str.Append($"CreateRAMData: {time.Elapsed.TotalMilliseconds} ms\n");
+
+            MessageBox.Show(str.ToString());
+            // My result:
+            // CreateLocalFile: 7933.13 ms
+            // CreateRAMFile:   39.78 ms
+            // CreateRAMData:   2.1 ms
+#endif
+            #endregion
         }
 
         /// <summary>
@@ -216,49 +268,17 @@ namespace Specialized_PDF_Editor
         }
 
         /// <summary>
-        /// Create RAM temp file for save result
+        /// Create temp file in RAM for save result
         /// </summary>
         private void CreateRAMFile()
         {
-            //if (!string.IsNullOrEmpty(tpath))
-            //    File.Delete(tpath);
-
-            //tpath = Directory.GetCurrentDirectory() + "\\temp.pdf";
-
-            /*
-            if (File.Exists(tpath))
-            {
-                status.Text = "Creating temp-file";
-
-                var time = DateTime.Now.AddSeconds(-1);
-
-                do
-                {
-                    tpath = Directory.GetCurrentDirectory() + "\\temp " +
-                        time.AddSeconds(1).ToString().Replace(":", ".") + ".pdf";
-                } while (File.Exists(tpath));
-
-                status.Text = string.Empty;
-            }
-            */
-
-            string name = string.Empty;
-
-            if (string.IsNullOrEmpty(tpath))
-            {
-                tpath = Directory.GetCurrentDirectory() + "\\temp " +
-                        DateTime.Now.ToString().Replace(":", ".") + ".pdf";
-            }
-            name = "temp.pdf";
+            string name = "temp " + DateTime.Now.ToString().Replace(":", ".") + ".pdf";
 
             try
             {
                 mmFile = MemoryMappedFile.CreateNew(name, 4096, MemoryMappedFileAccess.ReadWrite);
                 streamMMF = mmFile.CreateViewStream(0, 0, MemoryMappedFileAccess.ReadWrite);
 
-                //using (mmFile = MemoryMappedFile.CreateNew(name, 4096, MemoryMappedFileAccess.ReadWrite))
-                //using (var stream = new FileStream(tpath, FileMode.Create, FileAccess.ReadWrite))
-                //using (streamMMF = mmFile.CreateViewStream(0, 0, MemoryMappedFileAccess.ReadWrite))
                 using (var writer = new PdfWriter(streamMMF))
                 using (var pdf = new PdfDocument(writer))
                 using (var doc = new Document(pdf))
@@ -268,15 +288,6 @@ namespace Specialized_PDF_Editor
                     doc.Add(new Paragraph("I'm Bogdan, I`m created this test-file."))
                         .Add(new Paragraph("Life is beautiful"));
 
-                    // create file in RAM
-                    //mmFile = MemoryMappedFile.CreateNew(name, stream.Length, MemoryMappedFileAccess.ReadWrite);
-                    // create stream from file
-                    //streamMMF = mmFile.CreateViewStream(0, stream.Length, MemoryMappedFileAccess.ReadWrite);
-                    // copy data to stream in RAM
-                    //stream.CopyTo(streamMMF);
-                    //streamMMF.Position = 0;
-                    //writer.Flush();
-                    //streamMMF.Flush();
                     doc.Flush();
                     doc.Close();    // write data in RAM after close this
                 }
@@ -288,6 +299,39 @@ namespace Specialized_PDF_Editor
             }
 
             LoadPdfToMemory(name, streamMMF, pdfViewerC);
+
+            status.Text = "Analysis is completed";
+        }
+
+        /// <summary>
+        /// Create data of future file in RAM for save result
+        /// </summary>
+        private void CreateRAMData()
+        {
+            try
+            {
+                streamC = new MemoryStream();
+
+                using (var writer = new PdfWriter(streamC))
+                using (var pdf = new PdfDocument(writer))
+                using (var doc = new Document(pdf))
+                {
+                    writer.SetCloseStream(false);
+
+                    doc.Add(new Paragraph("I'm Bogdan, I`m created this test-file."))
+                        .Add(new Paragraph("Life is beautiful"));
+
+                    doc.Flush();
+                    doc.Close();    // write data in RAM after close this
+                }
+
+            }
+            catch (Exception ex)
+            {
+                status.Text = ex.Message;
+            }
+
+            LoadPdfToMemory(streamC, pdfViewerC);
 
             status.Text = "Analysis is completed";
         }
