@@ -13,7 +13,7 @@ namespace Specialized_PDF_Editor.Tests
     public class AnalysisPdfFile
     {
         private Analysis analysis;
-        private static MemoryStream streamC;
+        private static MemoryStream streamL;
 
         /// <summary>
         /// Initialize class before testing
@@ -25,8 +25,8 @@ namespace Specialized_PDF_Editor.Tests
             {
                 new FileInfo(@"Resources\File_3_pages.pdf").FullName
             });
-            form.LoadPdfForRead();
-            streamC = form.streamC;
+            //Visual.LoadPdfForRead();
+            streamL = Visual.StreamL;
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Specialized_PDF_Editor.Tests
         [TestInitialize]
         public void CleanBeforeTesting()
         {
-            analysis = new Analysis(streamC);
+            analysis = new Analysis(streamL);
         }
 
         /// <summary>
@@ -121,7 +121,6 @@ namespace Specialized_PDF_Editor.Tests
 
             Debug.WriteLine("\n" + actual);
         }
-
 
 
         /// <summary>
