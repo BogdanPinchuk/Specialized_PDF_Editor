@@ -51,11 +51,14 @@ namespace Specialized_PDF_Editor
             this.pdfViewerC = new PdfiumViewer.PdfViewer();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.textTest = new System.Windows.Forms.TextBox();
+            this.toolRead = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.statusM.SuspendLayout();
             this.tabC.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -63,7 +66,8 @@ namespace Specialized_PDF_Editor
             this.menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileMenu,
             this.analyseMenu,
-            this.helpMenu});
+            this.helpMenu,
+            this.toolRead});
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
             this.menu.Size = new System.Drawing.Size(800, 24);
@@ -87,7 +91,7 @@ namespace Specialized_PDF_Editor
             this.openMenu.Image = global::Specialized_PDF_Editor.Properties.Resources.OpenFile_16x;
             this.openMenu.Name = "openMenu";
             this.openMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openMenu.Size = new System.Drawing.Size(146, 22);
+            this.openMenu.Size = new System.Drawing.Size(180, 22);
             this.openMenu.Text = "Open";
             this.openMenu.Click += new System.EventHandler(this.OpenMenu_Click);
             // 
@@ -97,20 +101,20 @@ namespace Specialized_PDF_Editor
             this.saveMenu.Image = global::Specialized_PDF_Editor.Properties.Resources.Save_16x;
             this.saveMenu.Name = "saveMenu";
             this.saveMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveMenu.Size = new System.Drawing.Size(146, 22);
+            this.saveMenu.Size = new System.Drawing.Size(180, 22);
             this.saveMenu.Text = "Save";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(143, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // exitMenu
             // 
             this.exitMenu.Image = global::Specialized_PDF_Editor.Properties.Resources.Close_red_16x;
             this.exitMenu.Name = "exitMenu";
             this.exitMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitMenu.Size = new System.Drawing.Size(146, 22);
+            this.exitMenu.Size = new System.Drawing.Size(180, 22);
             this.exitMenu.Text = "Exit";
             this.exitMenu.Click += new System.EventHandler(this.ExitMenu_Click);
             // 
@@ -189,7 +193,7 @@ namespace Specialized_PDF_Editor
             this.pdfViewerL.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pdfViewerL.Location = new System.Drawing.Point(3, 3);
             this.pdfViewerL.Name = "pdfViewerL";
-            this.pdfViewerL.ShowToolbar = true;
+            this.pdfViewerL.ShowToolbar = false;
             this.pdfViewerL.Size = new System.Drawing.Size(786, 372);
             this.pdfViewerL.TabIndex = 0;
             this.pdfViewerL.ZoomMode = PdfiumViewer.PdfViewerZoomMode.FitBest;
@@ -211,13 +215,14 @@ namespace Specialized_PDF_Editor
             this.pdfViewerC.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pdfViewerC.Location = new System.Drawing.Point(3, 3);
             this.pdfViewerC.Name = "pdfViewerC";
-            this.pdfViewerC.ShowToolbar = true;
+            this.pdfViewerC.ShowToolbar = false;
             this.pdfViewerC.Size = new System.Drawing.Size(786, 372);
             this.pdfViewerC.TabIndex = 0;
             this.pdfViewerC.ZoomMode = PdfiumViewer.PdfViewerZoomMode.FitBest;
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.textTest);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Size = new System.Drawing.Size(792, 378);
@@ -225,6 +230,21 @@ namespace Specialized_PDF_Editor
             this.tabPage3.Text = "Correction";
             this.tabPage3.ToolTipText = "Page for make changes";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // textTest
+            // 
+            this.textTest.Location = new System.Drawing.Point(8, 16);
+            this.textTest.Multiline = true;
+            this.textTest.Name = "textTest";
+            this.textTest.Size = new System.Drawing.Size(426, 252);
+            this.textTest.TabIndex = 0;
+            // 
+            // toolRead
+            // 
+            this.toolRead.Name = "toolRead";
+            this.toolRead.Size = new System.Drawing.Size(71, 20);
+            this.toolRead.Text = "Read data";
+            this.toolRead.Click += new System.EventHandler(this.ToolRead_Click);
             // 
             // MainForm
             // 
@@ -249,6 +269,8 @@ namespace Specialized_PDF_Editor
             this.tabC.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -275,6 +297,8 @@ namespace Specialized_PDF_Editor
         private TabPage tabPage3;
         private ToolTip toolTip;
         private ToolStripStatusLabel nameOfDoc;
+        private TextBox textTest;
+        private ToolStripMenuItem toolRead;
     }
 }
 

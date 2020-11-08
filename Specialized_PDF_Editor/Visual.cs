@@ -35,6 +35,10 @@ namespace Specialized_PDF_Editor
         /// Status label for important messeges
         /// </summary>
         internal static ToolStripStatusLabel Status { get; set; }
+        /// <summary>
+        /// Temp testing textboxing
+        /// </summary>
+        internal static TextBox TestInfo { get; set; }
 
         /// <summary>
         /// File in RAM

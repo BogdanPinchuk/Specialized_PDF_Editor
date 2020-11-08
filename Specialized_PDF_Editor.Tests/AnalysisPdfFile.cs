@@ -163,6 +163,7 @@ namespace Specialized_PDF_Editor.Tests
         {
             analysis.ExtractData();
 
+            Debug.WriteLine("\n" + analysis.Pages[0].ToString());
             Debug.WriteLine("\n" + analysis.Metadata);
 
         }

@@ -30,6 +30,7 @@ namespace Specialized_PDF_Editor
             set { Visual.TPath = value; }
         }
 
+        internal Analysis analysis;
 
         internal MainForm(string[] pathes)
         {
@@ -49,6 +50,8 @@ namespace Specialized_PDF_Editor
             Visual.PdfViewerL = pdfViewerL;
             Visual.PdfViewerC = pdfViewerC;
             Visual.Status = status;
+
+            Visual.TestInfo = textTest;
         }
 
         /// <summary>
@@ -96,5 +99,18 @@ namespace Specialized_PDF_Editor
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        private void ToolRead_Click(object sender, EventArgs e)
+        {
+            Visual.TestInfo.Clear();
+            analysis = new Analysis(Visual.StreamL);
+            analysis.ExtractData();
+            analysis.ParsingFile();
+            //Visual.TestInfo.Text = analysis.Metadata.ToString();
+            var str = new StringBuilder();
+            for (int i = 0; i < analysis.HeadInfo.Length; i++)
+                str.Append(analysis.HeadInfo[i]);
+
+            Visual.TestInfo.Text = str.ToString();
+        }
     }
 }

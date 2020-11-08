@@ -2,6 +2,9 @@
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Action;
 using iText.Kernel.Pdf.Annot;
+using iText.Kernel.Pdf.Canvas.Parser;
+using iText.Kernel.Pdf.Canvas.Parser.Filter;
+using iText.Kernel.Pdf.Canvas.Parser.Listener;
 using iText.Layout;
 
 using System;
@@ -42,6 +45,11 @@ namespace Specialized_PDF_Editor
         internal MetaData Metadata { get; set; }
 
         /// <summary>
+        /// Array of data from headers
+        /// </summary>
+        internal StringBuilder[] HeadInfo { get; private set; }
+
+        /// <summary>
         /// Create instance for analysis
         /// </summary>
         /// <param name="stream">stream of loaded file</param>
@@ -49,6 +57,11 @@ namespace Specialized_PDF_Editor
         {
             this.stream = new MemoryStream(stream.ToArray(), 0, (int)stream.Length);
         }
+
+        /// <summary>
+        /// Create instance for analysis
+        /// </summary>
+        public Analysis() { }
 
         /// <summary>
         /// Extract data from PDF file
@@ -62,6 +75,8 @@ namespace Specialized_PDF_Editor
 
         internal void ExtractData()
         {
+            stream.Position = 0;
+
             using (var reader = new PdfReader(stream))
             using (var pdf = new PdfDocument(reader))
             using (var doc = new Document(pdf))
@@ -132,6 +147,66 @@ namespace Specialized_PDF_Editor
                     CreationDate = data.GetMoreInfo(PdfName.CreationDate.GetValue()),
                     ModificationDate = data.GetMoreInfo(PdfName.ModDate.GetValue()),
                 };
+            }
+        }
+
+        /// <summary>
+        /// Parsing data of pdf-file from tables
+        /// </summary>
+        internal void ParsingFile()
+        {
+            stream.Position = 0;
+
+            using (var reader = new PdfReader(stream))
+            using (var pdf = new PdfDocument(reader))
+            {
+                reader.SetCloseStream(false);
+
+                PageCount = pdf.GetNumberOfPages();
+
+                // get every page for analyse
+                PdfPage[] pages = Enumerable
+                            .Range(0, PageCount)
+                            .Select(t => pdf.GetPage(t + 1))
+                            .ToArray();
+
+                // data of every page
+                HeadInfo = new StringBuilder[PageCount];
+
+                // temp variable
+                Rectangle readBox;
+                TextRegionEventFilter readText;
+                FilteredEventListener listener;
+                LocationTextExtractionStrategy extractor;
+
+                for (int i = 0; i < 1 + 0* PageCount;  i++)
+                {
+                    HeadInfo[i] = new StringBuilder();
+
+                    // read head-information
+
+                    // area limit for read
+                    readBox = new Rectangle(Margin.Left,
+                        Pages[i].Size.Height - Margin.Top - 60,
+                        Pages[i].Size.Width - Margin.Right, 60);
+                    //readBox = new Rectangle(36, 400, 100, 36);
+                    readText = new TextRegionEventFilter(readBox);
+                    listener = new FilteredEventListener();
+
+                    // create a text extraction renderer
+                    //extractor = new LocationTextExtractionStrategy();
+                    extractor = listener
+                        .AttachEventListener(new LocationTextExtractionStrategy(),
+                        readText);
+
+                    new PdfCanvasProcessor(listener)
+                        .ProcessPageContent(pages[i]);
+
+                    HeadInfo[i].Append(extractor.GetResultantText())
+                        .Append("\n");
+                }
+
+                pdf.Close();
             }
         }
 
