@@ -40,6 +40,7 @@ namespace Specialized_PDF_Editor
             this.exitMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.analyseMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.helpMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolRead = new System.Windows.Forms.ToolStripMenuItem();
             this.statusM = new System.Windows.Forms.StatusStrip();
             this.status = new System.Windows.Forms.ToolStripStatusLabel();
             this.nameOfDoc = new System.Windows.Forms.ToolStripStatusLabel();
@@ -50,9 +51,8 @@ namespace Specialized_PDF_Editor
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.pdfViewerC = new PdfiumViewer.PdfViewer();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.textTest = new System.Windows.Forms.TextBox();
-            this.toolRead = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.menu.SuspendLayout();
             this.statusM.SuspendLayout();
             this.tabC.SuspendLayout();
@@ -91,7 +91,7 @@ namespace Specialized_PDF_Editor
             this.openMenu.Image = global::Specialized_PDF_Editor.Properties.Resources.OpenFile_16x;
             this.openMenu.Name = "openMenu";
             this.openMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openMenu.Size = new System.Drawing.Size(180, 22);
+            this.openMenu.Size = new System.Drawing.Size(146, 22);
             this.openMenu.Text = "Open";
             this.openMenu.Click += new System.EventHandler(this.OpenMenu_Click);
             // 
@@ -101,20 +101,20 @@ namespace Specialized_PDF_Editor
             this.saveMenu.Image = global::Specialized_PDF_Editor.Properties.Resources.Save_16x;
             this.saveMenu.Name = "saveMenu";
             this.saveMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveMenu.Size = new System.Drawing.Size(180, 22);
+            this.saveMenu.Size = new System.Drawing.Size(146, 22);
             this.saveMenu.Text = "Save";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(143, 6);
             // 
             // exitMenu
             // 
             this.exitMenu.Image = global::Specialized_PDF_Editor.Properties.Resources.Close_red_16x;
             this.exitMenu.Name = "exitMenu";
             this.exitMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitMenu.Size = new System.Drawing.Size(180, 22);
+            this.exitMenu.Size = new System.Drawing.Size(146, 22);
             this.exitMenu.Text = "Exit";
             this.exitMenu.Click += new System.EventHandler(this.ExitMenu_Click);
             // 
@@ -133,6 +133,13 @@ namespace Specialized_PDF_Editor
             this.helpMenu.Size = new System.Drawing.Size(60, 20);
             this.helpMenu.Text = "Help";
             this.helpMenu.Click += new System.EventHandler(this.HelpMenu_Click);
+            // 
+            // toolRead
+            // 
+            this.toolRead.Name = "toolRead";
+            this.toolRead.Size = new System.Drawing.Size(71, 20);
+            this.toolRead.Text = "Read data";
+            this.toolRead.Click += new System.EventHandler(this.ToolRead_Click);
             // 
             // statusM
             // 
@@ -233,18 +240,12 @@ namespace Specialized_PDF_Editor
             // 
             // textTest
             // 
-            this.textTest.Location = new System.Drawing.Point(8, 16);
+            this.textTest.Dock = System.Windows.Forms.DockStyle.Top;
+            this.textTest.Location = new System.Drawing.Point(0, 0);
             this.textTest.Multiline = true;
             this.textTest.Name = "textTest";
-            this.textTest.Size = new System.Drawing.Size(426, 252);
+            this.textTest.Size = new System.Drawing.Size(792, 287);
             this.textTest.TabIndex = 0;
-            // 
-            // toolRead
-            // 
-            this.toolRead.Name = "toolRead";
-            this.toolRead.Size = new System.Drawing.Size(71, 20);
-            this.toolRead.Text = "Read data";
-            this.toolRead.Click += new System.EventHandler(this.ToolRead_Click);
             // 
             // MainForm
             // 

@@ -101,6 +101,9 @@ namespace Specialized_PDF_Editor
 
         private void ToolRead_Click(object sender, EventArgs e)
         {
+            if (Visual.StreamL == null)
+                return;
+
             Visual.TestInfo.Clear();
             analysis = new Analysis(Visual.StreamL);
             analysis.ExtractData();

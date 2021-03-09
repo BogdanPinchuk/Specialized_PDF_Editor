@@ -87,12 +87,13 @@ namespace Specialized_PDF_Editor
                 pdfViewer.ShowBookmarks = true;
 
                 if (pdfViewer.Equals(PdfViewerL))
+                {
                     StreamL = stream;
+                    NameOfDoc.Text = new FileInfo(Path).Name;
+                }
                 else
                     StreamC = stream;
 
-                if (pdfViewer.Equals(PdfViewerL))
-                    NameOfDoc.Text = new FileInfo(Path).Name;
             }
             catch (Exception ex)
             {

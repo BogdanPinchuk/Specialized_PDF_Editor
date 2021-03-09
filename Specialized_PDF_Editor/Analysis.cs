@@ -178,6 +178,8 @@ namespace Specialized_PDF_Editor
                 TextRegionEventFilter readText;
                 FilteredEventListener listener;
                 LocationTextExtractionStrategy extractor;
+                PdfCanvasProcessor parser;
+                string[] lines;
 
                 for (int i = 0; i < 1 + 0* PageCount;  i++)
                 {
@@ -188,22 +190,26 @@ namespace Specialized_PDF_Editor
                     // area limit for read
                     readBox = new Rectangle(Margin.Left,
                         Pages[i].Size.Height - Margin.Top - 60,
-                        Pages[i].Size.Width - Margin.Right, 60);
-                    //readBox = new Rectangle(36, 400, 100, 36);
+                        Pages[i].Size.Width - Margin.Right,
+                        Margin.Top + 60);
                     readText = new TextRegionEventFilter(readBox);
                     listener = new FilteredEventListener();
 
                     // create a text extraction renderer
-                    //extractor = new LocationTextExtractionStrategy();
                     extractor = listener
                         .AttachEventListener(new LocationTextExtractionStrategy(),
                         readText);
 
-                    new PdfCanvasProcessor(listener)
+                    (parser = new PdfCanvasProcessor(listener))
                         .ProcessPageContent(pages[i]);
+                    parser.Reset();
 
-                    HeadInfo[i].Append(extractor.GetResultantText())
-                        .Append("\n");
+                    // read every line
+                    lines = extractor.GetResultantText()
+                        .Split('\n');
+
+                    foreach (string line in lines)
+                        HeadInfo[i].AppendLine(line);
                 }
 
                 pdf.Close();
