@@ -1,14 +1,11 @@
 ﻿using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
-using iText.Kernel.Pdf.Action;
-using iText.Kernel.Pdf.Annot;
 using iText.Kernel.Pdf.Canvas.Parser;
 using iText.Kernel.Pdf.Canvas.Parser.Filter;
 using iText.Kernel.Pdf.Canvas.Parser.Listener;
 using iText.Layout;
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -181,17 +178,16 @@ namespace Specialized_PDF_Editor
                 PdfCanvasProcessor parser;
                 string[] lines;
 
-                for (int i = 0; i < 1 + 0* PageCount;  i++)
+                for (int i = 0; i < PageCount - 1; i++)
                 {
                     HeadInfo[i] = new StringBuilder();
 
-                    // read head-information
-
+                    #region Read head-information
                     // area limit for read
                     readBox = new Rectangle(Margin.Left,
-                        Pages[i].Size.Height - Margin.Top - 60,
+                        Pages[i].Size.Height - Margin.Top - 50,
                         Pages[i].Size.Width - Margin.Right,
-                        Margin.Top + 60);
+                        Margin.Top + 50);
                     readText = new TextRegionEventFilter(readBox);
                     listener = new FilteredEventListener();
 
@@ -204,12 +200,43 @@ namespace Specialized_PDF_Editor
                         .ProcessPageContent(pages[i]);
                     parser.Reset();
 
-                    // read every line
+                    // read every line (row)
                     lines = extractor.GetResultantText()
                         .Split('\n');
 
                     foreach (string line in lines)
                         HeadInfo[i].AppendLine(line);
+                    #endregion
+
+                    //TODO: Delete this row
+                    HeadInfo[i].AppendLine("==========");
+
+                    #region Read data-information
+                    for (int j = 0; j < 4; j++)
+                    {
+                        readBox = new Rectangle(Margin.Left + j * (Pages[i].Size.Width - Margin.Right) / 4,
+                            Margin.Bottom - 20,
+                            (Pages[i].Size.Width - Margin.Right) / 4,
+                            Pages[i].Size.Height - Margin.Bottom - 80);
+                        readText = new TextRegionEventFilter(readBox);
+
+                        // create a text extraction renderer
+                        extractor = listener
+                            .AttachEventListener(new LocationTextExtractionStrategy(),
+                            readText);
+
+                        (parser = new PdfCanvasProcessor(listener))
+                            .ProcessPageContent(pages[i]);
+                        parser.Reset();
+
+                        // read every line (row)
+                        lines = extractor.GetResultantText()
+                            .Split('\n');
+
+                        foreach (string line in lines)
+                            HeadInfo[i].AppendLine(line);
+                    }
+                    #endregion
                 }
 
                 pdf.Close();

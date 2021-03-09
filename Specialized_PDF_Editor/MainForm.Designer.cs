@@ -244,6 +244,7 @@ namespace Specialized_PDF_Editor
             this.textTest.Location = new System.Drawing.Point(0, 0);
             this.textTest.Multiline = true;
             this.textTest.Name = "textTest";
+            this.textTest.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.textTest.Size = new System.Drawing.Size(792, 287);
             this.textTest.TabIndex = 0;
             // 
