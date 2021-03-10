@@ -53,12 +53,14 @@ namespace Specialized_PDF_Editor
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.textTest = new System.Windows.Forms.TextBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.groupHeader = new System.Windows.Forms.GroupBox();
             this.menu.SuspendLayout();
             this.statusM.SuspendLayout();
             this.tabC.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.groupHeader.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -229,9 +231,10 @@ namespace Specialized_PDF_Editor
             // 
             // tabPage3
             // 
-            this.tabPage3.Controls.Add(this.textTest);
+            this.tabPage3.Controls.Add(this.groupHeader);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage3.Size = new System.Drawing.Size(792, 378);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Correction";
@@ -240,13 +243,24 @@ namespace Specialized_PDF_Editor
             // 
             // textTest
             // 
-            this.textTest.Dock = System.Windows.Forms.DockStyle.Top;
-            this.textTest.Location = new System.Drawing.Point(0, 0);
+            this.textTest.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textTest.Location = new System.Drawing.Point(3, 16);
             this.textTest.Multiline = true;
             this.textTest.Name = "textTest";
             this.textTest.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textTest.Size = new System.Drawing.Size(792, 287);
+            this.textTest.Size = new System.Drawing.Size(780, 83);
             this.textTest.TabIndex = 0;
+            // 
+            // groupHeader
+            // 
+            this.groupHeader.Controls.Add(this.textTest);
+            this.groupHeader.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupHeader.Location = new System.Drawing.Point(3, 3);
+            this.groupHeader.Name = "groupHeader";
+            this.groupHeader.Size = new System.Drawing.Size(786, 102);
+            this.groupHeader.TabIndex = 1;
+            this.groupHeader.TabStop = false;
+            this.groupHeader.Text = "Header of information";
             // 
             // MainForm
             // 
@@ -272,7 +286,8 @@ namespace Specialized_PDF_Editor
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
-            this.tabPage3.PerformLayout();
+            this.groupHeader.ResumeLayout(false);
+            this.groupHeader.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -301,6 +316,7 @@ namespace Specialized_PDF_Editor
         private ToolStripStatusLabel nameOfDoc;
         private TextBox textTest;
         private ToolStripMenuItem toolRead;
+        private GroupBox groupHeader;
     }
 }
 

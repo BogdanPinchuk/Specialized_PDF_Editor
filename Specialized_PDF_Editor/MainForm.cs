@@ -106,7 +106,7 @@ namespace Specialized_PDF_Editor
 
             Visual.TestInfo.Clear();
             analysis = new Analysis(Visual.StreamL);
-            analysis.ExtractData();
+            analysis.ExtractMetaData();
             analysis.ParsingFile();
             //Visual.TestInfo.Text = analysis.Metadata.ToString();
             var str = new StringBuilder();

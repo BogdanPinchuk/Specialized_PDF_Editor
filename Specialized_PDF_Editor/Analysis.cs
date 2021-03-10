@@ -6,6 +6,8 @@ using iText.Kernel.Pdf.Canvas.Parser.Listener;
 using iText.Layout;
 
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -46,7 +48,7 @@ namespace Specialized_PDF_Editor
         /// <summary>
         /// Array of data from headers
         /// </summary>
-        internal StringBuilder[] HeadInfo { get; private set; }
+        internal StringBuilder HeadInfo { get; private set; }
         /// <summary>
         /// Array of names of colums
         /// </summary>
@@ -54,7 +56,8 @@ namespace Specialized_PDF_Editor
         /// <summary>
         /// Array of data from tables
         /// </summary>
-        internal StringBuilder[] DataInfo { get; private set; }
+        private StringBuilder[] DataInfo { get; set; }
+
         /// <summary>
         /// Block acess to data for multitreading
         /// </summary>
@@ -81,10 +84,10 @@ namespace Specialized_PDF_Editor
         internal void ExtractData(MemoryStream stream)
         {
             stream.CopyTo(this.stream);
-            ExtractData();
+            ExtractMetaData();
         }
 
-        internal void ExtractData()
+        internal void ExtractMetaData()
         {
             stream.Position = 0;
 
@@ -182,15 +185,11 @@ namespace Specialized_PDF_Editor
                             .ToArray();
 
                 // data of every page (two diferent variants)
-                HeadInfo = new StringBuilder[2];
-
-                // analyse headers of before last and last page using multithreding
-                Parallel.For(0, HeadInfo.Length,
-                    i => HeadInfo[i] = ParsingHeader(pages[i + PageCount - HeadInfo.Length]));
+                HeadInfo = ParsingHeader(pages[0]);
+                //TODO: delete last row for last page, when we will be create new paf-file
 
                 // data of names every columns
                 ColumnInfo = ParsingColumns(pages[0]);
-                HeadInfo[1].AppendLine(ColumnInfo.ToString());
 
                 // data from tables
                 DataInfo = new StringBuilder[PageCount - 1];
@@ -198,6 +197,9 @@ namespace Specialized_PDF_Editor
                 // analyse tables all page without last using multithreading
                 Parallel.For(0, DataInfo.Length,
                     i => DataInfo[i] = ParsingTables(pages[i]));
+
+                // convert string data to real data
+                var realdata = ExtractTableData(DataInfo);
 
                 pdf.Close();
             }
@@ -344,9 +346,50 @@ namespace Specialized_PDF_Editor
             return result;
         }
 
+        /// <summary>
+        /// Extract data from text rows
+        /// </summary>
+        /// <param name="dataInfo">string data</param>
+        /// <returns>array of data row</returns>
+        private IEquatable<KeyValuePairTable<int, DateTime, float, bool>> ExtractTableData(StringBuilder[] dataInfo)
+        {
+            StringBuilder all = new StringBuilder();
+
+            // union data
+            foreach (StringBuilder page in dataInfo)
+                all.Append(page);
+
+            // convert to array of string
+            string[] rows = all
+                .ToString()
+                .TrimEnd('\n')
+                .Replace("\r", "")
+                .Split('\n');
+
+            // create array of data
+            var data = new KeyValuePairTable<int, DateTime, float, bool>[rows.Length];
+
+            // convert strint into data
+            Parallel.For(0, rows.Length, i =>
+            {
+                var temp = rows[i].Trim().Split(' ');
+                int.TryParse(temp[0], out int key);
+                DateTime.TryParse(temp[1] + " " + temp[2], out DateTime datetime);
+                float.TryParse(temp[3].Replace('.', ','), out float value);
+                bool oor = (temp.Length == 5) ? true : false;
+                data[i] = new KeyValuePairTable<int, DateTime, float, bool>(key, datetime, value, oor);
+            });
+
+            return default;
+        }
+
+
         public void Dispose()
         {
             stream?.Dispose();
+            HeadInfo = null;
+            ColumnInfo = null;
+            DataInfo = null;
         }
     }
 
@@ -531,4 +574,45 @@ namespace Specialized_PDF_Editor
 
     }
 
+    /// <summary>
+    /// Collection for table data
+    /// </summary>
+    /// <typeparam name="TKey">Number</typeparam>
+    /// <typeparam name="TDateTime">Date and time</typeparam>
+    /// <typeparam name="TValue">Temperature in Celsius</typeparam>
+    /// <typeparam name="TOOR">Out of range</typeparam>
+    internal struct KeyValuePairTable<TKey, TDateTime, TValue, TOOR>
+    {
+        /// <summary>
+        /// Number
+        /// </summary>
+        internal TKey Key { get; }
+        /// <summary>
+        /// Date and time
+        /// </summary>
+        internal TDateTime DateTime { get; }
+        /// <summary>
+        /// Temperature in Celsius
+        /// </summary>
+        internal TValue Value { get; }
+        /// <summary>
+        /// Out of range
+        /// </summary>
+        internal TOOR OOR { get; }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="key">Number</param>
+        /// <param name="datetime">Date and time</param>
+        /// <param name="value">Temperature in Celsius</param>
+        /// <param name="oor">Out of range</param>
+        internal KeyValuePairTable(TKey key, TDateTime datetime, TValue value, TOOR oor)
+        {
+            Key = key;
+            DateTime = datetime;
+            Value = value;
+            OOR = oor;
+        }
+    }
 }

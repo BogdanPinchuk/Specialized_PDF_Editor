@@ -49,7 +49,7 @@ namespace Specialized_PDF_Editor.Tests
             int expected = 3;
 
             // act
-            analysis.ExtractData();
+            analysis.ExtractMetaData();
             int actual = analysis.PageCount;
             Debug.WriteLine($"\nNumber of page: {actual}");
 
@@ -67,7 +67,7 @@ namespace Specialized_PDF_Editor.Tests
             int expected = 0;
 
             // act
-            analysis.ExtractData();
+            analysis.ExtractMetaData();
             var actual = analysis.Pages;
 
             // assert
@@ -86,7 +86,7 @@ namespace Specialized_PDF_Editor.Tests
                 expected_h = 210;
 
             // act
-            analysis.ExtractData();
+            analysis.ExtractMetaData();
             var actual = analysis.Pages;
 
             // assert
@@ -111,7 +111,7 @@ namespace Specialized_PDF_Editor.Tests
             double expected = 36;
 
             // act
-            analysis.ExtractData();
+            analysis.ExtractMetaData();
             var actual = analysis.Margin;
 
             // assert
@@ -161,7 +161,7 @@ namespace Specialized_PDF_Editor.Tests
         [TestMethod]
         public void Testing()
         {
-            analysis.ExtractData();
+            analysis.ExtractMetaData();
 
             Debug.WriteLine("\n" + analysis.Pages[0].ToString());
             Debug.WriteLine("\n" + analysis.Metadata);
