@@ -59,14 +59,21 @@ namespace Specialized_PDF_Editor
             this.metaData = new System.Windows.Forms.TextBox();
             this.groupTable = new System.Windows.Forms.GroupBox();
             this.splitC2 = new System.Windows.Forms.SplitContainer();
-            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.tabGraph = new System.Windows.Forms.TabControl();
             this.tabChart = new System.Windows.Forms.TabPage();
+            this.mainChart = new System.Windows.Forms.PictureBox();
             this.tabParam = new System.Windows.Forms.TabPage();
             this.tabTable = new System.Windows.Forms.TabControl();
             this.tabBase = new System.Windows.Forms.TabPage();
+            this.dataTable = new System.Windows.Forms.DataGridView();
             this.tabOx = new System.Windows.Forms.TabPage();
             this.tabOy = new System.Windows.Forms.TabPage();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.Key = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OOR = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.menu.SuspendLayout();
             this.statusM.SuspendLayout();
             this.tabC.SuspendLayout();
@@ -89,7 +96,11 @@ namespace Specialized_PDF_Editor
             this.splitC2.Panel2.SuspendLayout();
             this.splitC2.SuspendLayout();
             this.tabGraph.SuspendLayout();
+            this.tabChart.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mainChart)).BeginInit();
             this.tabTable.SuspendLayout();
+            this.tabBase.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataTable)).BeginInit();
             this.SuspendLayout();
             // 
             // menu
@@ -393,6 +404,7 @@ namespace Specialized_PDF_Editor
             // 
             // tabChart
             // 
+            this.tabChart.Controls.Add(this.mainChart);
             this.tabChart.Location = new System.Drawing.Point(4, 22);
             this.tabChart.Name = "tabChart";
             this.tabChart.Padding = new System.Windows.Forms.Padding(3);
@@ -400,6 +412,16 @@ namespace Specialized_PDF_Editor
             this.tabChart.TabIndex = 0;
             this.tabChart.Text = "Chart";
             this.tabChart.UseVisualStyleBackColor = true;
+            // 
+            // mainChart
+            // 
+            this.mainChart.BackColor = System.Drawing.Color.Silver;
+            this.mainChart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mainChart.Location = new System.Drawing.Point(3, 3);
+            this.mainChart.Name = "mainChart";
+            this.mainChart.Size = new System.Drawing.Size(321, 153);
+            this.mainChart.TabIndex = 0;
+            this.mainChart.TabStop = false;
             // 
             // tabParam
             // 
@@ -425,6 +447,7 @@ namespace Specialized_PDF_Editor
             // 
             // tabBase
             // 
+            this.tabBase.Controls.Add(this.dataTable);
             this.tabBase.Location = new System.Drawing.Point(4, 22);
             this.tabBase.Name = "tabBase";
             this.tabBase.Padding = new System.Windows.Forms.Padding(3);
@@ -432,6 +455,23 @@ namespace Specialized_PDF_Editor
             this.tabBase.TabIndex = 0;
             this.tabBase.Text = "Base data";
             this.tabBase.UseVisualStyleBackColor = true;
+            // 
+            // dataTable
+            // 
+            this.dataTable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataTable.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dataTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Key,
+            this.Date,
+            this.Time,
+            this.Value,
+            this.OOR});
+            this.dataTable.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataTable.Location = new System.Drawing.Point(3, 3);
+            this.dataTable.Name = "dataTable";
+            this.dataTable.Size = new System.Drawing.Size(421, 153);
+            this.dataTable.TabIndex = 0;
             // 
             // tabOx
             // 
@@ -451,6 +491,34 @@ namespace Specialized_PDF_Editor
             this.tabOy.TabIndex = 2;
             this.tabOy.Text = "Axis Oy";
             this.tabOy.UseVisualStyleBackColor = true;
+            // 
+            // Key
+            // 
+            this.Key.HeaderText = "Номер";
+            this.Key.Name = "Key";
+            this.Key.ReadOnly = true;
+            // 
+            // Date
+            // 
+            this.Date.HeaderText = "Дата";
+            this.Date.Name = "Date";
+            // 
+            // Time
+            // 
+            this.Time.HeaderText = "Время";
+            this.Time.Name = "Time";
+            // 
+            // Value
+            // 
+            this.Value.HeaderText = "Т, °C";
+            this.Value.Name = "Value";
+            // 
+            // OOR
+            // 
+            this.OOR.HeaderText = "Нар.";
+            this.OOR.Name = "OOR";
+            this.OOR.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.OOR.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // MainForm
             // 
@@ -494,7 +562,11 @@ namespace Specialized_PDF_Editor
             ((System.ComponentModel.ISupportInitialize)(this.splitC2)).EndInit();
             this.splitC2.ResumeLayout(false);
             this.tabGraph.ResumeLayout(false);
+            this.tabChart.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.mainChart)).EndInit();
             this.tabTable.ResumeLayout(false);
+            this.tabBase.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataTable)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -537,6 +609,13 @@ namespace Specialized_PDF_Editor
         private TabPage tabBase;
         private TabPage tabOx;
         private TabPage tabOy;
+        private PictureBox mainChart;
+        private DataGridView dataTable;
+        private DataGridViewTextBoxColumn Key;
+        private DataGridViewTextBoxColumn Date;
+        private DataGridViewTextBoxColumn Time;
+        private DataGridViewTextBoxColumn Value;
+        private DataGridViewCheckBoxColumn OOR;
     }
 }
 
