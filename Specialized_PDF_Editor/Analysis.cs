@@ -44,6 +44,10 @@ namespace Specialized_PDF_Editor
         /// Metadata of document
         /// </summary>
         internal MetaData Metadata { get; set; }
+        /// <summary>
+        /// Data from tables
+        /// </summary>
+        internal KeyValuePairTable<int, DateTime, float, bool>[] TableData { get; set; }
 
         /// <summary>
         /// Array of data from headers
@@ -186,7 +190,8 @@ namespace Specialized_PDF_Editor
 
                 // data of every page (two diferent variants)
                 HeadInfo = ParsingHeader(pages[0]);
-                //TODO: delete last row for last page, when we will be create new paf-file
+                //TODO: delete last row for last page, when we will be create new pdf-file
+                var lines = HeadInfo.ToString();
 
                 // data of names every columns
                 ColumnInfo = ParsingColumns(pages[0]);
@@ -199,7 +204,7 @@ namespace Specialized_PDF_Editor
                     i => DataInfo[i] = ParsingTables(pages[i]));
 
                 // convert string data to real data
-                var realdata = ExtractTableData(DataInfo);
+                TableData = ExtractTableData(DataInfo);
 
                 pdf.Close();
             }
@@ -242,11 +247,13 @@ namespace Specialized_PDF_Editor
             }
 
             // read every line (row)
-            lines = extractor.GetResultantText()
+            lines = extractor
+                .GetResultantText()
                 .Split('\n');
 
             foreach (string line in lines)
-                result.AppendLine(line);
+                if (!string.IsNullOrEmpty(line.Trim()))
+                    result.AppendLine(line);
 
             return result;
         }
@@ -336,7 +343,8 @@ namespace Specialized_PDF_Editor
                 }
 
                 // read every line (row)
-                lines = extractor.GetResultantText()
+                lines = extractor
+                    .GetResultantText()
                     .Split('\n');
 
                 foreach (string line in lines)
@@ -351,7 +359,7 @@ namespace Specialized_PDF_Editor
         /// </summary>
         /// <param name="dataInfo">string data</param>
         /// <returns>array of data row</returns>
-        private IEquatable<KeyValuePairTable<int, DateTime, float, bool>> ExtractTableData(StringBuilder[] dataInfo)
+        private KeyValuePairTable<int, DateTime, float, bool>[] ExtractTableData(StringBuilder[] dataInfo)
         {
             StringBuilder all = new StringBuilder();
 
@@ -362,14 +370,14 @@ namespace Specialized_PDF_Editor
             // convert to array of string
             string[] rows = all
                 .ToString()
-                .TrimEnd('\n')
+                .Trim('\n')
                 .Replace("\r", "")
                 .Split('\n');
 
             // create array of data
             var data = new KeyValuePairTable<int, DateTime, float, bool>[rows.Length];
 
-            // convert strint into data
+            // convert strint into data using multithreading
             Parallel.For(0, rows.Length, i =>
             {
                 var temp = rows[i].Trim().Split(' ');
@@ -380,9 +388,8 @@ namespace Specialized_PDF_Editor
                 data[i] = new KeyValuePairTable<int, DateTime, float, bool>(key, datetime, value, oor);
             });
 
-            return default;
+            return data;
         }
-
 
         public void Dispose()
         {
@@ -559,16 +566,16 @@ namespace Specialized_PDF_Editor
 
         public override string ToString()
             => new StringBuilder($"PDF description:")
-            .Append($"\n\t - Title: {Title}")
-            .Append($"\n\t - Author: {Author}")
-            .Append($"\n\t - Subject: {Subject}")
-            .Append($"\n\t - Keywords: {Keywords}")
-            .Append($"\n\t - Creator: {Creator}")
-            .Append($"\n\t - Producer: {Producer}")
-            .Append($"\n\t - Version: {Version}")
-            .Append($"\n\t - Creatioan date: " +
+            .Append($"\r\n    - Title: {Title}")
+            .Append($"\r\n    - Author: {Author}")
+            .Append($"\r\n    - Subject: {Subject}")
+            .Append($"\r\n    - Keywords: {Keywords}")
+            .Append($"\r\n    - Creator: {Creator}")
+            .Append($"\r\n    - Producer: {Producer}")
+            .Append($"\r\n    - Version: {Version}")
+            .Append($"\r\n    - Creatioan date: " +
                 $"{(string.IsNullOrEmpty(CreationDate) ? string.Empty : PdfDate.Decode(CreationDate).ToString())}")
-            .Append($"\n\t - Modification date: " +
+            .Append($"\r\n    - Modification date: " +
                 $"{(string.IsNullOrEmpty(ModificationDate) ? string.Empty : PdfDate.Decode(ModificationDate).ToString())}")
             .ToString();
 

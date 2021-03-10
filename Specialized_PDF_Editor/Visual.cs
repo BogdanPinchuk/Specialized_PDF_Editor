@@ -36,9 +36,13 @@ namespace Specialized_PDF_Editor
         /// </summary>
         internal static ToolStripStatusLabel Status { get; set; }
         /// <summary>
-        /// Temp testing textboxing
+        /// Show header information
         /// </summary>
-        internal static TextBox TestInfo { get; set; }
+        internal static TextBox HeaderInfo { get; set; }
+        /// <summary>
+        /// Show metadata information
+        /// </summary>
+        internal static TextBox MetaDataInfo { get; set; }
 
         /// <summary>
         /// File in RAM

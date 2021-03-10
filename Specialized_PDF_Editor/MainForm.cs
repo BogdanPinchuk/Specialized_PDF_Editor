@@ -51,7 +51,8 @@ namespace Specialized_PDF_Editor
             Visual.PdfViewerC = pdfViewerC;
             Visual.Status = status;
 
-            Visual.TestInfo = textTest;
+            Visual.HeaderInfo = headerInfo;
+            Visual.MetaDataInfo = metaData;
         }
 
         /// <summary>
@@ -104,16 +105,16 @@ namespace Specialized_PDF_Editor
             if (Visual.StreamL == null)
                 return;
 
-            Visual.TestInfo.Clear();
+            Visual.HeaderInfo.Clear();
             analysis = new Analysis(Visual.StreamL);
             analysis.ExtractMetaData();
             analysis.ParsingFile();
-            //Visual.TestInfo.Text = analysis.Metadata.ToString();
             var str = new StringBuilder();
             for (int i = 0; i < analysis.HeadInfo.Length; i++)
                 str.Append(analysis.HeadInfo[i]);
 
-            Visual.TestInfo.Text = str.ToString();
+            Visual.MetaDataInfo.Text = analysis.Metadata.ToString();
+            Visual.HeaderInfo.Text = str.ToString();
         }
     }
 }

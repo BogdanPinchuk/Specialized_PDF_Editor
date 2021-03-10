@@ -51,16 +51,45 @@ namespace Specialized_PDF_Editor
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.pdfViewerC = new PdfiumViewer.PdfViewer();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.textTest = new System.Windows.Forms.TextBox();
-            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.splitC1 = new System.Windows.Forms.SplitContainer();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupHeader = new System.Windows.Forms.GroupBox();
+            this.headerInfo = new System.Windows.Forms.TextBox();
+            this.groupMetaInfo = new System.Windows.Forms.GroupBox();
+            this.metaData = new System.Windows.Forms.TextBox();
+            this.groupTable = new System.Windows.Forms.GroupBox();
+            this.splitC2 = new System.Windows.Forms.SplitContainer();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.tabGraph = new System.Windows.Forms.TabControl();
+            this.tabChart = new System.Windows.Forms.TabPage();
+            this.tabParam = new System.Windows.Forms.TabPage();
+            this.tabTable = new System.Windows.Forms.TabControl();
+            this.tabBase = new System.Windows.Forms.TabPage();
+            this.tabOx = new System.Windows.Forms.TabPage();
+            this.tabOy = new System.Windows.Forms.TabPage();
             this.menu.SuspendLayout();
             this.statusM.SuspendLayout();
             this.tabC.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitC1)).BeginInit();
+            this.splitC1.Panel1.SuspendLayout();
+            this.splitC1.Panel2.SuspendLayout();
+            this.splitC1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.groupHeader.SuspendLayout();
+            this.groupMetaInfo.SuspendLayout();
+            this.groupTable.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitC2)).BeginInit();
+            this.splitC2.Panel1.SuspendLayout();
+            this.splitC2.Panel2.SuspendLayout();
+            this.splitC2.SuspendLayout();
+            this.tabGraph.SuspendLayout();
+            this.tabTable.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -231,7 +260,7 @@ namespace Specialized_PDF_Editor
             // 
             // tabPage3
             // 
-            this.tabPage3.Controls.Add(this.groupHeader);
+            this.tabPage3.Controls.Add(this.splitC1);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
@@ -241,26 +270,187 @@ namespace Specialized_PDF_Editor
             this.tabPage3.ToolTipText = "Page for make changes";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // textTest
+            // splitC1
             // 
-            this.textTest.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textTest.Location = new System.Drawing.Point(3, 16);
-            this.textTest.Multiline = true;
-            this.textTest.Name = "textTest";
-            this.textTest.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textTest.Size = new System.Drawing.Size(780, 83);
-            this.textTest.TabIndex = 0;
+            this.splitC1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitC1.Location = new System.Drawing.Point(3, 3);
+            this.splitC1.Name = "splitC1";
+            this.splitC1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitC1.Panel1
+            // 
+            this.splitC1.Panel1.Controls.Add(this.splitContainer1);
+            // 
+            // splitC1.Panel2
+            // 
+            this.splitC1.Panel2.Controls.Add(this.groupTable);
+            this.splitC1.Size = new System.Drawing.Size(786, 372);
+            this.splitC1.SplitterDistance = 158;
+            this.splitC1.SplitterWidth = 10;
+            this.splitC1.TabIndex = 2;
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.groupHeader);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.groupMetaInfo);
+            this.splitContainer1.Size = new System.Drawing.Size(786, 158);
+            this.splitContainer1.SplitterDistance = 517;
+            this.splitContainer1.SplitterWidth = 10;
+            this.splitContainer1.TabIndex = 2;
             // 
             // groupHeader
             // 
-            this.groupHeader.Controls.Add(this.textTest);
-            this.groupHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupHeader.Location = new System.Drawing.Point(3, 3);
+            this.groupHeader.Controls.Add(this.headerInfo);
+            this.groupHeader.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupHeader.Location = new System.Drawing.Point(0, 0);
             this.groupHeader.Name = "groupHeader";
-            this.groupHeader.Size = new System.Drawing.Size(786, 102);
+            this.groupHeader.Size = new System.Drawing.Size(517, 158);
             this.groupHeader.TabIndex = 1;
             this.groupHeader.TabStop = false;
             this.groupHeader.Text = "Header of information";
+            // 
+            // headerInfo
+            // 
+            this.headerInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.headerInfo.Location = new System.Drawing.Point(3, 16);
+            this.headerInfo.Multiline = true;
+            this.headerInfo.Name = "headerInfo";
+            this.headerInfo.ReadOnly = true;
+            this.headerInfo.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.headerInfo.Size = new System.Drawing.Size(511, 139);
+            this.headerInfo.TabIndex = 0;
+            // 
+            // groupMetaInfo
+            // 
+            this.groupMetaInfo.Controls.Add(this.metaData);
+            this.groupMetaInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupMetaInfo.Location = new System.Drawing.Point(0, 0);
+            this.groupMetaInfo.Name = "groupMetaInfo";
+            this.groupMetaInfo.Size = new System.Drawing.Size(259, 158);
+            this.groupMetaInfo.TabIndex = 2;
+            this.groupMetaInfo.TabStop = false;
+            this.groupMetaInfo.Text = "Metadata";
+            // 
+            // metaData
+            // 
+            this.metaData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.metaData.Location = new System.Drawing.Point(3, 16);
+            this.metaData.Multiline = true;
+            this.metaData.Name = "metaData";
+            this.metaData.ReadOnly = true;
+            this.metaData.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.metaData.Size = new System.Drawing.Size(253, 139);
+            this.metaData.TabIndex = 0;
+            // 
+            // groupTable
+            // 
+            this.groupTable.Controls.Add(this.splitC2);
+            this.groupTable.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupTable.Location = new System.Drawing.Point(0, 0);
+            this.groupTable.Name = "groupTable";
+            this.groupTable.Size = new System.Drawing.Size(786, 204);
+            this.groupTable.TabIndex = 0;
+            this.groupTable.TabStop = false;
+            this.groupTable.Text = "Data of tables";
+            // 
+            // splitC2
+            // 
+            this.splitC2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitC2.Location = new System.Drawing.Point(3, 16);
+            this.splitC2.Name = "splitC2";
+            // 
+            // splitC2.Panel1
+            // 
+            this.splitC2.Panel1.Controls.Add(this.tabGraph);
+            // 
+            // splitC2.Panel2
+            // 
+            this.splitC2.Panel2.Controls.Add(this.tabTable);
+            this.splitC2.Size = new System.Drawing.Size(780, 185);
+            this.splitC2.SplitterDistance = 335;
+            this.splitC2.SplitterWidth = 10;
+            this.splitC2.TabIndex = 0;
+            // 
+            // tabGraph
+            // 
+            this.tabGraph.Controls.Add(this.tabChart);
+            this.tabGraph.Controls.Add(this.tabParam);
+            this.tabGraph.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabGraph.Location = new System.Drawing.Point(0, 0);
+            this.tabGraph.Name = "tabGraph";
+            this.tabGraph.SelectedIndex = 0;
+            this.tabGraph.Size = new System.Drawing.Size(335, 185);
+            this.tabGraph.TabIndex = 0;
+            // 
+            // tabChart
+            // 
+            this.tabChart.Location = new System.Drawing.Point(4, 22);
+            this.tabChart.Name = "tabChart";
+            this.tabChart.Padding = new System.Windows.Forms.Padding(3);
+            this.tabChart.Size = new System.Drawing.Size(327, 159);
+            this.tabChart.TabIndex = 0;
+            this.tabChart.Text = "Chart";
+            this.tabChart.UseVisualStyleBackColor = true;
+            // 
+            // tabParam
+            // 
+            this.tabParam.Location = new System.Drawing.Point(4, 22);
+            this.tabParam.Name = "tabParam";
+            this.tabParam.Padding = new System.Windows.Forms.Padding(3);
+            this.tabParam.Size = new System.Drawing.Size(327, 159);
+            this.tabParam.TabIndex = 1;
+            this.tabParam.Text = "Parameters";
+            this.tabParam.UseVisualStyleBackColor = true;
+            // 
+            // tabTable
+            // 
+            this.tabTable.Controls.Add(this.tabBase);
+            this.tabTable.Controls.Add(this.tabOx);
+            this.tabTable.Controls.Add(this.tabOy);
+            this.tabTable.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabTable.Location = new System.Drawing.Point(0, 0);
+            this.tabTable.Name = "tabTable";
+            this.tabTable.SelectedIndex = 0;
+            this.tabTable.Size = new System.Drawing.Size(435, 185);
+            this.tabTable.TabIndex = 0;
+            // 
+            // tabBase
+            // 
+            this.tabBase.Location = new System.Drawing.Point(4, 22);
+            this.tabBase.Name = "tabBase";
+            this.tabBase.Padding = new System.Windows.Forms.Padding(3);
+            this.tabBase.Size = new System.Drawing.Size(427, 159);
+            this.tabBase.TabIndex = 0;
+            this.tabBase.Text = "Base data";
+            this.tabBase.UseVisualStyleBackColor = true;
+            // 
+            // tabOx
+            // 
+            this.tabOx.Location = new System.Drawing.Point(4, 22);
+            this.tabOx.Name = "tabOx";
+            this.tabOx.Padding = new System.Windows.Forms.Padding(3);
+            this.tabOx.Size = new System.Drawing.Size(427, 159);
+            this.tabOx.TabIndex = 1;
+            this.tabOx.Text = "Axis Ox";
+            this.tabOx.UseVisualStyleBackColor = true;
+            // 
+            // tabOy
+            // 
+            this.tabOy.Location = new System.Drawing.Point(4, 22);
+            this.tabOy.Name = "tabOy";
+            this.tabOy.Size = new System.Drawing.Size(427, 159);
+            this.tabOy.TabIndex = 2;
+            this.tabOy.Text = "Axis Oy";
+            this.tabOy.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -286,8 +476,25 @@ namespace Specialized_PDF_Editor
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
+            this.splitC1.Panel1.ResumeLayout(false);
+            this.splitC1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitC1)).EndInit();
+            this.splitC1.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.groupHeader.ResumeLayout(false);
             this.groupHeader.PerformLayout();
+            this.groupMetaInfo.ResumeLayout(false);
+            this.groupMetaInfo.PerformLayout();
+            this.groupTable.ResumeLayout(false);
+            this.splitC2.Panel1.ResumeLayout(false);
+            this.splitC2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitC2)).EndInit();
+            this.splitC2.ResumeLayout(false);
+            this.tabGraph.ResumeLayout(false);
+            this.tabTable.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -314,9 +521,22 @@ namespace Specialized_PDF_Editor
         private TabPage tabPage3;
         private ToolTip toolTip;
         private ToolStripStatusLabel nameOfDoc;
-        private TextBox textTest;
+        private TextBox headerInfo;
         private ToolStripMenuItem toolRead;
         private GroupBox groupHeader;
+        private SplitContainer splitC1;
+        private GroupBox groupTable;
+        private SplitContainer splitC2;
+        private SplitContainer splitContainer1;
+        private GroupBox groupMetaInfo;
+        private TextBox metaData;
+        private TabControl tabGraph;
+        private TabPage tabChart;
+        private TabPage tabParam;
+        private TabControl tabTable;
+        private TabPage tabBase;
+        private TabPage tabOx;
+        private TabPage tabOy;
     }
 }
 
