@@ -48,6 +48,10 @@ namespace Specialized_PDF_Editor
         /// </summary>
         internal StringBuilder[] HeadInfo { get; private set; }
         /// <summary>
+        /// Array of names of colums
+        /// </summary>
+        internal StringBuilder ColumnInfo { get; private set; }
+        /// <summary>
         /// Array of data from tables
         /// </summary>
         internal StringBuilder[] DataInfo { get; private set; }
@@ -181,83 +185,19 @@ namespace Specialized_PDF_Editor
                 HeadInfo = new StringBuilder[2];
 
                 // analyse headers of before last and last page using multithreding
-                Parallel.For(0, HeadInfo.Length, 
+                Parallel.For(0, HeadInfo.Length,
                     i => HeadInfo[i] = ParsingHeader(pages[i + PageCount - HeadInfo.Length]));
-                
 
-#if false
-                // temp variable
-                Rectangle readBox;
-                TextRegionEventFilter readText;
-                FilteredEventListener listener;
-                LocationTextExtractionStrategy extractor;
-                PdfCanvasProcessor parser;
-                string[] lines;
+                // data of names every columns
+                ColumnInfo = ParsingColumns(pages[0]);
+                HeadInfo[1].AppendLine(ColumnInfo.ToString());
 
-                for (int i = 0; i < PageCount; i++)
-                {
-                    HeadInfo[i] = new StringBuilder();
+                // data from tables
+                DataInfo = new StringBuilder[PageCount - 1];
 
-                #region Read head-information
-                    // area limit for read
-                    readBox = new Rectangle(Margin.Left,
-                        Pages[i].Size.Height - Margin.Top - 50,
-                        Pages[i].Size.Width - Margin.Right,
-                        Margin.Top + 50);
-                    readText = new TextRegionEventFilter(readBox);
-                    listener = new FilteredEventListener();
-
-                    // create a text extraction renderer
-                    extractor = listener
-                        .AttachEventListener(new LocationTextExtractionStrategy(),
-                        readText);
-
-                    (parser = new PdfCanvasProcessor(listener))
-                        .ProcessPageContent(pages[i]);
-                    parser.Reset();
-
-                    // read every line (row)
-                    lines = extractor.GetResultantText()
-                        .Split('\n');
-
-                    foreach (string line in lines)
-                        HeadInfo[i].AppendLine(line);
-                #endregion
-
-                #region Read data-information
-                    if (i == PageCount - 1)
-                        continue;
-
-                    for (int j = 0; j < 4; j++)
-                    {
-                        readBox = new Rectangle(Margin.Left + j * (Pages[i].Size.Width - Margin.Right) / 4,
-                            Margin.Bottom - 20,
-                            (Pages[i].Size.Width - Margin.Right) / 4,
-                            Pages[i].Size.Height - Margin.Bottom - 80);
-                        readText = new TextRegionEventFilter(readBox);
-
-                        // create a text extraction renderer
-                        extractor = listener
-                            .AttachEventListener(new LocationTextExtractionStrategy(),
-                            readText);
-
-                        (parser = new PdfCanvasProcessor(listener))
-                            .ProcessPageContent(pages[i]);
-                        parser.Reset();
-
-                        // read every line (row)
-                        lines = extractor.GetResultantText()
-                            .Split('\n');
-
-                        foreach (string line in lines)
-                            if (!string.IsNullOrEmpty(line))
-                                HeadInfo[i].AppendLine(line);
-                    }
-                #endregion
-
-                }
-
-#endif
+                // analyse tables all page without last using multithreading
+                Parallel.For(0, DataInfo.Length,
+                    i => DataInfo[i] = ParsingTables(pages[i]));
 
                 pdf.Close();
             }
@@ -306,6 +246,101 @@ namespace Specialized_PDF_Editor
             foreach (string line in lines)
                 result.AppendLine(line);
 
+            return result;
+        }
+
+        /// <summary>
+        /// Parsing columns name
+        /// </summary>
+        /// <param name="page">Data of page</param>
+        /// <returns>names of columns from page</returns>
+        private StringBuilder ParsingColumns(PdfPage page)
+        {
+            // temp variable
+            Rectangle readBox;
+            TextRegionEventFilter readText;
+            FilteredEventListener listener;
+            LocationTextExtractionStrategy extractor;
+            PdfCanvasProcessor parser;
+            string[] lines;
+            StringBuilder result = new StringBuilder();
+
+            // area limit for read
+            readBox = new Rectangle(Margin.Left,
+                page.GetPageSize().GetHeight() - Margin.Top - 70,
+                (page.GetPageSize().GetWidth() - Margin.Right) / 4, 10);
+            readText = new TextRegionEventFilter(readBox);
+            listener = new FilteredEventListener();
+
+            // create a text extraction renderer
+            extractor = listener
+                .AttachEventListener(new LocationTextExtractionStrategy(),
+                readText);
+
+            lock (block)
+            {
+                (parser = new PdfCanvasProcessor(listener))
+                    .ProcessPageContent(page);
+                parser.Reset();
+            }
+
+            // read every line (row)
+            lines = extractor.GetResultantText()
+                .Split('\n');
+
+            foreach (string line in lines)
+                result.AppendLine(line);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Parsing data from tables
+        /// </summary>
+        /// <param name="page">Data of page</param>
+        /// <returns>data of table every cell</returns>
+        private StringBuilder ParsingTables(PdfPage page)
+        {
+            // temp variable
+            Rectangle readBox;
+            TextRegionEventFilter readText;
+            FilteredEventListener listener;
+            LocationTextExtractionStrategy extractor;
+            PdfCanvasProcessor parser;
+            string[] lines;
+            StringBuilder result = new StringBuilder();
+
+            for (int j = 0; j < 4; j++)
+            {
+                // area limit for read
+                readBox = new Rectangle(Margin.Left + j * (page.GetPageSize().GetWidth() - Margin.Right) / 4,
+                    Margin.Bottom - 20,
+                    (page.GetPageSize().GetWidth() - Margin.Right) / 4,
+                    page.GetPageSize().GetHeight() - Margin.Bottom - 80);
+
+                readText = new TextRegionEventFilter(readBox);
+                listener = new FilteredEventListener();
+
+                // create a text extraction renderer
+                extractor = listener
+                    .AttachEventListener(new LocationTextExtractionStrategy(),
+                    readText);
+
+                lock (block)
+                {
+                    (parser = new PdfCanvasProcessor(listener))
+                        .ProcessPageContent(page);
+                    parser.Reset();
+                }
+
+                // read every line (row)
+                lines = extractor.GetResultantText()
+                    .Split('\n');
+
+                foreach (string line in lines)
+                    if (!string.IsNullOrEmpty(line.Trim()))
+                        result.AppendLine(line);
+            }
             return result;
         }
 
