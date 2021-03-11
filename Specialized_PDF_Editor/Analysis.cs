@@ -72,11 +72,11 @@ namespace Specialized_PDF_Editor
         /// <summary>
         /// Array of values of Oy axis
         /// </summary>
-        internal StringBuilder OyAxisInfo { get; set; }
+        private StringBuilder OyAxisInfo { get; set; }
         /// <summary>
         /// Array of values of Ox axis
         /// </summary>
-        internal StringBuilder OxAxisInfo { get; set; }
+        private StringBuilder OxAxisInfo { get; set; }
 
         /// <summary>
         /// Block acess to data for multitreading

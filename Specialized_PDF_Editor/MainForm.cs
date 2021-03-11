@@ -55,6 +55,8 @@ namespace Specialized_PDF_Editor
             Visual.MetaDataInfo = metaData;
 
             Visual.MainDataTable = tableMainData;
+            Visual.OyDataTable = tableOyData;
+            Visual.OxDataTable = tableOxData;
         }
 
         /// <summary>
@@ -118,6 +120,10 @@ namespace Specialized_PDF_Editor
             Visual.MetaDataInfo.Text = analysis.Metadata.ToString();
             Visual.HeaderInfo.Text = analysis.HeadInfo.ToString();
             Visual.ShowMainDataTable(analysis.TableData);
+            Visual.ShowOyDataTable(analysis.DataOyAxis);
+            Visual.ShowOxDataTable(analysis.DataOxAxis);
+
+            //TODO: Added periodic change colour of tables
         }
 
     }
