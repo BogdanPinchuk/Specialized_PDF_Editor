@@ -37,6 +37,7 @@ namespace Specialized_PDF_Editor.Tests
         public void CleanBeforeTesting()
         {
             analysis = new Analysis(streamL);
+            analysis.ExtractMetaData();
         }
 
         /// <summary>
@@ -86,7 +87,6 @@ namespace Specialized_PDF_Editor.Tests
                 expected_h = 210;
 
             // act
-            analysis.ExtractMetaData();
             var actual = analysis.Pages;
 
             // assert

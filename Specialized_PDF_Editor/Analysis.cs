@@ -207,7 +207,6 @@ namespace Specialized_PDF_Editor
                 // data of every page (two diferent variants)
                 HeadInfo = ParsingHeader(pages[0]);
                 //TODO: delete last row for last page, when we will be create new pdf-file
-                var lines = HeadInfo.ToString();
 
                 // data of names every columns
                 ColumnInfo = ParsingColumns(pages[0]);
@@ -241,7 +240,7 @@ namespace Specialized_PDF_Editor
         /// </summary>
         /// <param name="page">Data of page</param>
         /// <returns>header text from page</returns>
-        private StringBuilder ParsingHeader(PdfPage page)
+        internal StringBuilder ParsingHeader(PdfPage page)
         {
             // temp variable
             Rectangle readBox;
@@ -289,7 +288,7 @@ namespace Specialized_PDF_Editor
         /// </summary>
         /// <param name="page">Data of page</param>
         /// <returns>names of columns from page</returns>
-        private StringBuilder ParsingColumns(PdfPage page)
+        internal StringBuilder ParsingColumns(PdfPage page)
         {
             // temp variable
             Rectangle readBox;
@@ -334,7 +333,7 @@ namespace Specialized_PDF_Editor
         /// </summary>
         /// <param name="page">Data of page</param>
         /// <returns>data of table every cell</returns>
-        private StringBuilder ParsingTables(PdfPage page)
+        internal StringBuilder ParsingTables(PdfPage page)
         {
             // temp variable
             Rectangle readBox;
@@ -385,7 +384,7 @@ namespace Specialized_PDF_Editor
         /// </summary>
         /// <param name="page">Data of page</param>
         /// <returns>data of Oy axis</returns>
-        private StringBuilder ParsingOyAxis(PdfPage page)
+        internal StringBuilder ParsingOyAxis(PdfPage page)
         {
             // temp variable
             Rectangle readBox;
@@ -432,7 +431,7 @@ namespace Specialized_PDF_Editor
         /// </summary>
         /// <param name="page">Data of page</param>
         /// <returns>data of Oy axis</returns>
-        private StringBuilder ParsingOxAxis(PdfPage page)
+        internal StringBuilder ParsingOxAxis(PdfPage page)
         {
             // temp variable
             Rectangle readBox;
@@ -479,7 +478,7 @@ namespace Specialized_PDF_Editor
         /// </summary>
         /// <param name="dataInfo">string data</param>
         /// <returns>array of data row</returns>
-        private KeyValuePairTable<int, DateTime, float, bool>[] ExtractTableData(StringBuilder[] dataInfo)
+        internal KeyValuePairTable<int, DateTime, float, bool>[] ExtractTableData(StringBuilder[] dataInfo)
         {
             StringBuilder all = new StringBuilder();
 
@@ -516,7 +515,7 @@ namespace Specialized_PDF_Editor
         /// </summary>
         /// <param name="dataInfo">string data</param>
         /// <returns>array of data Oy</returns>
-        private int[] ExtractOyAxis(StringBuilder dataInfo)
+        internal int[] ExtractOyAxis(StringBuilder dataInfo)
         {
             // convert to array of string
             string[] rows = dataInfo
@@ -539,7 +538,7 @@ namespace Specialized_PDF_Editor
         /// </summary>
         /// <param name="dataInfo">string data</param>
         /// <returns>array of data Ox</returns>
-        private DateTime[] ExtractOxAxis(StringBuilder dataInfo)
+        internal DateTime[] ExtractOxAxis(StringBuilder dataInfo)
         {
             // convert to array of string
             string[] rows = dataInfo
@@ -791,5 +790,14 @@ namespace Specialized_PDF_Editor
             Value = value;
             OOR = oor;
         }
+
+        public override string ToString()
+            => new StringBuilder($"Number: {Key};")
+            .Append($"\nDate and time: {DateTime};")
+            .Append($"\nTemperature: {Value};")
+            .Append($"\nOut of range: {OOR};")
+            .ToString();
+
     }
+
 }
