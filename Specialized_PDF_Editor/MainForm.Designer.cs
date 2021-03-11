@@ -508,6 +508,7 @@ namespace Specialized_PDF_Editor
             this.tableMainData.AllowUserToAddRows = false;
             this.tableMainData.AllowUserToDeleteRows = false;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.tableMainData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.tableMainData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.tableMainData.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -617,6 +618,7 @@ namespace Specialized_PDF_Editor
             this.tableOyData.AllowUserToAddRows = false;
             this.tableOyData.AllowUserToDeleteRows = false;
             dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.tableOyData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle10;
             this.tableOyData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.tableOyData.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -678,6 +680,7 @@ namespace Specialized_PDF_Editor
             this.tableOxData.AllowUserToAddRows = false;
             this.tableOxData.AllowUserToDeleteRows = false;
             dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.tableOxData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle17;
             this.tableOxData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.tableOxData.BorderStyle = System.Windows.Forms.BorderStyle.None;
