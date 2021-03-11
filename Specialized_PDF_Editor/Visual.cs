@@ -43,6 +43,10 @@ namespace Specialized_PDF_Editor
         /// Show metadata information
         /// </summary>
         internal static TextBox MetaDataInfo { get; set; }
+        /// <summary>
+        /// Show data in main table
+        /// </summary>
+        internal static DataGridView MainDataTable { get; set; }
 
         /// <summary>
         /// File in RAM
@@ -276,6 +280,78 @@ namespace Specialized_PDF_Editor
 
             Status.Text = "Analysis is completed";
         }
+
+        /// <summary>
+        /// Show data in main table
+        /// </summary>
+        internal static void ShowMainDataTable(KeyValuePairTable<int, DateTime, float, bool>[] tableData)
+        {
+            // clear table
+            MainDataTable.Columns.Clear();
+            MainDataTable.Rows.Clear();
+
+            // if the data is null then exit
+            if (tableData == null)
+                return;
+
+            // instance size of table rows
+            int Ny = tableData.Length;
+
+            // add columns and their names
+            MainDataTable.Columns.Add("Columns1", "Номер");
+            MainDataTable.Columns.Add("Columns2", "Дата");
+            MainDataTable.Columns.Add("Columns3", "Время");
+            MainDataTable.Columns.Add("Columns4", "Т, °C");
+            MainDataTable.Columns.Add(new DataGridViewCheckBoxColumn());
+            MainDataTable.Columns[MainDataTable.Columns.Count - 1].HeaderText = "Нар.";
+
+            // add formats of columns
+            MainDataTable.Columns[0].DefaultCellStyle.Format = "N0";
+            //MainDataTable.Columns[1].DefaultCellStyle.Format = "d";
+            MainDataTable.Columns[1].DefaultCellStyle.Format = "dd.MM.yyyy";
+            //MainDataTable.Columns[2].DefaultCellStyle.Format = "t";
+            MainDataTable.Columns[2].DefaultCellStyle.Format = "HH:mm";
+            MainDataTable.Columns[3].DefaultCellStyle.Format = "N1";
+
+            // ability of correcting data
+            MainDataTable.Columns[0].ReadOnly = true;
+            MainDataTable.Columns[1].ReadOnly = true;
+            MainDataTable.Columns[2].ReadOnly = true;
+            MainDataTable.Columns[3].ReadOnly = false;
+            MainDataTable.Columns[4].ReadOnly = false;
+
+            // add rows to table
+            MainDataTable.Rows.Add(Ny);
+
+            // add data in table
+            for (int i = 0; i < Ny; i++)
+            {
+                // counter for cell of row
+                int j = 0;
+
+                MainDataTable.Rows[i].Cells[j++].Value = tableData[i].Key;
+                MainDataTable.Rows[i].Cells[j++].Value = tableData[i].DateTime;
+                MainDataTable.Rows[i].Cells[j++].Value = tableData[i].DateTime;
+                MainDataTable.Rows[i].Cells[j++].Value = tableData[i].Value;
+                MainDataTable.Rows[i].Cells[j++].Value = tableData[i].OOR;
+            }
+
+            // fix cells
+            //MainDataTable.AutoResizeColumnHeadersHeight();
+            MainDataTable.AutoResizeColumns();
+            MainDataTable.AutoResizeRows();
+            MainDataTable.AutoResizeRowHeadersWidth(DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders);
+
+            // remove selection of table
+            MainDataTable.ClearSelection();
+
+            // some parameters
+            MainDataTable.AllowUserToAddRows = false;
+            MainDataTable.AllowUserToDeleteRows = false;
+            MainDataTable.AllowUserToOrderColumns = false;
+        }
+
+
 
 
         /// <summary>

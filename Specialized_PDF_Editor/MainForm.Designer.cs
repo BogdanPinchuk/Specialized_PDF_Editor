@@ -47,9 +47,10 @@ namespace Specialized_PDF_Editor
             this.saveMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.analyseMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolsAnalysis = new System.Windows.Forms.ToolStripMenuItem();
+            this.analysisFile = new System.Windows.Forms.ToolStripMenuItem();
             this.helpMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolRead = new System.Windows.Forms.ToolStripMenuItem();
+            this.analyseMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.statusM = new System.Windows.Forms.StatusStrip();
             this.status = new System.Windows.Forms.ToolStripStatusLabel();
             this.nameOfDoc = new System.Windows.Forms.ToolStripStatusLabel();
@@ -74,15 +75,15 @@ namespace Specialized_PDF_Editor
             this.tabParam = new System.Windows.Forms.TabPage();
             this.tabTable = new System.Windows.Forms.TabControl();
             this.tabMainData = new System.Windows.Forms.TabPage();
-            this.dataTable = new System.Windows.Forms.DataGridView();
-            this.tabOx = new System.Windows.Forms.TabPage();
-            this.tabOy = new System.Windows.Forms.TabPage();
-            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.tableMainData = new System.Windows.Forms.DataGridView();
             this.Key = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.OOR = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.tabOx = new System.Windows.Forms.TabPage();
+            this.tabOy = new System.Windows.Forms.TabPage();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.menu.SuspendLayout();
             this.statusM.SuspendLayout();
             this.tabC.SuspendLayout();
@@ -109,16 +110,16 @@ namespace Specialized_PDF_Editor
             ((System.ComponentModel.ISupportInitialize)(this.mainChart)).BeginInit();
             this.tabTable.SuspendLayout();
             this.tabMainData.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataTable)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tableMainData)).BeginInit();
             this.SuspendLayout();
             // 
             // menu
             // 
             this.menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileMenu,
-            this.analyseMenu,
+            this.toolsAnalysis,
             this.helpMenu,
-            this.toolRead});
+            this.analyseMenu});
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
             this.menu.Size = new System.Drawing.Size(800, 24);
@@ -169,13 +170,23 @@ namespace Specialized_PDF_Editor
             this.exitMenu.Text = "Exit";
             this.exitMenu.Click += new System.EventHandler(this.ExitMenu_Click);
             // 
-            // analyseMenu
+            // toolsAnalysis
             // 
-            this.analyseMenu.Image = global::Specialized_PDF_Editor.Properties.Resources.AnalyzeTrace_16x;
-            this.analyseMenu.Name = "analyseMenu";
-            this.analyseMenu.Size = new System.Drawing.Size(76, 20);
-            this.analyseMenu.Text = "Analyse";
-            this.analyseMenu.Click += new System.EventHandler(this.AnalyseMenu_Click);
+            this.toolsAnalysis.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.analysisFile});
+            this.toolsAnalysis.Image = global::Specialized_PDF_Editor.Properties.Resources.SolutionFolderSwitch_16x;
+            this.toolsAnalysis.Name = "toolsAnalysis";
+            this.toolsAnalysis.Size = new System.Drawing.Size(63, 20);
+            this.toolsAnalysis.Text = "Tools";
+            // 
+            // analysisFile
+            // 
+            this.analysisFile.Image = global::Specialized_PDF_Editor.Properties.Resources.ValidationSummary_16x;
+            this.analysisFile.Name = "analysisFile";
+            this.analysisFile.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.analysisFile.Size = new System.Drawing.Size(176, 22);
+            this.analysisFile.Text = "Analysis pdf file";
+            this.analysisFile.Click += new System.EventHandler(this.ToolAnalysisFile_Click);
             // 
             // helpMenu
             // 
@@ -185,12 +196,13 @@ namespace Specialized_PDF_Editor
             this.helpMenu.Text = "Help";
             this.helpMenu.Click += new System.EventHandler(this.HelpMenu_Click);
             // 
-            // toolRead
+            // analyseMenu
             // 
-            this.toolRead.Name = "toolRead";
-            this.toolRead.Size = new System.Drawing.Size(71, 20);
-            this.toolRead.Text = "Read data";
-            this.toolRead.Click += new System.EventHandler(this.ToolRead_Click);
+            this.analyseMenu.Image = global::Specialized_PDF_Editor.Properties.Resources.AnalyzeTrace_16x;
+            this.analyseMenu.Name = "analyseMenu";
+            this.analyseMenu.Size = new System.Drawing.Size(76, 20);
+            this.analyseMenu.Text = "Analyse";
+            this.analyseMenu.Click += new System.EventHandler(this.AnalyseMenu_Click);
             // 
             // statusM
             // 
@@ -456,7 +468,7 @@ namespace Specialized_PDF_Editor
             // 
             // tabMainData
             // 
-            this.tabMainData.Controls.Add(this.dataTable);
+            this.tabMainData.Controls.Add(this.tableMainData);
             this.tabMainData.Location = new System.Drawing.Point(4, 22);
             this.tabMainData.Name = "tabMainData";
             this.tabMainData.Padding = new System.Windows.Forms.Padding(3);
@@ -465,21 +477,21 @@ namespace Specialized_PDF_Editor
             this.tabMainData.Text = "Main data";
             this.tabMainData.UseVisualStyleBackColor = true;
             // 
-            // dataTable
+            // tableMainData
             // 
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dataTable.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.dataTable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataTable.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tableMainData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.tableMainData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.tableMainData.BorderStyle = System.Windows.Forms.BorderStyle.None;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            this.dataTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            this.dataTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.tableMainData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.tableMainData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.tableMainData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Key,
             this.Date,
             this.Time,
@@ -492,41 +504,22 @@ namespace Specialized_PDF_Editor
             dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataTable.DefaultCellStyle = dataGridViewCellStyle7;
-            this.dataTable.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataTable.Location = new System.Drawing.Point(3, 3);
-            this.dataTable.Name = "dataTable";
+            this.tableMainData.DefaultCellStyle = dataGridViewCellStyle7;
+            this.tableMainData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableMainData.Location = new System.Drawing.Point(3, 3);
+            this.tableMainData.Name = "tableMainData";
             dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            this.dataTable.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            this.tableMainData.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
             dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dataTable.RowsDefaultCellStyle = dataGridViewCellStyle9;
-            this.dataTable.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dataTable.Size = new System.Drawing.Size(421, 153);
-            this.dataTable.TabIndex = 0;
-            // 
-            // tabOx
-            // 
-            this.tabOx.Location = new System.Drawing.Point(4, 22);
-            this.tabOx.Name = "tabOx";
-            this.tabOx.Padding = new System.Windows.Forms.Padding(3);
-            this.tabOx.Size = new System.Drawing.Size(427, 159);
-            this.tabOx.TabIndex = 1;
-            this.tabOx.Text = "Axis Ox";
-            this.tabOx.UseVisualStyleBackColor = true;
-            // 
-            // tabOy
-            // 
-            this.tabOy.Location = new System.Drawing.Point(4, 22);
-            this.tabOy.Name = "tabOy";
-            this.tabOy.Size = new System.Drawing.Size(427, 159);
-            this.tabOy.TabIndex = 2;
-            this.tabOy.Text = "Axis Oy";
-            this.tabOy.UseVisualStyleBackColor = true;
+            this.tableMainData.RowsDefaultCellStyle = dataGridViewCellStyle9;
+            this.tableMainData.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.tableMainData.Size = new System.Drawing.Size(421, 153);
+            this.tableMainData.TabIndex = 0;
             // 
             // Key
             // 
@@ -569,6 +562,25 @@ namespace Specialized_PDF_Editor
             this.OOR.HeaderText = "Нар.";
             this.OOR.Name = "OOR";
             this.OOR.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // tabOx
+            // 
+            this.tabOx.Location = new System.Drawing.Point(4, 22);
+            this.tabOx.Name = "tabOx";
+            this.tabOx.Padding = new System.Windows.Forms.Padding(3);
+            this.tabOx.Size = new System.Drawing.Size(427, 159);
+            this.tabOx.TabIndex = 1;
+            this.tabOx.Text = "Axis Ox";
+            this.tabOx.UseVisualStyleBackColor = true;
+            // 
+            // tabOy
+            // 
+            this.tabOy.Location = new System.Drawing.Point(4, 22);
+            this.tabOy.Name = "tabOy";
+            this.tabOy.Size = new System.Drawing.Size(427, 159);
+            this.tabOy.TabIndex = 2;
+            this.tabOy.Text = "Axis Oy";
+            this.tabOy.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -616,7 +628,7 @@ namespace Specialized_PDF_Editor
             ((System.ComponentModel.ISupportInitialize)(this.mainChart)).EndInit();
             this.tabTable.ResumeLayout(false);
             this.tabMainData.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataTable)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tableMainData)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -644,7 +656,6 @@ namespace Specialized_PDF_Editor
         private ToolTip toolTip;
         private ToolStripStatusLabel nameOfDoc;
         private TextBox headerInfo;
-        private ToolStripMenuItem toolRead;
         private GroupBox groupHeader;
         private SplitContainer splitC1;
         private GroupBox groupTable;
@@ -660,12 +671,14 @@ namespace Specialized_PDF_Editor
         private TabPage tabOx;
         private TabPage tabOy;
         private PictureBox mainChart;
-        private DataGridView dataTable;
+        private DataGridView tableMainData;
         private DataGridViewTextBoxColumn Key;
         private DataGridViewTextBoxColumn Date;
         private DataGridViewTextBoxColumn Time;
         private DataGridViewTextBoxColumn Value;
         private DataGridViewCheckBoxColumn OOR;
+        private ToolStripMenuItem toolsAnalysis;
+        private ToolStripMenuItem analysisFile;
     }
 }
 

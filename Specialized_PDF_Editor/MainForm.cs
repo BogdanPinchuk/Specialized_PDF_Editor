@@ -53,6 +53,8 @@ namespace Specialized_PDF_Editor
 
             Visual.HeaderInfo = headerInfo;
             Visual.MetaDataInfo = metaData;
+
+            Visual.MainDataTable = tableMainData;
         }
 
         /// <summary>
@@ -100,21 +102,23 @@ namespace Specialized_PDF_Editor
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void ToolRead_Click(object sender, EventArgs e)
+        private void ToolAnalysisFile_Click(object sender, EventArgs e)
         {
             if (Visual.StreamL == null)
+            {
+                status.Text = "The file is invalid or non-available";
                 return;
+            }
 
             Visual.HeaderInfo.Clear();
             analysis = new Analysis(Visual.StreamL);
             analysis.ExtractMetaData();
             analysis.ParsingFile();
-            var str = new StringBuilder();
-            for (int i = 0; i < analysis.HeadInfo.Length; i++)
-                str.Append(analysis.HeadInfo[i]);
 
             Visual.MetaDataInfo.Text = analysis.Metadata.ToString();
-            Visual.HeaderInfo.Text = str.ToString();
+            Visual.HeaderInfo.Text = analysis.HeadInfo.ToString();
+            Visual.ShowMainDataTable(analysis.TableData);
         }
+
     }
 }

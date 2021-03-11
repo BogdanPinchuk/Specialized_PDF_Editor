@@ -133,6 +133,16 @@ namespace Specialized_PDF_Editor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap SolutionFolderSwitch_16x {
+            get {
+                object obj = ResourceManager.GetObject("SolutionFolderSwitch_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ValidationSummary_16x {
             get {
                 object obj = ResourceManager.GetObject("ValidationSummary_16x", resourceCulture);
