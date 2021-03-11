@@ -32,11 +32,14 @@ namespace Specialized_PDF_Editor
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menu = new System.Windows.Forms.MenuStrip();
             this.fileMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -70,7 +73,7 @@ namespace Specialized_PDF_Editor
             this.mainChart = new System.Windows.Forms.PictureBox();
             this.tabParam = new System.Windows.Forms.TabPage();
             this.tabTable = new System.Windows.Forms.TabControl();
-            this.tabBase = new System.Windows.Forms.TabPage();
+            this.tabMainData = new System.Windows.Forms.TabPage();
             this.dataTable = new System.Windows.Forms.DataGridView();
             this.tabOx = new System.Windows.Forms.TabPage();
             this.tabOy = new System.Windows.Forms.TabPage();
@@ -105,7 +108,7 @@ namespace Specialized_PDF_Editor
             this.tabChart.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainChart)).BeginInit();
             this.tabTable.SuspendLayout();
-            this.tabBase.SuspendLayout();
+            this.tabMainData.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataTable)).BeginInit();
             this.SuspendLayout();
             // 
@@ -441,7 +444,7 @@ namespace Specialized_PDF_Editor
             // 
             // tabTable
             // 
-            this.tabTable.Controls.Add(this.tabBase);
+            this.tabTable.Controls.Add(this.tabMainData);
             this.tabTable.Controls.Add(this.tabOx);
             this.tabTable.Controls.Add(this.tabOy);
             this.tabTable.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -451,28 +454,30 @@ namespace Specialized_PDF_Editor
             this.tabTable.Size = new System.Drawing.Size(435, 185);
             this.tabTable.TabIndex = 0;
             // 
-            // tabBase
+            // tabMainData
             // 
-            this.tabBase.Controls.Add(this.dataTable);
-            this.tabBase.Location = new System.Drawing.Point(4, 22);
-            this.tabBase.Name = "tabBase";
-            this.tabBase.Padding = new System.Windows.Forms.Padding(3);
-            this.tabBase.Size = new System.Drawing.Size(427, 159);
-            this.tabBase.TabIndex = 0;
-            this.tabBase.Text = "Base data";
-            this.tabBase.UseVisualStyleBackColor = true;
+            this.tabMainData.Controls.Add(this.dataTable);
+            this.tabMainData.Location = new System.Drawing.Point(4, 22);
+            this.tabMainData.Name = "tabMainData";
+            this.tabMainData.Padding = new System.Windows.Forms.Padding(3);
+            this.tabMainData.Size = new System.Drawing.Size(427, 159);
+            this.tabMainData.TabIndex = 0;
+            this.tabMainData.Text = "Main data";
+            this.tabMainData.UseVisualStyleBackColor = true;
             // 
             // dataTable
             // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dataTable.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dataTable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataTable.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            this.dataTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            this.dataTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dataTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Key,
@@ -480,17 +485,27 @@ namespace Specialized_PDF_Editor
             this.Time,
             this.Value,
             this.OOR});
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataTable.DefaultCellStyle = dataGridViewCellStyle7;
             this.dataTable.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataTable.Location = new System.Drawing.Point(3, 3);
             this.dataTable.Name = "dataTable";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataTable.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            this.dataTable.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dataTable.RowsDefaultCellStyle = dataGridViewCellStyle9;
+            this.dataTable.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.dataTable.Size = new System.Drawing.Size(421, 153);
             this.dataTable.TabIndex = 0;
             // 
@@ -515,53 +530,44 @@ namespace Specialized_PDF_Editor
             // 
             // Key
             // 
-            this.Key.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.Format = "N0";
-            dataGridViewCellStyle2.NullValue = null;
-            this.Key.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Format = "N0";
+            dataGridViewCellStyle3.NullValue = null;
+            this.Key.DefaultCellStyle = dataGridViewCellStyle3;
             this.Key.HeaderText = "Номер";
             this.Key.Name = "Key";
-            this.Key.Width = 66;
             // 
             // Date
             // 
-            this.Date.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Format = "d";
-            dataGridViewCellStyle3.NullValue = null;
-            this.Date.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.Format = "d";
+            dataGridViewCellStyle4.NullValue = null;
+            this.Date.DefaultCellStyle = dataGridViewCellStyle4;
             this.Date.HeaderText = "Дата";
             this.Date.Name = "Date";
-            this.Date.Width = 58;
             // 
             // Time
             // 
-            this.Time.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.Format = "t";
-            dataGridViewCellStyle4.NullValue = null;
-            this.Time.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.Format = "t";
+            dataGridViewCellStyle5.NullValue = null;
+            this.Time.DefaultCellStyle = dataGridViewCellStyle5;
             this.Time.HeaderText = "Время";
             this.Time.Name = "Time";
-            this.Time.Width = 65;
             // 
             // Value
             // 
-            this.Value.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.Format = "N1";
-            dataGridViewCellStyle5.NullValue = null;
-            this.Value.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.Format = "N1";
+            dataGridViewCellStyle6.NullValue = null;
+            this.Value.DefaultCellStyle = dataGridViewCellStyle6;
             this.Value.HeaderText = "Т, °C";
             this.Value.Name = "Value";
-            this.Value.Width = 56;
             // 
             // OOR
             // 
             this.OOR.HeaderText = "Нар.";
             this.OOR.Name = "OOR";
-            this.OOR.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.OOR.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // MainForm
@@ -609,7 +615,7 @@ namespace Specialized_PDF_Editor
             this.tabChart.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.mainChart)).EndInit();
             this.tabTable.ResumeLayout(false);
-            this.tabBase.ResumeLayout(false);
+            this.tabMainData.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataTable)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -650,7 +656,7 @@ namespace Specialized_PDF_Editor
         private TabPage tabChart;
         private TabPage tabParam;
         private TabControl tabTable;
-        private TabPage tabBase;
+        private TabPage tabMainData;
         private TabPage tabOx;
         private TabPage tabOy;
         private PictureBox mainChart;

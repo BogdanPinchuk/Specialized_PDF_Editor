@@ -48,6 +48,14 @@ namespace Specialized_PDF_Editor
         /// Data from tables
         /// </summary>
         internal KeyValuePairTable<int, DateTime, float, bool>[] TableData { get; set; }
+        /// <summary>
+        /// Data from Oy axis
+        /// </summary>
+        internal int[] DataOyAxis { get; set; }
+        /// <summary>
+        /// Data from Ox axis
+        /// </summary>
+        internal DateTime[] DataOxAxis { get; set; }
 
         /// <summary>
         /// Array of data from headers
@@ -61,6 +69,14 @@ namespace Specialized_PDF_Editor
         /// Array of data from tables
         /// </summary>
         private StringBuilder[] DataInfo { get; set; }
+        /// <summary>
+        /// Array of values of Oy axis
+        /// </summary>
+        internal StringBuilder OyAxisInfo { get; set; }
+        /// <summary>
+        /// Array of values of Ox axis
+        /// </summary>
+        internal StringBuilder OxAxisInfo { get; set; }
 
         /// <summary>
         /// Block acess to data for multitreading
@@ -205,6 +221,16 @@ namespace Specialized_PDF_Editor
 
                 // convert string data to real data
                 TableData = ExtractTableData(DataInfo);
+
+                // data of Oy axis
+                OyAxisInfo = ParsingOyAxis(pages[PageCount - 1]);
+                // convert string data to real data
+                DataOyAxis = ExtractOyAxis(OyAxisInfo);
+
+                // data of Ox axis
+                OxAxisInfo = ParsingOxAxis(pages[PageCount - 1]);
+                // convert string data to real data
+                DataOxAxis = ExtractOxAxis(OxAxisInfo);
 
                 pdf.Close();
             }
@@ -355,6 +381,100 @@ namespace Specialized_PDF_Editor
         }
 
         /// <summary>
+        /// Parsing data from Oy axis
+        /// </summary>
+        /// <param name="page">Data of page</param>
+        /// <returns>data of Oy axis</returns>
+        private StringBuilder ParsingOyAxis(PdfPage page)
+        {
+            // temp variable
+            Rectangle readBox;
+            TextRegionEventFilter readText;
+            FilteredEventListener listener;
+            LocationTextExtractionStrategy extractor;
+            PdfCanvasProcessor parser;
+            string[] lines;
+            StringBuilder result = new StringBuilder();
+
+            // area limit for read
+            readBox = new Rectangle(Margin.Left, Margin.Bottom + 60, 20,
+                page.GetPageSize().GetHeight() - Margin.Bottom - 160);
+
+            readText = new TextRegionEventFilter(readBox);
+            listener = new FilteredEventListener();
+
+            // create a text extraction renderer
+            extractor = listener
+                .AttachEventListener(new LocationTextExtractionStrategy(),
+                readText);
+
+            lock (block)
+            {
+                (parser = new PdfCanvasProcessor(listener))
+                    .ProcessPageContent(page);
+                parser.Reset();
+            }
+
+            // read every line (row)
+            lines = extractor
+                .GetResultantText()
+                .Split('\n');
+
+            foreach (string line in lines)
+                if (!string.IsNullOrEmpty(line.Trim()))
+                    result.AppendLine(line);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Parsing data from Ox axis
+        /// </summary>
+        /// <param name="page">Data of page</param>
+        /// <returns>data of Oy axis</returns>
+        private StringBuilder ParsingOxAxis(PdfPage page)
+        {
+            // temp variable
+            Rectangle readBox;
+            TextRegionEventFilter readText;
+            FilteredEventListener listener;
+            LocationTextExtractionStrategy extractor;
+            PdfCanvasProcessor parser;
+            string[] lines;
+            StringBuilder result = new StringBuilder();
+
+            // area limit for read
+            readBox = new Rectangle(Margin.Left + 20, Margin.Bottom + 40,
+                page.GetPageSize().GetWidth() - Margin.Right, 40);
+
+            readText = new TextRegionEventFilter(readBox);
+            listener = new FilteredEventListener();
+
+            // create a text extraction renderer
+            extractor = listener
+                .AttachEventListener(new LocationTextExtractionStrategy(),
+                readText);
+
+            lock (block)
+            {
+                (parser = new PdfCanvasProcessor(listener))
+                    .ProcessPageContent(page);
+                parser.Reset();
+            }
+
+            // read every line (row)
+            lines = extractor
+                .GetResultantText()
+                .Split('\n');
+
+            foreach (string line in lines)
+                if (!string.IsNullOrEmpty(line.Trim()))
+                    result.AppendLine(line);
+
+            return result;
+        }
+
+        /// <summary>
         /// Extract data from text rows
         /// </summary>
         /// <param name="dataInfo">string data</param>
@@ -387,6 +507,56 @@ namespace Specialized_PDF_Editor
                 bool oor = (temp.Length == 5) ? true : false;
                 data[i] = new KeyValuePairTable<int, DateTime, float, bool>(key, datetime, value, oor);
             });
+
+            return data;
+        }
+
+        /// <summary>
+        /// Extract data from chart Oy axis
+        /// </summary>
+        /// <param name="dataInfo">string data</param>
+        /// <returns>array of data Oy</returns>
+        private int[] ExtractOyAxis(StringBuilder dataInfo)
+        {
+            // convert to array of string
+            string[] rows = dataInfo
+                .ToString()
+                .Trim('\n')
+                .Replace("\r", "")
+                .Split('\n');
+
+            // create array of data
+            int[] data = new int[rows.Length];
+
+            // convert strint into data using multithreading
+            Parallel.For(0, rows.Length, i => int.TryParse(rows[i], out data[i]));
+
+            return data;
+        }
+
+        /// <summary>
+        /// Extract data from chart Ox axis
+        /// </summary>
+        /// <param name="dataInfo">string data</param>
+        /// <returns>array of data Ox</returns>
+        private DateTime[] ExtractOxAxis(StringBuilder dataInfo)
+        {
+            // convert to array of string
+            string[] rows = dataInfo
+                .ToString()
+                .Trim('\n')
+                .Replace("\r", "")
+                .Split('\n');
+
+            string[] times = rows[0].Trim().Split(' '),
+                dates = rows[1].Trim().Split(' ');
+
+            // create array of data
+            DateTime[] data = new DateTime[times.Length];
+
+            // convert strint into data using multithreading
+            Parallel.For(0, times.Length, i =>
+                DateTime.TryParse(times[i] + " " + dates[i], out data[i]));
 
             return data;
         }
