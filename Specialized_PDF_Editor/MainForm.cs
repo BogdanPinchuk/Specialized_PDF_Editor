@@ -57,6 +57,8 @@ namespace Specialized_PDF_Editor
             Visual.MainDataTable = tableMainData;
             Visual.OyDataTable = tableOyData;
             Visual.OxDataTable = tableOxData;
+
+            Visual.Chart = mainChart;
         }
 
         /// <summary>
@@ -134,5 +136,13 @@ namespace Specialized_PDF_Editor
             Visual.DoingChanges(e.RowIndex, e.ColumnIndex, analysis.TableData);
         }
 
+        private void MainChart_Paint(object sender, PaintEventArgs e)
+        {
+            if (analysis != null)
+            {
+                Visual.ShowChart(analysis.TableData, analysis.DataOyAxis, analysis.DataOxAxis,
+                    analysis, e.Graphics);
+            }
+        }
     }
 }

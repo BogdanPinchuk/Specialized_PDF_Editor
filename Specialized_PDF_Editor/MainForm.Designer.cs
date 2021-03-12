@@ -451,6 +451,7 @@ namespace Specialized_PDF_Editor
             // 
             // tabChart
             // 
+            this.tabChart.AutoScroll = true;
             this.tabChart.Controls.Add(this.mainChart);
             this.tabChart.Location = new System.Drawing.Point(4, 22);
             this.tabChart.Name = "tabChart";
@@ -462,13 +463,15 @@ namespace Specialized_PDF_Editor
             // 
             // mainChart
             // 
-            this.mainChart.BackColor = System.Drawing.Color.Silver;
+            this.mainChart.BackColor = System.Drawing.Color.LightGray;
             this.mainChart.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainChart.Location = new System.Drawing.Point(3, 3);
             this.mainChart.Name = "mainChart";
             this.mainChart.Size = new System.Drawing.Size(321, 153);
+            this.mainChart.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.mainChart.TabIndex = 0;
             this.mainChart.TabStop = false;
+            this.mainChart.Paint += new System.Windows.Forms.PaintEventHandler(this.MainChart_Paint);
             // 
             // tabParam
             // 
@@ -791,6 +794,7 @@ namespace Specialized_PDF_Editor
             this.splitC2.ResumeLayout(false);
             this.tabGraph.ResumeLayout(false);
             this.tabChart.ResumeLayout(false);
+            this.tabChart.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainChart)).EndInit();
             this.tabTable.ResumeLayout(false);
             this.tabMainData.ResumeLayout(false);

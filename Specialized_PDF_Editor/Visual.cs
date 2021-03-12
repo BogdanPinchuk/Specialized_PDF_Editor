@@ -4,6 +4,7 @@ using iText.Layout.Element;
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.IO.MemoryMappedFiles;
 using System.Linq;
@@ -55,6 +56,7 @@ namespace Specialized_PDF_Editor
         /// Show data in Ox table
         /// </summary>
         internal static DataGridView OxDataTable { get; set; }
+        internal static PictureBox Chart;
 
         /// <summary>
         /// File in RAM
@@ -136,7 +138,7 @@ namespace Specialized_PDF_Editor
                 Status.Text = ex.Message;
             }
         }
-        
+
         /// <summary>
         /// Show document
         /// </summary>
@@ -478,9 +480,9 @@ namespace Specialized_PDF_Editor
         /// <summary>
         /// Events when user changing values in tables
         /// </summary>
-        /// <param name="table">Table wich changing</param>
         /// <param name="row">Select row</param>
         /// <param name="col">Select column</param>
+        /// <param name="tableData">Table which changing</param>
         internal static void DoingChanges(int row, int col, KeyValuePairTable<int, DateTime, float, bool>[] tableData)
         {
             var table = MainDataTable;
@@ -500,7 +502,7 @@ namespace Specialized_PDF_Editor
                 bool canChange = float.TryParse(enterValue, out temp);
 
                 // save result
-                if (canChange)
+                if (canChange && (temp >= -273.15f))
                     tableData[row] =
                         new KeyValuePairTable<int, DateTime, float, bool>(tableData[row].Key,
                         tableData[row].DateTime, temp, tableData[row].OOR);
@@ -513,6 +515,71 @@ namespace Specialized_PDF_Editor
                 tableData[row] = new KeyValuePairTable<int, DateTime, float, bool>(tableData[row].Key,
                         tableData[row].DateTime, tableData[row].Value, (bool)table.CurrentCell.Value);
             }
+        }
+
+        /// <summary>
+        /// Present data on chart
+        /// </summary>
+        /// <param name="tableData">Main data of curve</param>
+        /// <param name="Oy">Sing of Oy axis</param>
+        /// <param name="Ox">Sing of Ox axis</param>
+        /// <param name="analysis">metadata of analysis pdf-file</param>
+        /// <param name="graph">graphics parameter</param>
+        internal static void ShowChart(KeyValuePairTable<int, DateTime, float, bool>[] tableData,
+            int[] Oy, DateTime[] Ox, Analysis analysis, Graphics graph)
+        {
+            var chart = Chart;
+
+            // instance limits of chart
+            float realWidth = 277.81f,
+                realHeight = 158.75f;
+
+            // height and width of picture
+            int width = (int)(analysis.Pages[analysis.PageCount - 1].Size.WidthUU * realWidth /
+                    analysis.Pages[analysis.PageCount - 1].Size.Width),
+                height = (int)(analysis.Pages[analysis.PageCount - 1].Size.HeightUU * realHeight /
+                    analysis.Pages[analysis.PageCount - 1].Size.Height);
+
+            Rectangle plotArea = new Rectangle(0, 0, width, height);
+
+            // names of header and axises
+            string sTitle = "График температуры",
+                sOyLabel = "Температура, C",
+                sOxLabel = "Время";
+
+            // names of legends
+            string[] legends =
+            {
+                "Температура, C",
+                "Верхняя граница",
+                "Ниж няя граница",
+            };
+
+            // value of colours from chart
+            Color temperature = Color.FromArgb(0, 250, 0),
+                topLimit = Color.FromArgb(238, 29, 37),
+                bottomLimit = Color.FromArgb(0, 0, 250),
+                gridAxis = Color.FromArgb(200, 200, 200),
+                borderChart = Color.FromArgb(0, 0, 0);
+
+            // instance font and height of text
+            string fontText = "Tahoma";
+            Font fTitle = new Font(fontText, 10.5f, FontStyle.Regular),
+                fAxis = new Font(fontText, 9.75f, FontStyle.Regular),
+                fLegend = new Font(fontText, 10.5f, FontStyle.Regular);
+            StringFormat sFormat = new StringFormat()
+            {
+                Alignment = StringAlignment.Center
+            };
+
+            // calculate size of fonts
+            SizeF titleFS = graph.MeasureString(sTitle, fTitle),
+                oyLabelFS = graph.MeasureString(sOyLabel, fAxis),
+                oxLabelFS = graph.MeasureString(sOxLabel, fAxis),
+                legendsFS = graph.MeasureString(legends
+                    .Where(t => t.Length >= legends.Select(i => i.Length).Max())
+                    .ElementAt(0), fAxis);  // find the max length
+
         }
 
         /// <summary>
