@@ -97,15 +97,15 @@ namespace Specialized_PDF_Editor
             this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.OOR = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tabOy = new System.Windows.Forms.TabPage();
-            this.tabOx = new System.Windows.Forms.TabPage();
-            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.tableOyData = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabOx = new System.Windows.Forms.TabPage();
             this.tableOxData = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.menu.SuspendLayout();
             this.statusM.SuspendLayout();
             this.tabC.SuspendLayout();
@@ -134,8 +134,8 @@ namespace Specialized_PDF_Editor
             this.tabMainData.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tableMainData)).BeginInit();
             this.tabOy.SuspendLayout();
-            this.tabOx.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tableOyData)).BeginInit();
+            this.tabOx.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tableOxData)).BeginInit();
             this.SuspendLayout();
             // 
@@ -549,6 +549,7 @@ namespace Specialized_PDF_Editor
             this.tableMainData.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.tableMainData.Size = new System.Drawing.Size(421, 153);
             this.tableMainData.TabIndex = 0;
+            this.tableMainData.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.TableMainData_CellEndEdit);
             // 
             // Key
             // 
@@ -602,16 +603,6 @@ namespace Specialized_PDF_Editor
             this.tabOy.TabIndex = 1;
             this.tabOy.Text = "Axis Oy";
             this.tabOy.UseVisualStyleBackColor = true;
-            // 
-            // tabOx
-            // 
-            this.tabOx.Controls.Add(this.tableOxData);
-            this.tabOx.Location = new System.Drawing.Point(4, 22);
-            this.tabOx.Name = "tabOx";
-            this.tabOx.Size = new System.Drawing.Size(427, 159);
-            this.tabOx.TabIndex = 2;
-            this.tabOx.Text = "Axis Ox";
-            this.tabOx.UseVisualStyleBackColor = true;
             // 
             // tableOyData
             // 
@@ -674,6 +665,16 @@ namespace Specialized_PDF_Editor
             this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle13;
             this.dataGridViewTextBoxColumn4.HeaderText = "Температура, C";
             this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            // 
+            // tabOx
+            // 
+            this.tabOx.Controls.Add(this.tableOxData);
+            this.tabOx.Location = new System.Drawing.Point(4, 22);
+            this.tabOx.Name = "tabOx";
+            this.tabOx.Size = new System.Drawing.Size(427, 159);
+            this.tabOx.TabIndex = 2;
+            this.tabOx.Text = "Axis Ox";
+            this.tabOx.UseVisualStyleBackColor = true;
             // 
             // tableOxData
             // 
@@ -795,8 +796,8 @@ namespace Specialized_PDF_Editor
             this.tabMainData.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tableMainData)).EndInit();
             this.tabOy.ResumeLayout(false);
-            this.tabOx.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tableOyData)).EndInit();
+            this.tabOx.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tableOxData)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

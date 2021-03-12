@@ -294,9 +294,11 @@ namespace Specialized_PDF_Editor
         /// </summary>
         internal static void ShowMainDataTable(KeyValuePairTable<int, DateTime, float, bool>[] tableData)
         {
+            DataGridView table = MainDataTable;
+
             // clear table
-            MainDataTable.Columns.Clear();
-            MainDataTable.Rows.Clear();
+            table.Columns.Clear();
+            table.Rows.Clear();
 
             // if the data is null then exit
             if (tableData == null)
@@ -306,57 +308,55 @@ namespace Specialized_PDF_Editor
             int Ny = tableData.Length;
 
             // add columns and their names
-            MainDataTable.Columns.Add("Columns1", "Номер");
-            MainDataTable.Columns.Add("Columns2", "Дата");
-            MainDataTable.Columns.Add("Columns3", "Время");
-            MainDataTable.Columns.Add("Columns4", "Т, °C");
-            MainDataTable.Columns.Add(new DataGridViewCheckBoxColumn());
-            MainDataTable.Columns[MainDataTable.Columns.Count - 1].HeaderText = "Нар.";
+            table.Columns.Add("Key", "Номер");
+            table.Columns.Add("Date", "Дата");
+            table.Columns.Add("Time", "Время");
+            table.Columns.Add("Value", "Т, °C");
+            table.Columns.Add(new DataGridViewCheckBoxColumn());
+            table.Columns[table.Columns.Count - 1].Name = "OOR";
+            table.Columns["OOR"].HeaderText = "Нар.";
 
             // add formats of columns
-            MainDataTable.Columns[0].DefaultCellStyle.Format = "N0";
-            //MainDataTable.Columns[1].DefaultCellStyle.Format = "d";
-            MainDataTable.Columns[1].DefaultCellStyle.Format = "dd.MM.yyyy";
-            //MainDataTable.Columns[2].DefaultCellStyle.Format = "t";
-            MainDataTable.Columns[2].DefaultCellStyle.Format = "HH:mm";
-            MainDataTable.Columns[3].DefaultCellStyle.Format = "N1";
+            table.Columns["Key"].DefaultCellStyle.Format = "N0";
+            //table.Columns["Date"].DefaultCellStyle.Format = "d";
+            table.Columns["Date"].DefaultCellStyle.Format = "dd.MM.yyyy";
+            //table.Columns["Time"].DefaultCellStyle.Format = "t";
+            table.Columns["Time"].DefaultCellStyle.Format = "HH:mm";
+            table.Columns["OOR"].DefaultCellStyle.Format = "N1";
 
             // ability of correcting data
-            MainDataTable.Columns[0].ReadOnly = true;
-            MainDataTable.Columns[1].ReadOnly = true;
-            MainDataTable.Columns[2].ReadOnly = true;
-            MainDataTable.Columns[3].ReadOnly = false;
-            MainDataTable.Columns[4].ReadOnly = false;
+            table.Columns["Key"].ReadOnly = true;
+            table.Columns["Date"].ReadOnly = true;
+            table.Columns["Time"].ReadOnly = true;
+            table.Columns["Value"].ReadOnly = false;
+            table.Columns["OOR"].ReadOnly = false;
 
             // add rows to table
-            MainDataTable.Rows.Add(Ny);
+            table.Rows.Add(Ny);
 
             // add data in table
             for (int i = 0; i < Ny; i++)
             {
-                // counter for cell of row
-                int j = 0;
-
-                MainDataTable.Rows[i].Cells[j++].Value = tableData[i].Key;
-                MainDataTable.Rows[i].Cells[j++].Value = tableData[i].DateTime;
-                MainDataTable.Rows[i].Cells[j++].Value = tableData[i].DateTime;
-                MainDataTable.Rows[i].Cells[j++].Value = tableData[i].Value;
-                MainDataTable.Rows[i].Cells[j++].Value = tableData[i].OOR;
+                table.Rows[i].Cells["Key"].Value = tableData[i].Key;
+                table.Rows[i].Cells["Date"].Value = tableData[i].DateTime;
+                table.Rows[i].Cells["Time"].Value = tableData[i].DateTime;
+                table.Rows[i].Cells["Value"].Value = tableData[i].Value;
+                table.Rows[i].Cells["OOR"].Value = tableData[i].OOR;
             }
 
             // fix cells
-            //MainDataTable.AutoResizeColumnHeadersHeight();
-            MainDataTable.AutoResizeColumns();
-            MainDataTable.AutoResizeRows();
-            MainDataTable.AutoResizeRowHeadersWidth(DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders);
+            //table.AutoResizeColumnHeadersHeight();
+            table.AutoResizeColumns();
+            table.AutoResizeRows();
+            table.AutoResizeRowHeadersWidth(DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders);
 
             // remove selection of table
-            MainDataTable.ClearSelection();
+            table.ClearSelection();
 
             // some parameters
-            MainDataTable.AllowUserToAddRows = false;
-            MainDataTable.AllowUserToDeleteRows = false;
-            MainDataTable.AllowUserToOrderColumns = false;
+            table.AllowUserToAddRows = false;
+            table.AllowUserToDeleteRows = false;
+            table.AllowUserToOrderColumns = true;
         }
 
         /// <summary>
@@ -378,16 +378,16 @@ namespace Specialized_PDF_Editor
             int Ny = tableData.Length;
 
             // add columns and their names
-            table.Columns.Add("Columns1", "Номер");
-            table.Columns.Add("Columns2", "Температура, C");
+            table.Columns.Add("Key", "Номер");
+            table.Columns.Add("Value", "Температура, C");
 
             // add formats of columns
-            table.Columns[0].DefaultCellStyle.Format = "N0";
-            table.Columns[1].DefaultCellStyle.Format = "N0";
+            table.Columns["Key"].DefaultCellStyle.Format = "N0";
+            table.Columns["Value"].DefaultCellStyle.Format = "N0";
 
             // ability of correcting data
-            table.Columns[0].ReadOnly = true;
-            table.Columns[1].ReadOnly = true;
+            table.Columns["Key"].ReadOnly = true;
+            table.Columns["Value"].ReadOnly = true;
 
             // add rows to table
             table.Rows.Add(Ny);
@@ -395,11 +395,8 @@ namespace Specialized_PDF_Editor
             // add data in table
             for (int i = 0; i < Ny; i++)
             {
-                // counter for cell of row
-                int j = 0;
-
-                table.Rows[i].Cells[j++].Value = i + 1;
-                table.Rows[i].Cells[j++].Value = tableData[i];
+                table.Rows[i].Cells["Key"].Value = i + 1;
+                table.Rows[i].Cells["Value"].Value = tableData[i];
             }
 
             // fix cells
@@ -414,7 +411,7 @@ namespace Specialized_PDF_Editor
             // some parameters
             table.AllowUserToAddRows = false;
             table.AllowUserToDeleteRows = false;
-            table.AllowUserToOrderColumns = false;
+            table.AllowUserToOrderColumns = true;
         }
 
         /// <summary>
@@ -436,21 +433,21 @@ namespace Specialized_PDF_Editor
             int Ny = tableData.Length;
 
             // add columns and their names
-            table.Columns.Add("Columns1", "Номер");
-            table.Columns.Add("Columns2", "Время");
-            table.Columns.Add("Columns3", "Дата");
+            table.Columns.Add("Key", "Номер");
+            table.Columns.Add("Time", "Время");
+            table.Columns.Add("Date", "Дата");
 
             // add formats of columns
-            table.Columns[0].DefaultCellStyle.Format = "N0";
-            //table.Columns[1].DefaultCellStyle.Format = "t";
-            table.Columns[1].DefaultCellStyle.Format = "HH:mm";
-            //table.Columns[2].DefaultCellStyle.Format = "d";
-            table.Columns[2].DefaultCellStyle.Format = "dd.MM.yyyy";
+            table.Columns["Key"].DefaultCellStyle.Format = "N0";
+            //table.Columns["Time"].DefaultCellStyle.Format = "t";
+            table.Columns["Time"].DefaultCellStyle.Format = "HH:mm";
+            //table.Columns["Date"].DefaultCellStyle.Format = "d";
+            table.Columns["Date"].DefaultCellStyle.Format = "dd.MM.yyyy";
 
             // ability of correcting data
-            table.Columns[0].ReadOnly = true;
-            table.Columns[1].ReadOnly = true;
-            table.Columns[2].ReadOnly = true;
+            table.Columns["Key"].ReadOnly = true;
+            table.Columns["Time"].ReadOnly = true;
+            table.Columns["Date"].ReadOnly = true;
 
             // add rows to table
             table.Rows.Add(Ny);
@@ -458,12 +455,9 @@ namespace Specialized_PDF_Editor
             // add data in table
             for (int i = 0; i < Ny; i++)
             {
-                // counter for cell of row
-                int j = 0;
-
-                table.Rows[i].Cells[j++].Value = i + 1;
-                table.Rows[i].Cells[j++].Value = tableData[i];
-                table.Rows[i].Cells[j++].Value = tableData[i];
+                table.Rows[i].Cells["Key"].Value = i + 1;
+                table.Rows[i].Cells["Time"].Value = tableData[i];
+                table.Rows[i].Cells["Date"].Value = tableData[i];
             }
 
             // fix cells
@@ -478,7 +472,47 @@ namespace Specialized_PDF_Editor
             // some parameters
             table.AllowUserToAddRows = false;
             table.AllowUserToDeleteRows = false;
-            table.AllowUserToOrderColumns = false;
+            table.AllowUserToOrderColumns = true;
+        }
+
+        /// <summary>
+        /// Events when user changing values in tables
+        /// </summary>
+        /// <param name="table">Table wich changing</param>
+        /// <param name="row">Select row</param>
+        /// <param name="col">Select column</param>
+        internal static void DoingChanges(int row, int col, KeyValuePairTable<int, DateTime, float, bool>[] tableData)
+        {
+            var table = MainDataTable;
+
+            // check needed of columns
+            if (table.Columns[col].Name != "Value" &&
+                table.Columns[col].Name != "OOR")
+                return;
+
+            if (table.Columns[col].Name == "Value")
+            {
+                // new enter value
+                string enterValue = table.CurrentCell.Value.ToString().Replace(".", ",");
+
+                // convert new value
+                float temp;
+                bool canChange = float.TryParse(enterValue, out temp);
+
+                // save result
+                if (canChange)
+                    tableData[row] =
+                        new KeyValuePairTable<int, DateTime, float, bool>(tableData[row].Key,
+                        tableData[row].DateTime, temp, tableData[row].OOR);
+                else
+                    table.CurrentCell.Value = tableData[row].Value;
+            }
+            else
+            {
+                // save result
+                tableData[row] = new KeyValuePairTable<int, DateTime, float, bool>(tableData[row].Key,
+                        tableData[row].DateTime, tableData[row].Value, (bool)table.CurrentCell.Value);
+            }
         }
 
         /// <summary>

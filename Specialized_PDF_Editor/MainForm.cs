@@ -122,8 +122,16 @@ namespace Specialized_PDF_Editor
             Visual.ShowMainDataTable(analysis.TableData);
             Visual.ShowOyDataTable(analysis.DataOyAxis);
             Visual.ShowOxDataTable(analysis.DataOxAxis);
+        }
 
-            //TODO: Added periodic change colour of tables
+        /// <summary>
+        /// Occurs when cell ending changing
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TableMainData_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            Visual.DoingChanges(e.RowIndex, e.ColumnIndex, analysis.TableData);
         }
 
     }
