@@ -125,7 +125,7 @@ namespace Specialized_PDF_Editor
             Visual.ShowOyDataTable(analysis.DataOyAxis);
             Visual.ShowOxDataTable(analysis.DataOxAxis);
 
-            // update area
+            // update area of chart
             Refresh();
         }
 

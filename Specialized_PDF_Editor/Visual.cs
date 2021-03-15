@@ -548,10 +548,6 @@ namespace Specialized_PDF_Editor
             int width = (int)analysis.Pages[analysis.PageCount - 1].Size.Width,
                 height = (int)analysis.Pages[analysis.PageCount - 1].Size.Height;
 
-            // instance size of picturebox
-            //chart.Dock = DockStyle.None;
-            //chart.Size = new Size(width, height);
-
             // instance size of graph
             Rectangle plotArea = new Rectangle(rect.Left, rect.Top, rect.Width - 1, rect.Height - 1);
 
@@ -591,13 +587,13 @@ namespace Specialized_PDF_Editor
                 oxLabelFS = graph.MeasureString(sOxLabel, fAxis),
                 legendsFS = new SizeF(legends.Select(t => graph.MeasureString(t, fAxis).Width).Max(),
                     legends.Select(t => graph.MeasureString(t, fAxis).Height).Max()),
-                //legendsFS_ = graph.MeasureString(legends
-                //    .Where(t => t.Length >= legends.Select(i => i.Length).Max())
-                //    .ElementAt(0), fAxis);  // find the max length
                 gridOyFS = new SizeF(oyAxisData.Select(t => graph.MeasureString(t, fAxis).Width).Max(),
                     oyAxisData.Select(t => graph.MeasureString(t, fAxis).Height).Max()),
                 gridOxFS = new SizeF(oxAxisData.Select(t => graph.MeasureString(t, fAxis).Width).Max(),
                     oxAxisData.Select(t => graph.MeasureString(t, fAxis).Height).Max());
+                //legendsFS_ = graph.MeasureString(legends
+                //    .Where(t => t.Length >= legends.Select(i => i.Length).Max())
+                //    .ElementAt(0), fAxis);  // find the max length
 
             // coeficient of scale ("zoom")
             double kfY = plotArea.Height / (maxY - minY),
