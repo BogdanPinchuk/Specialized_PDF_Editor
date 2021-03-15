@@ -142,6 +142,9 @@ namespace Specialized_PDF_Editor
             {
                 Visual.ShowChart(analysis, e.Graphics);
             }
+
+            // update area
+            Update();
         }
     }
 }

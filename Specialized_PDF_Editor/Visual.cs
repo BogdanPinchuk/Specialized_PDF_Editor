@@ -5,6 +5,7 @@ using iText.Layout.Element;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.IO.MemoryMappedFiles;
 using System.Linq;
@@ -539,16 +540,18 @@ namespace Specialized_PDF_Editor
                     analysis.TableData[0].DateTime).TotalMinutes;  // convert to minutes
             //TODO: Added using the customer range
 
-
-            // instance limits of chart
-            float realWidth = 277.81f,
-                realHeight = 158.75f;
+            // step for grid
+            float dY = (maxY - minY) / (analysis.DataOyAxis.Length - 1),
+                dX = (maxX - minX) / (analysis.DataOxAxis.Length - 1);
 
             // height and width of picture
-            int width = (int)(analysis.Pages[analysis.PageCount - 1].Size.WidthUU * realWidth /
-                    analysis.Pages[analysis.PageCount - 1].Size.Width),
-                height = (int)(analysis.Pages[analysis.PageCount - 1].Size.HeightUU * realHeight /
-                    analysis.Pages[analysis.PageCount - 1].Size.Height);
+            int width = (int)analysis.Pages[analysis.PageCount - 1].Size.Width,
+                height = (int)analysis.Pages[analysis.PageCount - 1].Size.Height;
+
+            // instance size of picturebox
+            //graph.PageUnit = GraphicsUnit.Millimeter;
+            chart.Dock = DockStyle.None;
+            chart.Size = new Size(width, height);
 
             // instance size of graph
             Rectangle plotArea = new Rectangle(0, 0, width, height);
@@ -571,7 +574,7 @@ namespace Specialized_PDF_Editor
                 topLimit = Color.FromArgb(238, 29, 37),
                 bottomLimit = Color.FromArgb(0, 0, 250),
                 gridAxis = Color.FromArgb(200, 200, 200),
-                borderChart = Color.FromArgb(0, 0, 0);
+                borderChart = Color.FromArgb(0, 0, 0);  // and text
 
             // instance font and height of text
             string fontText = "Tahoma";
@@ -594,7 +597,7 @@ namespace Specialized_PDF_Editor
                 //    .ElementAt(0), fAxis);  // find the max length
                 gridOyFS = new SizeF(oyAxisData.Select(t => graph.MeasureString(t, fAxis).Width).Max(),
                     oyAxisData.Select(t => graph.MeasureString(t, fAxis).Height).Max()),
-                gridOxFs = new SizeF(oxAxisData.Select(t => graph.MeasureString(t, fAxis).Width).Max(),
+                gridOxFS = new SizeF(oxAxisData.Select(t => graph.MeasureString(t, fAxis).Width).Max(),
                     oxAxisData.Select(t => graph.MeasureString(t, fAxis).Height).Max());
 
             // coeficient of scale ("zoom")
@@ -606,22 +609,86 @@ namespace Specialized_PDF_Editor
 
             Parallel.For(0, analysis.TableData.Length, i =>
                 plot[i] = new PointF(PlotLimits(plotArea.Left, plotArea.Right, (float)(plotArea.Left + kfX *
-                    (analysis.TableData[analysis.TableData.Length - 1].DateTime - 
-                    analysis.TableData[i].DateTime).TotalMinutes)),
-                    PlotLimits(plotArea.Top, plotArea.Bottom, (float)(plotArea.Bottom - kfY * 
-                    (maxY - analysis.TableData[i].Value)))));
+                    (analysis.TableData[i].DateTime - analysis.TableData[0].DateTime).TotalMinutes)), 
+                    PlotLimits(plotArea.Top, plotArea.Bottom, (float)(plotArea.Bottom - kfY * (maxY - analysis.TableData[i].Value)))));
 
+            // sign axises and header
+            graph.DrawString(sTitle, fTitle, new SolidBrush(borderChart),
+                new PointF(plotArea.Left + plotArea.Width / 2, 15), sFormat);
+            graph.DrawString(sOxLabel, fAxis, new SolidBrush(borderChart),
+                new PointF(plotArea.Left + plotArea.Width / 2, plotArea.Height - 25), sFormat);
 
+            // save parameters of area
+            GraphicsState gState = graph.Save();
+            graph.TranslateTransform(10, plotArea.Top + plotArea.Height / 2);
+            // rotate text
+            graph.RotateTransform(-90);
+            //graph.DrawString(sOyLabel, fAxis, new SolidBrush(borderChart),
+            //    new PointF(0, 0), sFormat);
+            // restore parameters
+            graph.Restore(gState);
+
+            // draw area of charts and brush
+            graph.FillRectangle(new SolidBrush(Color.White), plotArea);
+
+            // draw axis in area chart
+            Pen aPen = new Pen(gridAxis, 1f)
+            {
+                DashStyle = DashStyle.Dash,
+                DashPattern = new float[] { 2f, 2f },
+            };
+
+            // present grid
+            // horizontal grid lines
+            for (int i = 0; i < analysis.DataOyAxis.Length; i++)
+                graph.DrawLine(aPen, plotArea.Left, (float)(plotArea.Top + i * dY * kfY),
+                    plotArea.Right, (float)(plotArea.Top + i * dY * kfY));
+            // vertical grid lines
+            for (int i = 0; i < analysis.DataOxAxis.Length; i++)
+                graph.DrawLine(aPen, (float)(plotArea.Left + i * dX * kfX), plotArea.Bottom,
+                    (float)(plotArea.Left + i * dX * kfX), plotArea.Top);
+
+            // sign value of grid
+            // bottom sing
+            sFormat.Alignment = StringAlignment.Center;
+
+            // vertical values
+            for (int i = 0; i < analysis.DataOyAxis.Length; i++)
+                graph.DrawString(oyAxisData[i], fAxis, new SolidBrush(borderChart),
+                    new PointF((float)(plotArea.Left + i * dX + kfX), plotArea.Top + 5), sFormat);
+
+            // left sing
+            sFormat.Alignment = StringAlignment.Far;
+
+            // horizontal values
+            for (int i = 0; i < analysis.DataOxAxis.Length; i++)
+                graph.DrawString(oxAxisData[i], fAxis, new SolidBrush(borderChart),
+                        new PointF(plotArea.Left - 5, (float)(plotArea.Bottom -
+                        i * dY * kfY - gridOxFS.Height * 0.5f)), sFormat);
+
+            // show chart
+            aPen.DashStyle = DashStyle.Solid;
+            aPen.Color = temperature;
+            aPen.Width = 2f;
+
+            // draw chart
+            graph.DrawLines(aPen, plot);
+
+            // draw border chart
+            graph.DrawRectangle(new Pen(borderChart), plotArea);
+
+            // dispose graphics
+            aPen.Dispose();
         }
 
-        /// <summary>
-        /// Limiting of plot
-        /// </summary>
-        /// <param name="min">min value</param>
-        /// <param name="max">max value</param>
-        /// <param name="value">value</param>
-        /// <returns></returns>
-        private static float PlotLimits(float min, float max, float value)
+    /// <summary>
+    /// Limiting of plot
+    /// </summary>
+    /// <param name="min">min value</param>
+    /// <param name="max">max value</param>
+    /// <param name="value">value</param>
+    /// <returns></returns>
+    private static float PlotLimits(float min, float max, float value)
             => (value < min) ? min : ((value > max) ? max : value);
 
 

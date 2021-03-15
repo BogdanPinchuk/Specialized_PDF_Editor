@@ -343,7 +343,7 @@ namespace Specialized_PDF_Editor
             // 
             this.splitC1.Panel2.Controls.Add(this.groupTable);
             this.splitC1.Size = new System.Drawing.Size(786, 372);
-            this.splitC1.SplitterDistance = 158;
+            this.splitC1.SplitterDistance = 88;
             this.splitC1.SplitterWidth = 10;
             this.splitC1.TabIndex = 2;
             // 
@@ -360,7 +360,7 @@ namespace Specialized_PDF_Editor
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.groupMetaInfo);
-            this.splitContainer1.Size = new System.Drawing.Size(786, 158);
+            this.splitContainer1.Size = new System.Drawing.Size(786, 88);
             this.splitContainer1.SplitterDistance = 517;
             this.splitContainer1.SplitterWidth = 10;
             this.splitContainer1.TabIndex = 2;
@@ -371,7 +371,7 @@ namespace Specialized_PDF_Editor
             this.groupHeader.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupHeader.Location = new System.Drawing.Point(0, 0);
             this.groupHeader.Name = "groupHeader";
-            this.groupHeader.Size = new System.Drawing.Size(517, 158);
+            this.groupHeader.Size = new System.Drawing.Size(517, 88);
             this.groupHeader.TabIndex = 1;
             this.groupHeader.TabStop = false;
             this.groupHeader.Text = "Header of information";
@@ -384,7 +384,7 @@ namespace Specialized_PDF_Editor
             this.headerInfo.Name = "headerInfo";
             this.headerInfo.ReadOnly = true;
             this.headerInfo.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.headerInfo.Size = new System.Drawing.Size(511, 139);
+            this.headerInfo.Size = new System.Drawing.Size(511, 69);
             this.headerInfo.TabIndex = 0;
             // 
             // groupMetaInfo
@@ -393,7 +393,7 @@ namespace Specialized_PDF_Editor
             this.groupMetaInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupMetaInfo.Location = new System.Drawing.Point(0, 0);
             this.groupMetaInfo.Name = "groupMetaInfo";
-            this.groupMetaInfo.Size = new System.Drawing.Size(259, 158);
+            this.groupMetaInfo.Size = new System.Drawing.Size(259, 88);
             this.groupMetaInfo.TabIndex = 2;
             this.groupMetaInfo.TabStop = false;
             this.groupMetaInfo.Text = "Metadata";
@@ -406,7 +406,7 @@ namespace Specialized_PDF_Editor
             this.metaData.Name = "metaData";
             this.metaData.ReadOnly = true;
             this.metaData.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.metaData.Size = new System.Drawing.Size(253, 139);
+            this.metaData.Size = new System.Drawing.Size(253, 69);
             this.metaData.TabIndex = 0;
             // 
             // groupTable
@@ -415,7 +415,7 @@ namespace Specialized_PDF_Editor
             this.groupTable.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupTable.Location = new System.Drawing.Point(0, 0);
             this.groupTable.Name = "groupTable";
-            this.groupTable.Size = new System.Drawing.Size(786, 204);
+            this.groupTable.Size = new System.Drawing.Size(786, 274);
             this.groupTable.TabIndex = 0;
             this.groupTable.TabStop = false;
             this.groupTable.Text = "Data of tables";
@@ -433,8 +433,8 @@ namespace Specialized_PDF_Editor
             // splitC2.Panel2
             // 
             this.splitC2.Panel2.Controls.Add(this.tabTable);
-            this.splitC2.Size = new System.Drawing.Size(780, 185);
-            this.splitC2.SplitterDistance = 335;
+            this.splitC2.Size = new System.Drawing.Size(780, 255);
+            this.splitC2.SplitterDistance = 557;
             this.splitC2.SplitterWidth = 10;
             this.splitC2.TabIndex = 0;
             // 
@@ -446,7 +446,7 @@ namespace Specialized_PDF_Editor
             this.tabGraph.Location = new System.Drawing.Point(0, 0);
             this.tabGraph.Name = "tabGraph";
             this.tabGraph.SelectedIndex = 0;
-            this.tabGraph.Size = new System.Drawing.Size(335, 185);
+            this.tabGraph.Size = new System.Drawing.Size(557, 255);
             this.tabGraph.TabIndex = 0;
             // 
             // tabChart
@@ -456,7 +456,7 @@ namespace Specialized_PDF_Editor
             this.tabChart.Location = new System.Drawing.Point(4, 22);
             this.tabChart.Name = "tabChart";
             this.tabChart.Padding = new System.Windows.Forms.Padding(3);
-            this.tabChart.Size = new System.Drawing.Size(327, 159);
+            this.tabChart.Size = new System.Drawing.Size(549, 229);
             this.tabChart.TabIndex = 0;
             this.tabChart.Text = "Chart";
             this.tabChart.UseVisualStyleBackColor = true;
@@ -467,8 +467,8 @@ namespace Specialized_PDF_Editor
             this.mainChart.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainChart.Location = new System.Drawing.Point(3, 3);
             this.mainChart.Name = "mainChart";
-            this.mainChart.Size = new System.Drawing.Size(321, 153);
-            this.mainChart.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.mainChart.Size = new System.Drawing.Size(543, 223);
+            this.mainChart.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.mainChart.TabIndex = 0;
             this.mainChart.TabStop = false;
             this.mainChart.Paint += new System.Windows.Forms.PaintEventHandler(this.MainChart_Paint);
@@ -492,7 +492,7 @@ namespace Specialized_PDF_Editor
             this.tabTable.Location = new System.Drawing.Point(0, 0);
             this.tabTable.Name = "tabTable";
             this.tabTable.SelectedIndex = 0;
-            this.tabTable.Size = new System.Drawing.Size(435, 185);
+            this.tabTable.Size = new System.Drawing.Size(213, 255);
             this.tabTable.TabIndex = 0;
             // 
             // tabMainData
@@ -501,7 +501,7 @@ namespace Specialized_PDF_Editor
             this.tabMainData.Location = new System.Drawing.Point(4, 22);
             this.tabMainData.Name = "tabMainData";
             this.tabMainData.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMainData.Size = new System.Drawing.Size(427, 159);
+            this.tabMainData.Size = new System.Drawing.Size(205, 229);
             this.tabMainData.TabIndex = 0;
             this.tabMainData.Text = "Main data";
             this.tabMainData.UseVisualStyleBackColor = true;
@@ -550,7 +550,7 @@ namespace Specialized_PDF_Editor
             dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.tableMainData.RowsDefaultCellStyle = dataGridViewCellStyle9;
             this.tableMainData.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.tableMainData.Size = new System.Drawing.Size(421, 153);
+            this.tableMainData.Size = new System.Drawing.Size(199, 223);
             this.tableMainData.TabIndex = 0;
             this.tableMainData.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.TableMainData_CellEndEdit);
             // 
@@ -794,7 +794,6 @@ namespace Specialized_PDF_Editor
             this.splitC2.ResumeLayout(false);
             this.tabGraph.ResumeLayout(false);
             this.tabChart.ResumeLayout(false);
-            this.tabChart.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainChart)).EndInit();
             this.tabTable.ResumeLayout(false);
             this.tabMainData.ResumeLayout(false);
