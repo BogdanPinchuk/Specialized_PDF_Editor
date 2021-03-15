@@ -140,8 +140,7 @@ namespace Specialized_PDF_Editor
         {
             if (analysis != null)
             {
-                Visual.ShowChart(analysis.TableData, analysis.DataOyAxis, analysis.DataOxAxis,
-                    analysis, e.Graphics);
+                Visual.ShowChart(analysis, e.Graphics);
             }
         }
     }

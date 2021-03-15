@@ -520,15 +520,25 @@ namespace Specialized_PDF_Editor
         /// <summary>
         /// Present data on chart
         /// </summary>
-        /// <param name="tableData">Main data of curve</param>
-        /// <param name="Oy">Sing of Oy axis</param>
-        /// <param name="Ox">Sing of Ox axis</param>
-        /// <param name="analysis">metadata of analysis pdf-file</param>
+        /// <param name="analysis">Data of analysis pdf-file</param>
         /// <param name="graph">graphics parameter</param>
-        internal static void ShowChart(KeyValuePairTable<int, DateTime, float, bool>[] tableData,
-            int[] Oy, DateTime[] Ox, Analysis analysis, Graphics graph)
+        internal static void ShowChart(Analysis analysis, Graphics graph)
         {
-            var chart = Chart;
+            PictureBox chart = Chart;
+            //KeyValuePairTable<int, DateTime, float, bool>[] tableData = analysis.TableData;
+
+            // prepare data
+            string[] oyAxisData = analysis.DataOyAxis.AsParallel().AsOrdered()
+                .Select(t => t.ToString("N0")).ToArray(),
+                oxAxisData = analysis.DataOxAxis.AsParallel().AsOrdered()
+                .Select(t => t.ToString("HH:mm") + "\n" + t.ToString("dd.MM.yyyy")).ToArray();
+            float minY = analysis.DataOyAxis.Min(),
+                maxY = analysis.DataOyAxis.Max(),
+                minX = 0,
+                maxX = (float)(analysis.TableData[analysis.TableData.Length - 1].DateTime - 
+                    analysis.TableData[0].DateTime).TotalMinutes;  // convert to minutes
+            //TODO: Added using the customer range
+
 
             // instance limits of chart
             float realWidth = 277.81f,
@@ -540,6 +550,7 @@ namespace Specialized_PDF_Editor
                 height = (int)(analysis.Pages[analysis.PageCount - 1].Size.HeightUU * realHeight /
                     analysis.Pages[analysis.PageCount - 1].Size.Height);
 
+            // instance size of graph
             Rectangle plotArea = new Rectangle(0, 0, width, height);
 
             // names of header and axises
@@ -576,11 +587,43 @@ namespace Specialized_PDF_Editor
             SizeF titleFS = graph.MeasureString(sTitle, fTitle),
                 oyLabelFS = graph.MeasureString(sOyLabel, fAxis),
                 oxLabelFS = graph.MeasureString(sOxLabel, fAxis),
-                legendsFS = graph.MeasureString(legends
-                    .Where(t => t.Length >= legends.Select(i => i.Length).Max())
-                    .ElementAt(0), fAxis);  // find the max length
+                legendsFS = new SizeF(legends.Select(t => graph.MeasureString(t, fAxis).Width).Max(),
+                    legends.Select(t => graph.MeasureString(t, fAxis).Height).Max()),
+                //legendsFS_ = graph.MeasureString(legends
+                //    .Where(t => t.Length >= legends.Select(i => i.Length).Max())
+                //    .ElementAt(0), fAxis);  // find the max length
+                gridOyFS = new SizeF(oyAxisData.Select(t => graph.MeasureString(t, fAxis).Width).Max(),
+                    oyAxisData.Select(t => graph.MeasureString(t, fAxis).Height).Max()),
+                gridOxFs = new SizeF(oxAxisData.Select(t => graph.MeasureString(t, fAxis).Width).Max(),
+                    oxAxisData.Select(t => graph.MeasureString(t, fAxis).Height).Max());
+
+            // coeficient of scale ("zoom")
+            double kfY = plotArea.Height / (maxY - minY),
+                kfX = plotArea.Width / (maxX - minX);
+
+            // recalculate points relevant to scale
+            PointF[] plot = new PointF[analysis.TableData.Length];
+
+            Parallel.For(0, analysis.TableData.Length, i =>
+                plot[i] = new PointF(PlotLimits(plotArea.Left, plotArea.Right, (float)(plotArea.Left + kfX *
+                    (analysis.TableData[analysis.TableData.Length - 1].DateTime - 
+                    analysis.TableData[i].DateTime).TotalMinutes)),
+                    PlotLimits(plotArea.Top, plotArea.Bottom, (float)(plotArea.Bottom - kfY * 
+                    (maxY - analysis.TableData[i].Value)))));
+
 
         }
+
+        /// <summary>
+        /// Limiting of plot
+        /// </summary>
+        /// <param name="min">min value</param>
+        /// <param name="max">max value</param>
+        /// <param name="value">value</param>
+        /// <returns></returns>
+        private static float PlotLimits(float min, float max, float value)
+            => (value < min) ? min : ((value > max) ? max : value);
+
 
         /// <summary>
         /// Unload/clean data from memory but not close
