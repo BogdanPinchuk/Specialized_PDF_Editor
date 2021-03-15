@@ -124,6 +124,9 @@ namespace Specialized_PDF_Editor
             Visual.ShowMainDataTable(analysis.TableData);
             Visual.ShowOyDataTable(analysis.DataOyAxis);
             Visual.ShowOxDataTable(analysis.DataOxAxis);
+
+            // update area
+            Refresh();
         }
 
         /// <summary>
@@ -139,12 +142,7 @@ namespace Specialized_PDF_Editor
         private void MainChart_Paint(object sender, PaintEventArgs e)
         {
             if (analysis != null)
-            {
-                Visual.ShowChart(analysis, e.Graphics);
-            }
-
-            // update area
-            Update();
+                Visual.ShowChart(analysis, e.Graphics, e.ClipRectangle);
         }
     }
 }

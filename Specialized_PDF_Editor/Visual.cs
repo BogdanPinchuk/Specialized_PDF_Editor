@@ -523,10 +523,10 @@ namespace Specialized_PDF_Editor
         /// </summary>
         /// <param name="analysis">Data of analysis pdf-file</param>
         /// <param name="graph">graphics parameter</param>
-        internal static void ShowChart(Analysis analysis, Graphics graph)
+        /// <param name="rect">size of area for draw</param>
+        internal static void ShowChart(Analysis analysis, Graphics graph, Rectangle rect)
         {
             PictureBox chart = Chart;
-            //KeyValuePairTable<int, DateTime, float, bool>[] tableData = analysis.TableData;
 
             // prepare data
             string[] oyAxisData = analysis.DataOyAxis.AsParallel().AsOrdered()
@@ -549,12 +549,11 @@ namespace Specialized_PDF_Editor
                 height = (int)analysis.Pages[analysis.PageCount - 1].Size.Height;
 
             // instance size of picturebox
-            //graph.PageUnit = GraphicsUnit.Millimeter;
-            chart.Dock = DockStyle.None;
-            chart.Size = new Size(width, height);
+            //chart.Dock = DockStyle.None;
+            //chart.Size = new Size(width, height);
 
             // instance size of graph
-            Rectangle plotArea = new Rectangle(0, 0, width, height);
+            Rectangle plotArea = new Rectangle(rect.Left, rect.Top, rect.Width - 1, rect.Height - 1);
 
             // names of header and axises
             string sTitle = "График температуры",
@@ -610,23 +609,23 @@ namespace Specialized_PDF_Editor
             Parallel.For(0, analysis.TableData.Length, i =>
                 plot[i] = new PointF(PlotLimits(plotArea.Left, plotArea.Right, (float)(plotArea.Left + kfX *
                     (analysis.TableData[i].DateTime - analysis.TableData[0].DateTime).TotalMinutes)), 
-                    PlotLimits(plotArea.Top, plotArea.Bottom, (float)(plotArea.Bottom - kfY * (maxY - analysis.TableData[i].Value)))));
+                    PlotLimits(plotArea.Top, plotArea.Bottom, (float)(plotArea.Bottom - kfY * analysis.TableData[i].Value))));
 
             // sign axises and header
-            graph.DrawString(sTitle, fTitle, new SolidBrush(borderChart),
-                new PointF(plotArea.Left + plotArea.Width / 2, 15), sFormat);
-            graph.DrawString(sOxLabel, fAxis, new SolidBrush(borderChart),
-                new PointF(plotArea.Left + plotArea.Width / 2, plotArea.Height - 25), sFormat);
+            //graph.DrawString(sTitle, fTitle, new SolidBrush(borderChart),
+            //    new PointF(plotArea.Left + plotArea.Width / 2, 15), sFormat);
+            //graph.DrawString(sOxLabel, fAxis, new SolidBrush(borderChart),
+            //    new PointF(plotArea.Left + plotArea.Width / 2, plotArea.Height - 25), sFormat);
 
             // save parameters of area
-            GraphicsState gState = graph.Save();
-            graph.TranslateTransform(10, plotArea.Top + plotArea.Height / 2);
-            // rotate text
-            graph.RotateTransform(-90);
-            //graph.DrawString(sOyLabel, fAxis, new SolidBrush(borderChart),
-            //    new PointF(0, 0), sFormat);
-            // restore parameters
-            graph.Restore(gState);
+            //GraphicsState gState = graph.Save();
+            //graph.TranslateTransform(10, plotArea.Top + plotArea.Height / 2);
+            //// rotate text
+            //graph.RotateTransform(-90);
+            ////graph.DrawString(sOyLabel, fAxis, new SolidBrush(borderChart),
+            ////    new PointF(0, 0), sFormat);
+            //// restore parameters
+            //graph.Restore(gState);
 
             // draw area of charts and brush
             graph.FillRectangle(new SolidBrush(Color.White), plotArea);
@@ -650,21 +649,21 @@ namespace Specialized_PDF_Editor
 
             // sign value of grid
             // bottom sing
-            sFormat.Alignment = StringAlignment.Center;
+            //sFormat.Alignment = StringAlignment.Center;
 
-            // vertical values
-            for (int i = 0; i < analysis.DataOyAxis.Length; i++)
-                graph.DrawString(oyAxisData[i], fAxis, new SolidBrush(borderChart),
-                    new PointF((float)(plotArea.Left + i * dX + kfX), plotArea.Top + 5), sFormat);
+            //// vertical values
+            //for (int i = 0; i < analysis.DataOyAxis.Length; i++)
+            //    graph.DrawString(oyAxisData[i], fAxis, new SolidBrush(borderChart),
+            //        new PointF((float)(plotArea.Left + i * dX + kfX), plotArea.Top + 5), sFormat);
 
-            // left sing
-            sFormat.Alignment = StringAlignment.Far;
+            //// left sing
+            //sFormat.Alignment = StringAlignment.Far;
 
-            // horizontal values
-            for (int i = 0; i < analysis.DataOxAxis.Length; i++)
-                graph.DrawString(oxAxisData[i], fAxis, new SolidBrush(borderChart),
-                        new PointF(plotArea.Left - 5, (float)(plotArea.Bottom -
-                        i * dY * kfY - gridOxFS.Height * 0.5f)), sFormat);
+            //// horizontal values
+            //for (int i = 0; i < analysis.DataOxAxis.Length; i++)
+            //    graph.DrawString(oxAxisData[i], fAxis, new SolidBrush(borderChart),
+            //            new PointF(plotArea.Left - 5, (float)(plotArea.Bottom -
+            //            i * dY * kfY - gridOxFS.Height * 0.5f)), sFormat);
 
             // show chart
             aPen.DashStyle = DashStyle.Solid;
