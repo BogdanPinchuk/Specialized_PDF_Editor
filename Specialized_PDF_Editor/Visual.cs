@@ -610,13 +610,10 @@ namespace Specialized_PDF_Editor
             graph.FillRectangle(new SolidBrush(Color.White), plotArea);
 
             // draw axis in area chart
-            Pen gPen = new Pen(borderChart, 2f)
+            Pen gPen = new Pen(borderChart, 1f)
             {
                 DashStyle = DashStyle.Solid,
             };
-
-            // draw border chart (can change colour of  background of chart)
-            graph.DrawRectangle(gPen, plotArea);
 
             // coeficient of scale ("zoom")
             float kfY = plotArea.Height / (maxOy - minOy),
@@ -628,7 +625,6 @@ namespace Specialized_PDF_Editor
                 float stepX = plotArea.Width / (float)(6 * 4 + 1),
                     stepY = plotArea.Height / (float)(6 * 4 + 1);
 
-                gPen.Width = 1.0f;
                 // right - small
                 for (float i = plotArea.Left; i < plotArea.Right; i += stepX)
                     graph.DrawLine(gPen, i, plotArea.Top, i, plotArea.Top + 4);
@@ -654,6 +650,24 @@ namespace Specialized_PDF_Editor
                 float beginY = Math.Abs(minY - minOy) * kfY,
                     beginX = (float)Math.Abs((analysis.DataOxAxis[0] - analysis.TableData[0].DateTime).TotalMinutes) * kfX;
 
+                // draw grid
+                gPen = new Pen(gridAxis, 1f)
+                {
+                    DashStyle = DashStyle.Dash,
+                    DashPattern = new float[] { 2f, 3f },
+                };
+                // bottom - big
+                for (float i = plotArea.Left + beginX; i < plotArea.Right; i += 4f * dX)
+                    graph.DrawLine(gPen, i, plotArea.Bottom, i, plotArea.Top);
+                // left - big
+                for (float i = plotArea.Bottom + beginY; i > plotArea.Top; i -= stepY)
+                    graph.DrawLine(gPen, plotArea.Left, i, plotArea.Right, i);
+
+                #region draw help grid
+                gPen = new Pen(borderChart, 1f)
+                {
+                    DashStyle = DashStyle.Solid,
+                };
                 // bottom (left)
                 for (float i = plotArea.Left + beginX; i > plotArea.Left; i -= dX)
                     graph.DrawLine(gPen, i, plotArea.Bottom, i, plotArea.Bottom - 4);
@@ -672,8 +686,17 @@ namespace Specialized_PDF_Editor
                     graph.DrawLine(gPen, plotArea.Left, i, plotArea.Left + 4, i);
                 // left - big
                 for (float i = plotArea.Bottom + beginY; i > plotArea.Top; i -= stepY)
-                    graph.DrawLine(gPen, plotArea.Left, i, plotArea.Left + 8, i);
+                    graph.DrawLine(gPen, plotArea.Left, i, plotArea.Left + 8, i); 
+                #endregion
             }
+
+            gPen = new Pen(borderChart, 2f)
+            {
+                DashStyle = DashStyle.Solid,
+            };
+
+            // draw border chart (can change colour of  background of chart)
+            graph.DrawRectangle(gPen, plotArea);
 
             // sign axises and header
             graph.DrawString(sTitle, fTitle, new SolidBrush(borderChart),
