@@ -587,6 +587,11 @@ namespace Specialized_PDF_Editor
                 maxX = (float)(analysis.TableData[analysis.TableData.Length - 1].DateTime -
                     analysis.TableData[0].DateTime).TotalMinutes;  // convert to minutes
 
+            // TODO: change for ability ented data of customers
+            // min and max of Oy axis
+            float minOy = minY,
+                maxOy = maxY;
+
             // draw work space "clean"
             graph.FillRectangle(new SolidBrush(Color.White), rect);
 
@@ -605,41 +610,69 @@ namespace Specialized_PDF_Editor
             graph.FillRectangle(new SolidBrush(Color.White), plotArea);
 
             // draw axis in area chart
-            Pen aPen = new Pen(borderChart, 2f)
+            Pen gPen = new Pen(borderChart, 2f)
             {
                 DashStyle = DashStyle.Solid,
             };
 
             // draw border chart (can change colour of  background of chart)
-            graph.DrawRectangle(aPen, plotArea);
+            graph.DrawRectangle(gPen, plotArea);
+
+            // coeficient of scale ("zoom")
+            float kfY = plotArea.Height / (maxOy - minOy),
+                kfX = plotArea.Width / (maxX - minX);
 
             // draw helping grid, big and small
             {
                 // step of grid
                 float stepX = plotArea.Width / (float)(6 * 4 + 1),
                     stepY = plotArea.Height / (float)(6 * 4 + 1);
-                
-                aPen.Width = 1.0f;
+
+                gPen.Width = 1.0f;
+                // right - small
                 for (float i = plotArea.Left; i < plotArea.Right; i += stepX)
-                {
-                    graph.DrawLine(aPen, i, plotArea.Top, i, plotArea.Top + 4);
-                    graph.DrawLine(aPen, i, plotArea.Bottom, i, plotArea.Bottom - 4);
-                }
+                    graph.DrawLine(gPen, i, plotArea.Top, i, plotArea.Top + 4);
+                // right - big
                 for (float i = plotArea.Left; i < plotArea.Right; i += 4f * stepX)
-                {
-                    graph.DrawLine(aPen, i, plotArea.Top, i, plotArea.Top + 8);
-                    graph.DrawLine(aPen, i, plotArea.Bottom, i, plotArea.Bottom - 8);
-                }
+                    graph.DrawLine(gPen, i, plotArea.Top, i, plotArea.Top + 8);
+                // top - small
                 for (float i = plotArea.Bottom; i > plotArea.Top; i -= stepY)
-                {
-                    graph.DrawLine(aPen, plotArea.Left, i, plotArea.Left + 4, i);
-                    graph.DrawLine(aPen, plotArea.Right, i, plotArea.Right - 4, i);
-                }
+                    graph.DrawLine(gPen, plotArea.Right, i, plotArea.Right - 4, i);
+                // top - big
                 for (float i = plotArea.Bottom; i > plotArea.Top; i -= 4f * stepY)
-                {
-                    graph.DrawLine(aPen, plotArea.Left, i, plotArea.Left + 8, i);
-                    graph.DrawLine(aPen, plotArea.Right, i, plotArea.Right - 8, i);
-                }
+                    graph.DrawLine(gPen, plotArea.Right, i, plotArea.Right - 8, i);
+            }
+
+            // step for grid
+            float dX = kfX * (float)(analysis.DataOxAxis[1] - analysis.DataOxAxis[0]).TotalMinutes / 4,
+                dY = 2 * kfY;
+            {
+                // step of help grid
+                float stepY = kfY * Math.Abs(analysis.DataOyAxis[1] - analysis.DataOyAxis[0]);
+
+                // start grid text
+                float beginY = Math.Abs(minY - minOy) * kfY,
+                    beginX = (float)Math.Abs((analysis.DataOxAxis[0] - analysis.TableData[0].DateTime).TotalMinutes) * kfX;
+
+                // bottom (left)
+                for (float i = plotArea.Left + beginX; i > plotArea.Left; i -= dX)
+                    graph.DrawLine(gPen, i, plotArea.Bottom, i, plotArea.Bottom - 4);
+                // bottom (right)
+                for (float i = plotArea.Left + beginX; i < plotArea.Right; i += dX)
+                    graph.DrawLine(gPen, i, plotArea.Bottom, i, plotArea.Bottom - 4);
+                // bottom - big
+                for (float i = plotArea.Left + beginX; i < plotArea.Right; i += 4f * dX)
+                    graph.DrawLine(gPen, i, plotArea.Bottom, i, plotArea.Bottom - 8);
+
+                // left (up)
+                for (float i = plotArea.Bottom + beginY; i > plotArea.Top; i -= dY)
+                    graph.DrawLine(gPen, plotArea.Left, i, plotArea.Left + 4, i);
+                // left (down)
+                for (float i = plotArea.Bottom + beginY; i < plotArea.Bottom; i += dY)
+                    graph.DrawLine(gPen, plotArea.Left, i, plotArea.Left + 4, i);
+                // left - big
+                for (float i = plotArea.Bottom + beginY; i > plotArea.Top; i -= stepY)
+                    graph.DrawLine(gPen, plotArea.Left, i, plotArea.Left + 8, i);
             }
 
             // sign axises and header
@@ -660,19 +693,37 @@ namespace Specialized_PDF_Editor
 
 
 
-            //// sign value of grid
-            //// bottom sing
-            //sFormat.Alignment = StringAlignment.Center;
 
-            //// vertical values
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            // sign value of grid
+            // bottom sing
+            sFormat.Alignment = StringAlignment.Center;
+
+            // vertical values
             //for (int i = 0; i < analysis.DataOyAxis.Length; i++)
             //    graph.DrawString(oyAxisData[i], fAxis, new SolidBrush(borderChart),
-            //        new PointF((float)(plotArea.Left + i * dX + kfX), plotArea.Top + 5), sFormat);
+            //        new PointF((float)(plotArea.Left + i * dX * kfX), plotArea.Top + 5), sFormat);
 
-            //// left sing
-            //sFormat.Alignment = StringAlignment.Far;
+            // left sing
+            sFormat.Alignment = StringAlignment.Far;
 
-            //// horizontal values
+            // horizontal values
             //for (int i = 0; i < analysis.DataOxAxis.Length; i++)
             //    graph.DrawString(oxAxisData[i], fAxis, new SolidBrush(borderChart),
             //            new PointF(plotArea.Left - 5, (float)(plotArea.Bottom -
@@ -690,10 +741,6 @@ namespace Specialized_PDF_Editor
 
 
 
-            // coeficient of scale ("zoom")
-            double kfY = plotArea.Height / (maxY - minY),
-                kfX = plotArea.Width / (maxX - minX);
-
             // recalculate points relevant to scale
             PointF[] plot = new PointF[analysis.TableData.Length];
 
@@ -703,25 +750,20 @@ namespace Specialized_PDF_Editor
                     PlotLimits(plotArea.Top, plotArea.Bottom, (float)(plotArea.Bottom - kfY * analysis.TableData[i].Value))));
 
             // draw axis in area chart
-            //Pen aPen = new Pen(gridAxis, 1f)
+            //Pen gPen = new Pen(gridAxis, 1f)
             //{
             //    DashStyle = DashStyle.Dash,
             //    DashPattern = new float[] { 2f, 2f },
             //};
 
-
-            // step for grid
-            float dY = (maxY - minY) / (analysis.DataOyAxis.Length - 1),
-                dX = (maxX - minX) / (analysis.DataOxAxis.Length - 1);
-
             // present grid
             // horizontal grid lines
             for (int i = 0; i < analysis.DataOyAxis.Length; i++)
-                graph.DrawLine(aPen, plotArea.Left, (float)(plotArea.Top + i * dY * kfY),
+                graph.DrawLine(gPen, plotArea.Left, (float)(plotArea.Top + i * dY * kfY),
                     plotArea.Right, (float)(plotArea.Top + i * dY * kfY));
             // vertical grid lines
             for (int i = 0; i < analysis.DataOxAxis.Length; i++)
-                graph.DrawLine(aPen, (float)(plotArea.Left + i * dX * kfX), plotArea.Bottom,
+                graph.DrawLine(gPen, (float)(plotArea.Left + i * dX * kfX), plotArea.Bottom,
                     (float)(plotArea.Left + i * dX * kfX), plotArea.Top);
 
             // sign value of grid
@@ -743,18 +785,18 @@ namespace Specialized_PDF_Editor
             //            i * dY * kfY - gridOxFS.Height * 0.5f)), sFormat);
 
             // show chart
-            aPen.DashStyle = DashStyle.Solid;
-            aPen.Color = temperature;
-            aPen.Width = 2f;
+            gPen.DashStyle = DashStyle.Solid;
+            gPen.Color = temperature;
+            gPen.Width = 2f;
 
             // draw chart
-            graph.DrawLines(aPen, plot);
+            graph.DrawLines(gPen, plot);
 
             // draw border chart
             graph.DrawRectangle(new Pen(borderChart), plotArea);
 
             // dispose graphics
-            aPen.Dispose();
+            gPen.Dispose();
         }
 
         /// <summary>
