@@ -579,7 +579,6 @@ namespace Specialized_PDF_Editor
             //    .Where(t => t.Length >= legends.Select(i => i.Length).Max())
             //    .ElementAt(0), fAxis);  // find the max length
 
-            //TODO: Added using the customer range
             // min and max of axis
             float minY = analysis.DataOyAxis.Min(),
                 maxY = analysis.DataOyAxis.Max(),
@@ -587,7 +586,6 @@ namespace Specialized_PDF_Editor
                 maxX = (float)(analysis.TableData[analysis.TableData.Length - 1].DateTime -
                     analysis.TableData[0].DateTime).TotalMinutes;  // convert to minutes
 
-            // TODO: change for ability ented data of customers
             // min and max of Oy axis
             float minOy, maxOy;
 
@@ -622,10 +620,10 @@ namespace Specialized_PDF_Editor
 
             // instance size of graph
             Rectangle plotArea = rect;
-            plotArea.X = 25 + (int)(oyLabelFS.Height + gridOyFS.Width);
-            plotArea.Y = 15 + (int)titleFS.Height;
+            plotArea.X = 20 + (int)(oyLabelFS.Height + gridOyFS.Width);
+            plotArea.Y = 20 + (int)titleFS.Height;
             plotArea.Width = 15 + width - plotArea.Left - (int)gridOyFS.Width;
-            plotArea.Height = height - plotArea.Top - (int)(gridOxFS.Height + oxLabelFS.Height);
+            plotArea.Height = height - 10 - plotArea.Top - (int)(gridOxFS.Height + oxLabelFS.Height);
 
             // draw area of charts and brush (can delete)
             graph.FillRectangle(new SolidBrush(Color.White), plotArea);
@@ -684,6 +682,29 @@ namespace Specialized_PDF_Editor
                 for (float i = plotArea.Bottom - beginY; i > plotArea.Top; i -= stepY)
                     graph.DrawLine(gPen, plotArea.Left, i, plotArea.Right, i);
 
+                // sign value of grid
+                // bottom sing
+                sFormat.Alignment = StringAlignment.Far;
+
+                // vertical values
+                {
+                    float j = plotArea.Bottom - beginY;
+                    for (int i = 0; i < oyAxisData.Length; i++, j -= stepY)
+                        graph.DrawString(oyAxisData[oyAxisData.Length - 1 - i], fAxis, new SolidBrush(borderChart),
+                            new PointF(plotArea.Left - 5, j - gridOyFS.Height / 2), sFormat);
+                }
+
+                // left sing
+                sFormat.Alignment = StringAlignment.Center;
+
+                // horizontal values
+                {
+                    float j = plotArea.Left + beginX;
+                    for (int i = 0; i < oxAxisData.Length; i++, j += 4f * dX)
+                        graph.DrawString(oxAxisData[i], fAxis, new SolidBrush(borderChart),
+                            new PointF(j, plotArea.Bottom + 5), sFormat);
+                }
+
                 #region draw help grid
                 gPen = new Pen(borderChart, 1f)
                 {
@@ -711,14 +732,6 @@ namespace Specialized_PDF_Editor
                 #endregion
             }
 
-            gPen = new Pen(borderChart, 2f)
-            {
-                DashStyle = DashStyle.Solid,
-            };
-
-            // draw border chart (can change colour of  background of chart)
-            graph.DrawRectangle(gPen, plotArea);
-
             // sign axises and header
             graph.DrawString(sTitle, fTitle, new SolidBrush(borderChart),
                 new PointF(rect.Left + rect.Width / 2, 5), sFormat);
@@ -734,57 +747,6 @@ namespace Specialized_PDF_Editor
             // restore parameters
             graph.Restore(gState);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            // sign value of grid
-            // bottom sing
-            sFormat.Alignment = StringAlignment.Center;
-
-            // vertical values
-            //for (int i = 0; i < analysis.DataOyAxis.Length; i++)
-            //    graph.DrawString(oyAxisData[i], fAxis, new SolidBrush(borderChart),
-            //        new PointF((float)(plotArea.Left + i * dX * kfX), plotArea.Top + 5), sFormat);
-
-            // left sing
-            sFormat.Alignment = StringAlignment.Far;
-
-            // horizontal values
-            //for (int i = 0; i < analysis.DataOxAxis.Length; i++)
-            //    graph.DrawString(oxAxisData[i], fAxis, new SolidBrush(borderChart),
-            //            new PointF(plotArea.Left - 5, (float)(plotArea.Bottom -
-            //            i * dY * kfY - gridOxFS.Height * 0.5f)), sFormat);
-
-
-
-
-
-
-            return;
-
-
-
-
-
-
             // recalculate points relevant to scale
             PointF[] plot = new PointF[analysis.TableData.Length];
 
@@ -792,41 +754,6 @@ namespace Specialized_PDF_Editor
                 plot[i] = new PointF(PlotLimits(plotArea.Left, plotArea.Right, (float)(plotArea.Left + kfX *
                     (analysis.TableData[i].DateTime - analysis.TableData[0].DateTime).TotalMinutes)),
                     PlotLimits(plotArea.Top, plotArea.Bottom, (float)(plotArea.Bottom - kfY * analysis.TableData[i].Value))));
-
-            // draw axis in area chart
-            //Pen gPen = new Pen(gridAxis, 1f)
-            //{
-            //    DashStyle = DashStyle.Dash,
-            //    DashPattern = new float[] { 2f, 2f },
-            //};
-
-            // present grid
-            // horizontal grid lines
-            for (int i = 0; i < analysis.DataOyAxis.Length; i++)
-                graph.DrawLine(gPen, plotArea.Left, (float)(plotArea.Top + i * dY * kfY),
-                    plotArea.Right, (float)(plotArea.Top + i * dY * kfY));
-            // vertical grid lines
-            for (int i = 0; i < analysis.DataOxAxis.Length; i++)
-                graph.DrawLine(gPen, (float)(plotArea.Left + i * dX * kfX), plotArea.Bottom,
-                    (float)(plotArea.Left + i * dX * kfX), plotArea.Top);
-
-            // sign value of grid
-            // bottom sing
-            //sFormat.Alignment = StringAlignment.Center;
-
-            //// vertical values
-            //for (int i = 0; i < analysis.DataOyAxis.Length; i++)
-            //    graph.DrawString(oyAxisData[i], fAxis, new SolidBrush(borderChart),
-            //        new PointF((float)(plotArea.Left + i * dX + kfX), plotArea.Top + 5), sFormat);
-
-            //// left sing
-            //sFormat.Alignment = StringAlignment.Far;
-
-            //// horizontal values
-            //for (int i = 0; i < analysis.DataOxAxis.Length; i++)
-            //    graph.DrawString(oxAxisData[i], fAxis, new SolidBrush(borderChart),
-            //            new PointF(plotArea.Left - 5, (float)(plotArea.Bottom -
-            //            i * dY * kfY - gridOxFS.Height * 0.5f)), sFormat);
 
             // show chart
             gPen.DashStyle = DashStyle.Solid;
@@ -836,8 +763,16 @@ namespace Specialized_PDF_Editor
             // draw chart
             graph.DrawLines(gPen, plot);
 
-            // draw border chart
-            graph.DrawRectangle(new Pen(borderChart), plotArea);
+            // draw limit lines
+            //TODO: do limits of line
+
+            // draw border chart (can change colour of  background of chart)
+            gPen = new Pen(borderChart, 2f)
+            {
+                DashStyle = DashStyle.Solid,
+            };
+
+            graph.DrawRectangle(gPen, plotArea);
 
             // dispose graphics
             gPen.Dispose();
