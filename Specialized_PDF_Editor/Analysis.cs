@@ -1,13 +1,14 @@
 ﻿using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Parser;
+using iText.Kernel.Pdf.Canvas.Parser.Data;
 using iText.Kernel.Pdf.Canvas.Parser.Filter;
 using iText.Kernel.Pdf.Canvas.Parser.Listener;
 using iText.Layout;
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -52,6 +53,10 @@ namespace Specialized_PDF_Editor
         /// Data from Oy axis
         /// </summary>
         internal int[] DataOyAxis { get; set; }
+        /// <summary>
+        /// Coordinates of position data Oy axis
+        /// </summary>
+        internal TextChunk[] PositionOyAxis { get; set; }
         /// <summary>
         /// Data from Ox axis
         /// </summary>
@@ -423,6 +428,17 @@ namespace Specialized_PDF_Editor
                 if (!string.IsNullOrEmpty(line.Trim()))
                     result.AppendLine(line);
 
+            TextExtractionStrategy strategy =
+                listener.AttachEventListener(new TextExtractionStrategy(), readText);
+            lock (block)
+            {
+                (parser = new PdfCanvasProcessor(listener))
+                    .ProcessPageContent(page);
+                parser.Reset();
+            }
+            
+            PositionOyAxis = strategy.TextResult.ToArray();
+
             return result;
         }
 
@@ -567,6 +583,64 @@ namespace Specialized_PDF_Editor
             ColumnInfo = null;
             DataInfo = null;
         }
+    }
+
+    /// <summary>
+    /// Class for analysis position of text
+    /// </summary>
+    internal class TextExtractionStrategy : LocationTextExtractionStrategy
+    {
+        /// <summary>
+        /// List of posinion letters
+        /// </summary>
+        public List<TextChunk> TextResult { get; set; }
+            = new List<TextChunk>();
+
+        public override void EventOccurred(IEventData data, EventType type)
+        {
+            if (!type.Equals(EventType.RENDER_TEXT))
+                return;
+
+            TextRenderInfo renderInfo = (TextRenderInfo)data;
+
+            string curFont = renderInfo.GetFont().GetFontProgram().ToString();
+            float curFontSize = renderInfo.GetFontSize();
+
+            IList<TextRenderInfo> text = renderInfo.GetCharacterRenderInfos();
+
+            foreach (TextRenderInfo t in text)
+            {
+                string letter = t.GetText();
+                Vector l_start = t.GetBaseline().GetStartPoint(),
+                    l_end = t.GetAscentLine().GetEndPoint();
+
+                Rectangle l_rect = new Rectangle(l_start.Get(0), l_start.Get(1),
+                    l_end.Get(0) - l_start.Get(0), l_end.Get(1) - l_start.Get(1));
+
+                if (letter != " " && !letter.Contains(' '))
+                {
+                    TextResult.Add(new TextChunk()
+                    {
+                        Text = letter,
+                        Rect = l_rect,
+                        FontFamily = curFont,
+                        FontSize = curFontSize,
+                    });
+                }
+            }
+
+        }
+    }
+
+    /// <summary>
+    /// Base info about position letter
+    /// </summary>
+    internal struct TextChunk
+    {
+        public string Text { get; set; }
+        public Rectangle Rect { get; set; }
+        public string FontFamily { get; set; }
+        public float FontSize { get; set; }
     }
 
     /// <summary>

@@ -589,8 +589,29 @@ namespace Specialized_PDF_Editor
 
             // TODO: change for ability ented data of customers
             // min and max of Oy axis
-            float minOy = minY,
-                maxOy = maxY;
+            float minOy, maxOy;
+
+            {
+                // position of data Oy axis and minimum possible height
+                float first_Oy = analysis.PositionOyAxis[0].Rect.GetY(),
+                    last_Oy = analysis.PositionOyAxis[analysis.PositionOyAxis.Length - 1].Rect.GetY(),
+                    minPosH = 103f,
+                    maxPosH = 485.5f;
+
+
+                List<float> dif = new List<float>();
+                //for (int i = 1; i < analysis.PositionOyAxis.Length; i++)
+                //    dif.Add(analysis.PositionOyAxis[i].Rect.GetY() - analysis.PositionOyAxis[i - 1].Rect.GetY());
+                Parallel.For(1, analysis.PositionOyAxis.Length, i =>
+                    dif.Add(Math.Abs(analysis.PositionOyAxis[i].Rect.GetY() - analysis.PositionOyAxis[i - 1].Rect.GetY())));
+
+                // step between two neghtbour values
+                float stepPdf = dif.Max(),
+                    stepValue = Math.Abs(analysis.DataOyAxis[1] - analysis.DataOyAxis[0]);
+
+                minOy = analysis.DataOyAxis[analysis.DataOyAxis.Length - 1] - Math.Abs(minPosH - first_Oy) * stepValue / stepPdf;
+                maxOy = analysis.DataOyAxis[0] + Math.Abs(maxPosH - last_Oy) * stepValue / stepPdf;
+            }
 
             // draw work space "clean"
             graph.FillRectangle(new SolidBrush(Color.White), rect);
@@ -616,8 +637,8 @@ namespace Specialized_PDF_Editor
             };
 
             // coeficient of scale ("zoom")
-            float kfY = plotArea.Height / (maxOy - minOy),
-                kfX = plotArea.Width / (maxX - minX);
+            float kfY = plotArea.Height / Math.Abs(maxOy - minOy),
+                kfX = plotArea.Width / Math.Abs(maxX - minX);
 
             // draw helping grid, big and small
             {
@@ -660,7 +681,7 @@ namespace Specialized_PDF_Editor
                 for (float i = plotArea.Left + beginX; i < plotArea.Right; i += 4f * dX)
                     graph.DrawLine(gPen, i, plotArea.Bottom, i, plotArea.Top);
                 // left - big
-                for (float i = plotArea.Bottom + beginY; i > plotArea.Top; i -= stepY)
+                for (float i = plotArea.Bottom - beginY; i > plotArea.Top; i -= stepY)
                     graph.DrawLine(gPen, plotArea.Left, i, plotArea.Right, i);
 
                 #region draw help grid
@@ -679,14 +700,14 @@ namespace Specialized_PDF_Editor
                     graph.DrawLine(gPen, i, plotArea.Bottom, i, plotArea.Bottom - 8);
 
                 // left (up)
-                for (float i = plotArea.Bottom + beginY; i > plotArea.Top; i -= dY)
+                for (float i = plotArea.Bottom - beginY; i > plotArea.Top; i -= dY)
                     graph.DrawLine(gPen, plotArea.Left, i, plotArea.Left + 4, i);
                 // left (down)
-                for (float i = plotArea.Bottom + beginY; i < plotArea.Bottom; i += dY)
+                for (float i = plotArea.Bottom - beginY; i < plotArea.Bottom; i += dY)
                     graph.DrawLine(gPen, plotArea.Left, i, plotArea.Left + 4, i);
                 // left - big
-                for (float i = plotArea.Bottom + beginY; i > plotArea.Top; i -= stepY)
-                    graph.DrawLine(gPen, plotArea.Left, i, plotArea.Left + 8, i); 
+                for (float i = plotArea.Bottom - beginY; i > plotArea.Top; i -= stepY)
+                    graph.DrawLine(gPen, plotArea.Left, i, plotArea.Left + 8, i);
                 #endregion
             }
 
