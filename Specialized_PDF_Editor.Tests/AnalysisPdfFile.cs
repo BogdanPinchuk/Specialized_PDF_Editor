@@ -52,7 +52,7 @@ namespace Specialized_PDF_Editor.Tests
             // act
             analysis.ExtractMetaData();
             int actual = analysis.PageCount;
-            Debug.WriteLine($"\nNumber of page: {actual}");
+            Trace.WriteLine($"\nNumber of page: {actual}");
 
             // assert
             Assert.AreEqual(expected, actual);
@@ -95,9 +95,9 @@ namespace Specialized_PDF_Editor.Tests
                 Assert.AreEqual(expected_h, actual[i].Size.HeightUU, 1);
                 Assert.AreEqual(expected_w, actual[i].Size.WidthUU, 1);
 
-                Debug.WriteLine($"\nPage {i + 1}:\n");
-                Debug.WriteLine($"\theight: {actual[i].Size.HeightUU:G4}");
-                Debug.WriteLine($"\twinth: {actual[i].Size.WidthUU:G4}");
+                Trace.WriteLine($"\nPage {i + 1}:\n");
+                Trace.WriteLine($"\theight: {actual[i].Size.HeightUU:G4}");
+                Trace.WriteLine($"\twinth: {actual[i].Size.WidthUU:G4}");
             }
         }
 
@@ -120,7 +120,7 @@ namespace Specialized_PDF_Editor.Tests
             Assert.AreEqual(expected, actual.Left, 1);
             Assert.AreEqual(expected, actual.Right, 1);
 
-            Debug.WriteLine("\n" + actual);
+            Trace.WriteLine("\n" + actual);
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace Specialized_PDF_Editor.Tests
             time.Stop();
             str.Append($"CreateRAMData: {time.Elapsed.TotalMilliseconds} ms\n");
 
-            Debug.WriteLine(str.ToString());
+            Trace.WriteLine(str.ToString());
             // My result:
             // CreateLocalFile: 7933.13 ms
             // CreateRAMFile:   39.78 ms
@@ -163,8 +163,8 @@ namespace Specialized_PDF_Editor.Tests
         {
             analysis.ExtractMetaData();
 
-            Debug.WriteLine("\n" + analysis.Pages[0].ToString());
-            Debug.WriteLine("\n" + analysis.Metadata);
+            Trace.WriteLine("\n" + analysis.Pages[0].ToString());
+            Trace.WriteLine("\n" + analysis.Metadata);
 
         }
     }

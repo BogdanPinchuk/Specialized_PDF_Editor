@@ -76,9 +76,9 @@ namespace Specialized_PDF_Editor.Tests
                 pdf.Close();
             }
 
-            Debug.WriteLine($"\nHeader information:");
-            Debug.WriteLine($"\nActual: \n{actual}");
-            Debug.WriteLine($"\nExpected: \n{expected}");
+            Trace.WriteLine($"\nHeader information:");
+            Trace.WriteLine($"\nActual: \n{actual}");
+            Trace.WriteLine($"\nExpected: \n{expected}");
 
             // assert
             Assert.AreEqual(expected, actual);
@@ -116,9 +116,9 @@ namespace Specialized_PDF_Editor.Tests
                 pdf.Close();
             }
 
-            Debug.WriteLine($"\nHeader information:");
-            Debug.WriteLine($"\nActual: \n{actual}");
-            Debug.WriteLine($"\nExpected: \n{expected}");
+            Trace.WriteLine($"\nHeader information:");
+            Trace.WriteLine($"\nActual: \n{actual}");
+            Trace.WriteLine($"\nExpected: \n{expected}");
 
             // assert
             Assert.AreEqual(expected, actual);
@@ -156,9 +156,9 @@ namespace Specialized_PDF_Editor.Tests
                 pdf.Close();
             }
 
-            Debug.WriteLine($"\nName of columns:");
-            Debug.WriteLine($"\nActual: \n{actual}");
-            Debug.WriteLine($"\nExpected: \n{expected}");
+            Trace.WriteLine($"\nName of columns:");
+            Trace.WriteLine($"\nActual: \n{actual}");
+            Trace.WriteLine($"\nExpected: \n{expected}");
 
             // assert
             Assert.AreEqual(expected, actual);
@@ -196,9 +196,9 @@ namespace Specialized_PDF_Editor.Tests
                 pdf.Close();
             }
 
-            Debug.WriteLine($"\nTable data:");
-            Debug.WriteLine($"\nActual: \n{actual}");
-            Debug.WriteLine($"\nExpected: \n{expected}");
+            Trace.WriteLine($"\nTable data:");
+            Trace.WriteLine($"\nActual: \n{actual}");
+            Trace.WriteLine($"\nExpected: \n{expected}");
 
             // assert
             Assert.AreEqual(expected, actual);
@@ -236,9 +236,9 @@ namespace Specialized_PDF_Editor.Tests
                 pdf.Close();
             }
 
-            Debug.WriteLine($"\nTable data:");
-            Debug.WriteLine($"\nActual: \n{actual}");
-            Debug.WriteLine($"\nExpected: \n{expected}");
+            Trace.WriteLine($"\nTable data:");
+            Trace.WriteLine($"\nActual: \n{actual}");
+            Trace.WriteLine($"\nExpected: \n{expected}");
 
             // assert
             Assert.AreEqual(expected, actual);
@@ -276,9 +276,9 @@ namespace Specialized_PDF_Editor.Tests
                 pdf.Close();
             }
 
-            Debug.WriteLine($"\nOy axis:");
-            Debug.WriteLine($"\nActual: \n{actual}");
-            Debug.WriteLine($"\nExpected: \n{expected}");
+            Trace.WriteLine($"\nOy axis:");
+            Trace.WriteLine($"\nActual: \n{actual}");
+            Trace.WriteLine($"\nExpected: \n{expected}");
 
             // assert
             Assert.AreEqual(expected, actual);
@@ -316,9 +316,9 @@ namespace Specialized_PDF_Editor.Tests
                 pdf.Close();
             }
 
-            Debug.WriteLine($"\nOx axis:");
-            Debug.WriteLine($"\nActual: \n{actual}");
-            Debug.WriteLine($"\nExpected: \n{expected}");
+            Trace.WriteLine($"\nOx axis:");
+            Trace.WriteLine($"\nActual: \n{actual}");
+            Trace.WriteLine($"\nExpected: \n{expected}");
 
             // assert
             Assert.AreEqual(expected, actual);
@@ -368,11 +368,11 @@ namespace Specialized_PDF_Editor.Tests
                 pdf.Close();
             }
 
-            Debug.WriteLine($"\nTable data:");
+            Trace.WriteLine($"\nTable data:");
             for (int i = 0; i < expected.Length; i++)
             {
-                Debug.WriteLine($"\nActual: \n{actual[i]}");
-                Debug.WriteLine($"\nExpected: \n{expected[i]}");
+                Trace.WriteLine($"\nActual: \n{actual[i]}");
+                Trace.WriteLine($"\nExpected: \n{expected[i]}");
             }
 
             // assert
@@ -419,11 +419,11 @@ namespace Specialized_PDF_Editor.Tests
                 pdf.Close();
             }
 
-            Debug.WriteLine($"\nOy axis:");
+            Trace.WriteLine($"\nOy axis:");
             for (int i = 0; i < expected.Length; i++)
             {
-                Debug.WriteLine($"\nActual: {actual[i]}");
-                Debug.WriteLine($"Expected: {expected[i]}");
+                Trace.WriteLine($"\nActual: {actual[i]}");
+                Trace.WriteLine($"Expected: {expected[i]}");
             }
 
             // assert
@@ -474,11 +474,11 @@ namespace Specialized_PDF_Editor.Tests
                 pdf.Close();
             }
 
-            Debug.WriteLine($"\nOx axis:");
+            Trace.WriteLine($"\nOx axis:");
             for (int i = 0; i < expected.Length; i++)
             {
-                Debug.WriteLine($"\nActual: {actual[i]}");
-                Debug.WriteLine($"Expected: {expected[i]}");
+                Trace.WriteLine($"\nActual: {actual[i]}");
+                Trace.WriteLine($"Expected: {expected[i]}");
             }
 
             // assert
