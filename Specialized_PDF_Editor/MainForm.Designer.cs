@@ -36,10 +36,6 @@ namespace Specialized_PDF_Editor
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -55,6 +51,10 @@ namespace Specialized_PDF_Editor
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menu = new System.Windows.Forms.MenuStrip();
             this.fileMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -91,11 +91,6 @@ namespace Specialized_PDF_Editor
             this.tabTable = new System.Windows.Forms.TabControl();
             this.tabMainData = new System.Windows.Forms.TabPage();
             this.tableMainData = new System.Windows.Forms.DataGridView();
-            this.Key = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OOR = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tabOy = new System.Windows.Forms.TabPage();
             this.tableOyData = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -106,6 +101,11 @@ namespace Specialized_PDF_Editor
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.Key = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OOR = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.menu.SuspendLayout();
             this.statusM.SuspendLayout();
             this.tabC.SuspendLayout();
@@ -478,7 +478,7 @@ namespace Specialized_PDF_Editor
             this.tabParam.Location = new System.Drawing.Point(4, 22);
             this.tabParam.Name = "tabParam";
             this.tabParam.Padding = new System.Windows.Forms.Padding(3);
-            this.tabParam.Size = new System.Drawing.Size(327, 159);
+            this.tabParam.Size = new System.Drawing.Size(459, 198);
             this.tabParam.TabIndex = 1;
             this.tabParam.Text = "Parameters";
             this.tabParam.UseVisualStyleBackColor = true;
@@ -554,55 +554,13 @@ namespace Specialized_PDF_Editor
             this.tableMainData.TabIndex = 0;
             this.tableMainData.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.TableMainData_CellEndEdit);
             // 
-            // Key
-            // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Format = "N0";
-            dataGridViewCellStyle3.NullValue = null;
-            this.Key.DefaultCellStyle = dataGridViewCellStyle3;
-            this.Key.HeaderText = "Номер";
-            this.Key.Name = "Key";
-            // 
-            // Date
-            // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.Format = "d";
-            dataGridViewCellStyle4.NullValue = null;
-            this.Date.DefaultCellStyle = dataGridViewCellStyle4;
-            this.Date.HeaderText = "Дата";
-            this.Date.Name = "Date";
-            // 
-            // Time
-            // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.Format = "t";
-            dataGridViewCellStyle5.NullValue = null;
-            this.Time.DefaultCellStyle = dataGridViewCellStyle5;
-            this.Time.HeaderText = "Время";
-            this.Time.Name = "Time";
-            // 
-            // Value
-            // 
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.Format = "N1";
-            dataGridViewCellStyle6.NullValue = null;
-            this.Value.DefaultCellStyle = dataGridViewCellStyle6;
-            this.Value.HeaderText = "Т, °C";
-            this.Value.Name = "Value";
-            // 
-            // OOR
-            // 
-            this.OOR.HeaderText = "Нар.";
-            this.OOR.Name = "OOR";
-            this.OOR.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
             // tabOy
             // 
             this.tabOy.Controls.Add(this.tableOyData);
             this.tabOy.Location = new System.Drawing.Point(4, 22);
             this.tabOy.Name = "tabOy";
             this.tabOy.Padding = new System.Windows.Forms.Padding(3);
-            this.tabOy.Size = new System.Drawing.Size(427, 159);
+            this.tabOy.Size = new System.Drawing.Size(295, 198);
             this.tabOy.TabIndex = 1;
             this.tabOy.Text = "Axis Oy";
             this.tabOy.UseVisualStyleBackColor = true;
@@ -648,7 +606,7 @@ namespace Specialized_PDF_Editor
             dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.tableOyData.RowsDefaultCellStyle = dataGridViewCellStyle16;
             this.tableOyData.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.tableOyData.Size = new System.Drawing.Size(421, 153);
+            this.tableOyData.Size = new System.Drawing.Size(289, 192);
             this.tableOyData.TabIndex = 1;
             // 
             // dataGridViewTextBoxColumn1
@@ -674,7 +632,7 @@ namespace Specialized_PDF_Editor
             this.tabOx.Controls.Add(this.tableOxData);
             this.tabOx.Location = new System.Drawing.Point(4, 22);
             this.tabOx.Name = "tabOx";
-            this.tabOx.Size = new System.Drawing.Size(427, 159);
+            this.tabOx.Size = new System.Drawing.Size(295, 198);
             this.tabOx.TabIndex = 2;
             this.tabOx.Text = "Axis Ox";
             this.tabOx.UseVisualStyleBackColor = true;
@@ -721,7 +679,7 @@ namespace Specialized_PDF_Editor
             dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.tableOxData.RowsDefaultCellStyle = dataGridViewCellStyle24;
             this.tableOxData.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.tableOxData.Size = new System.Drawing.Size(427, 159);
+            this.tableOxData.Size = new System.Drawing.Size(295, 198);
             this.tableOxData.TabIndex = 1;
             // 
             // dataGridViewTextBoxColumn2
@@ -750,6 +708,52 @@ namespace Specialized_PDF_Editor
             this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle21;
             this.dataGridViewTextBoxColumn3.HeaderText = "Дата";
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            // 
+            // Key
+            // 
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Format = "N0";
+            dataGridViewCellStyle3.NullValue = null;
+            this.Key.DefaultCellStyle = dataGridViewCellStyle3;
+            this.Key.HeaderText = "Номер";
+            this.Key.Name = "Key";
+            this.Key.ReadOnly = true;
+            // 
+            // Date
+            // 
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.Format = "d";
+            dataGridViewCellStyle4.NullValue = null;
+            this.Date.DefaultCellStyle = dataGridViewCellStyle4;
+            this.Date.HeaderText = "Дата";
+            this.Date.Name = "Date";
+            this.Date.ReadOnly = true;
+            // 
+            // Time
+            // 
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.Format = "t";
+            dataGridViewCellStyle5.NullValue = null;
+            this.Time.DefaultCellStyle = dataGridViewCellStyle5;
+            this.Time.HeaderText = "Время";
+            this.Time.Name = "Time";
+            this.Time.ReadOnly = true;
+            // 
+            // Value
+            // 
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.Format = "N1";
+            dataGridViewCellStyle6.NullValue = null;
+            this.Value.DefaultCellStyle = dataGridViewCellStyle6;
+            this.Value.HeaderText = "Т, °C";
+            this.Value.Name = "Value";
+            // 
+            // OOR
+            // 
+            this.OOR.HeaderText = "Нар.";
+            this.OOR.Name = "OOR";
+            this.OOR.ReadOnly = true;
+            this.OOR.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // MainForm
             // 
@@ -846,11 +850,6 @@ namespace Specialized_PDF_Editor
         private TabPage tabOx;
         private PictureBox mainChart;
         private DataGridView tableMainData;
-        private DataGridViewTextBoxColumn Key;
-        private DataGridViewTextBoxColumn Date;
-        private DataGridViewTextBoxColumn Time;
-        private DataGridViewTextBoxColumn Value;
-        private DataGridViewCheckBoxColumn OOR;
         private ToolStripMenuItem toolsAnalysis;
         private ToolStripMenuItem analysisFile;
         private DataGridView tableOyData;
@@ -860,6 +859,11 @@ namespace Specialized_PDF_Editor
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private DataGridViewTextBoxColumn Key;
+        private DataGridViewTextBoxColumn Date;
+        private DataGridViewTextBoxColumn Time;
+        private DataGridViewTextBoxColumn Value;
+        private DataGridViewCheckBoxColumn OOR;
     }
 }
 

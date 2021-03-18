@@ -13,6 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -61,6 +62,14 @@ namespace Specialized_PDF_Editor
         /// Data from Ox axis
         /// </summary>
         internal DateTime[] DataOxAxis { get; set; }
+        /// <summary>
+        /// Minimum of alloweble of range
+        /// </summary>
+        internal float LimitMin { get; set; }
+        /// <summary>
+        /// Maximum of alloweble of range
+        /// </summary>
+        internal float LimitMax { get; set; }
 
         /// <summary>
         /// Array of data from headers
@@ -211,6 +220,29 @@ namespace Specialized_PDF_Editor
 
                 // data of every page (two diferent variants)
                 HeadInfo = ParsingHeader(pages[0]);
+
+                // find the limits
+                {
+                    Regex regex = new Regex(@"Задан диапазон температур между:(\s+[+-]?\d+)°C и(\s+[+-]?\d+)°C",
+                        RegexOptions.IgnoreCase | RegexOptions.Compiled);
+                    Match match = regex.Match(HeadInfo.ToString());
+                    string findS = match.Value;
+
+                    regex = new Regex(@"([+-]?\d+)", RegexOptions.Compiled);
+                    MatchCollection matches = regex.Matches(findS);
+                    
+                    List<float> results = new List<float>();
+                    foreach (Match m in matches)
+                    {
+                        float.TryParse(m.Value, out float res);
+                        results.Add(res);
+                    }
+
+                    // save data
+                    LimitMin = results.Min();
+                    LimitMax = results.Max();
+                }
+
                 //TODO: delete last row for last page, when we will be create new pdf-file
 
                 // data of names every columns
@@ -436,7 +468,7 @@ namespace Specialized_PDF_Editor
                     .ProcessPageContent(page);
                 parser.Reset();
             }
-            
+
             PositionOyAxis = strategy.TextResult.ToArray();
 
             return result;

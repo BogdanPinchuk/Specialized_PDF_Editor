@@ -136,7 +136,7 @@ namespace Specialized_PDF_Editor
         /// <param name="e"></param>
         private void TableMainData_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            Visual.DoingChanges(e.RowIndex, e.ColumnIndex, analysis.TableData);
+            Visual.DoingChanges(e.RowIndex, e.ColumnIndex, analysis);
         }
 
         private void MainChart_Paint(object sender, PaintEventArgs e)

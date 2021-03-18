@@ -332,7 +332,7 @@ namespace Specialized_PDF_Editor
             table.Columns["Date"].ReadOnly = true;
             table.Columns["Time"].ReadOnly = true;
             table.Columns["Value"].ReadOnly = false;
-            table.Columns["OOR"].ReadOnly = false;
+            table.Columns["OOR"].ReadOnly = true;
 
             // add rows to table
             table.Rows.Add(Ny);
@@ -483,39 +483,42 @@ namespace Specialized_PDF_Editor
         /// </summary>
         /// <param name="row">Select row</param>
         /// <param name="col">Select column</param>
-        /// <param name="tableData">Table which changing</param>
-        internal static void DoingChanges(int row, int col, KeyValuePairTable<int, DateTime, float, bool>[] tableData)
+        /// <param name="analysis">Data of analysis pdf-file</param>
+        internal static void DoingChanges(int row, int col, Analysis analysis)
         {
+            var tableData = analysis.TableData;
             var table = MainDataTable;
 
             // check needed of columns
-            if (table.Columns[col].Name != "Value" &&
-                table.Columns[col].Name != "OOR")
+            if (table.Columns[col].Name != "Value")
                 return;
 
-            if (table.Columns[col].Name == "Value")
+            // new enter value
+            string enterValue = table.CurrentCell.Value.ToString().Replace(".", ",");
+
+            // convert new value
+            float temp;
+            bool canChange = float.TryParse(enterValue, out temp);
+
+            // save result
+            if (canChange && (temp >= -273.15f))
             {
-                // new enter value
-                string enterValue = table.CurrentCell.Value.ToString().Replace(".", ",");
+                tableData[row] =
+                    new KeyValuePairTable<int, DateTime, float, bool>(tableData[row].Key,
+                    tableData[row].DateTime, temp, tableData[row].OOR);
 
-                // convert new value
-                float temp;
-                bool canChange = float.TryParse(enterValue, out temp);
-
-                // save result
-                if (canChange && (temp >= -273.15f))
-                    tableData[row] =
-                        new KeyValuePairTable<int, DateTime, float, bool>(tableData[row].Key,
-                        tableData[row].DateTime, temp, tableData[row].OOR);
+                // save result + second using canChange value for save result
+                if (analysis.LimitMin <= temp && temp <= analysis.LimitMax)
+                    canChange = false;
                 else
-                    table.CurrentCell.Value = tableData[row].Value;
+                    canChange = true;
+
+                tableData[row] = new KeyValuePairTable<int, DateTime, float, bool>(tableData[row].Key,
+                        tableData[row].DateTime, tableData[row].Value, canChange);
+                table.Rows[row].Cells["OOR"].Value = canChange;
             }
             else
-            {
-                // save result
-                tableData[row] = new KeyValuePairTable<int, DateTime, float, bool>(tableData[row].Key,
-                        tableData[row].DateTime, tableData[row].Value, (bool)table.CurrentCell.Value);
-            }
+                table.CurrentCell.Value = tableData[row].Value;
         }
 
         /// <summary>
