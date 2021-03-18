@@ -497,8 +497,7 @@ namespace Specialized_PDF_Editor
             string enterValue = table.CurrentCell.Value.ToString().Replace(".", ",");
 
             // convert new value
-            float temp;
-            bool canChange = float.TryParse(enterValue, out temp);
+            bool canChange = float.TryParse(enterValue, out float temp);
 
             // save result
             if (canChange && (temp >= -273.15f))
@@ -508,10 +507,7 @@ namespace Specialized_PDF_Editor
                     tableData[row].DateTime, temp, tableData[row].OOR);
 
                 // save result + second using canChange value for save result
-                if (analysis.LimitMin <= temp && temp <= analysis.LimitMax)
-                    canChange = false;
-                else
-                    canChange = true;
+                canChange = (analysis.LimitMin <= temp && temp <= analysis.LimitMax) ? false : true;
 
                 tableData[row] = new KeyValuePairTable<int, DateTime, float, bool>(tableData[row].Key,
                         tableData[row].DateTime, tableData[row].Value, canChange);
@@ -541,7 +537,7 @@ namespace Specialized_PDF_Editor
             {
                 "Температура, C",
                 "Верхняя граница",
-                "Ниж няя граница",
+                "Нижняя граница",
             };
 
             // prepare data
@@ -649,16 +645,16 @@ namespace Specialized_PDF_Editor
 
                 // right - small
                 for (float i = plotArea.Left; i < plotArea.Right; i += stepX)
-                    graph.DrawLine(gPen, i, plotArea.Top, i, plotArea.Top + 4);
+                    graph.DrawLine(gPen, i, plotArea.Top, i, plotArea.Top + 3);
                 // right - big
                 for (float i = plotArea.Left; i < plotArea.Right; i += 4f * stepX)
-                    graph.DrawLine(gPen, i, plotArea.Top, i, plotArea.Top + 8);
+                    graph.DrawLine(gPen, i, plotArea.Top, i, plotArea.Top + 6);
                 // top - small
                 for (float i = plotArea.Bottom; i > plotArea.Top; i -= stepY)
-                    graph.DrawLine(gPen, plotArea.Right, i, plotArea.Right - 4, i);
+                    graph.DrawLine(gPen, plotArea.Right, i, plotArea.Right - 3, i);
                 // top - big
                 for (float i = plotArea.Bottom; i > plotArea.Top; i -= 4f * stepY)
-                    graph.DrawLine(gPen, plotArea.Right, i, plotArea.Right - 8, i);
+                    graph.DrawLine(gPen, plotArea.Right, i, plotArea.Right - 6, i);
             }
 
             // step for grid
@@ -715,24 +711,50 @@ namespace Specialized_PDF_Editor
                 };
                 // bottom (left)
                 for (float i = plotArea.Left + beginX; i > plotArea.Left; i -= dX)
-                    graph.DrawLine(gPen, i, plotArea.Bottom, i, plotArea.Bottom - 4);
+                    graph.DrawLine(gPen, i, plotArea.Bottom, i, plotArea.Bottom - 3);
                 // bottom (right)
                 for (float i = plotArea.Left + beginX; i < plotArea.Right; i += dX)
-                    graph.DrawLine(gPen, i, plotArea.Bottom, i, plotArea.Bottom - 4);
+                    graph.DrawLine(gPen, i, plotArea.Bottom, i, plotArea.Bottom - 3);
                 // bottom - big
                 for (float i = plotArea.Left + beginX; i < plotArea.Right; i += 4f * dX)
-                    graph.DrawLine(gPen, i, plotArea.Bottom, i, plotArea.Bottom - 8);
+                    graph.DrawLine(gPen, i, plotArea.Bottom, i, plotArea.Bottom - 6);
 
                 // left (up)
                 for (float i = plotArea.Bottom - beginY; i > plotArea.Top; i -= dY)
-                    graph.DrawLine(gPen, plotArea.Left, i, plotArea.Left + 4, i);
+                    graph.DrawLine(gPen, plotArea.Left, i, plotArea.Left + 3, i);
                 // left (down)
                 for (float i = plotArea.Bottom - beginY; i < plotArea.Bottom; i += dY)
-                    graph.DrawLine(gPen, plotArea.Left, i, plotArea.Left + 4, i);
+                    graph.DrawLine(gPen, plotArea.Left, i, plotArea.Left + 3, i);
                 // left - big
                 for (float i = plotArea.Bottom - beginY; i > plotArea.Top; i -= stepY)
-                    graph.DrawLine(gPen, plotArea.Left, i, plotArea.Left + 8, i);
+                    graph.DrawLine(gPen, plotArea.Left, i, plotArea.Left + 6, i);
                 #endregion
+
+                // recalculate points relevant to scale
+                PointF[] plot = new PointF[analysis.TableData.Length];
+
+                Parallel.For(0, analysis.TableData.Length, i =>
+                    plot[i] = new PointF(PlotLimits(plotArea.Left, plotArea.Right, (float)(plotArea.Left + kfX *
+                        (analysis.TableData[i].DateTime - analysis.TableData[0].DateTime).TotalMinutes)),
+                        PlotLimits(plotArea.Top, plotArea.Bottom, 
+                        (float)(plotArea.Bottom - kfY * (analysis.TableData[i].Value - minOy)))));
+
+                // show chart
+                gPen.DashStyle = DashStyle.Solid;
+                gPen.Color = temperature;
+                gPen.Width = 2f;
+
+                // draw chart
+                graph.DrawLines(gPen, plot);
+
+                // draw limit lines
+                //TODO: draw limits of line
+                gPen.Color = topLimit;
+                graph.DrawLine(gPen, plotArea.Left, plotArea.Bottom - kfY * Math.Abs(analysis.LimitMax - minOy),
+                    plotArea.Right, plotArea.Bottom - kfY * Math.Abs(analysis.LimitMax - minOy));
+                gPen.Color = bottomLimit;
+                graph.DrawLine(gPen, plotArea.Left, plotArea.Bottom - kfY * Math.Abs(analysis.LimitMin - minOy),
+                    plotArea.Right, plotArea.Bottom - kfY * Math.Abs(analysis.LimitMin - minOy));
             }
 
             // sign axises and header
@@ -750,25 +772,6 @@ namespace Specialized_PDF_Editor
             // restore parameters
             graph.Restore(gState);
 
-            // recalculate points relevant to scale
-            PointF[] plot = new PointF[analysis.TableData.Length];
-
-            Parallel.For(0, analysis.TableData.Length, i =>
-                plot[i] = new PointF(PlotLimits(plotArea.Left, plotArea.Right, (float)(plotArea.Left + kfX *
-                    (analysis.TableData[i].DateTime - analysis.TableData[0].DateTime).TotalMinutes)),
-                    PlotLimits(plotArea.Top, plotArea.Bottom, (float)(plotArea.Bottom - kfY * analysis.TableData[i].Value))));
-
-            // show chart
-            gPen.DashStyle = DashStyle.Solid;
-            gPen.Color = temperature;
-            gPen.Width = 2f;
-
-            // draw chart
-            graph.DrawLines(gPen, plot);
-
-            // draw limit lines
-            //TODO: do limits of line
-
             // draw border chart (can change colour of  background of chart)
             gPen = new Pen(borderChart, 2f)
             {
@@ -776,6 +779,44 @@ namespace Specialized_PDF_Editor
             };
 
             graph.DrawRectangle(gPen, plotArea);
+
+            //TODO: draw legends
+            {
+                // area for legends
+                Rectangle l_rect = new Rectangle((int)(plotArea.Right - plotArea.Width * 1.05 / 6.25),
+                     (int)(plotArea.Bottom - plotArea.Height * 1.15 / 7.25),
+                     (int)(plotArea.Width / 6.25), (int)(plotArea.Height / 7.25));
+
+                // draw area
+                graph.FillRectangle(new SolidBrush(Color.FromArgb((byte)(0.9 * byte.MaxValue), Color.White)), l_rect);
+
+                // draw border
+                gPen.Width = 1f;
+                graph.DrawRectangle(gPen, l_rect);
+
+                // imaginary division
+                float partY = l_rect.Height / 3f,
+                    partX = l_rect.Width / 3f;
+
+                // draw lines
+                gPen.Width = 2f;
+                gPen.Color = temperature;
+                graph.DrawLine(gPen, l_rect.Left + partX / 6, l_rect.Top + partY / 2,
+                    l_rect.Left + partX - partX / 8, l_rect.Top + partY / 2);
+                gPen.Color = topLimit;
+                graph.DrawLine(gPen, l_rect.Left + partX / 6, l_rect.Top + 3 * partY / 2,
+                    l_rect.Left + partX - partX / 8, l_rect.Top + 3 * partY / 2);
+                gPen.Color = bottomLimit;
+                graph.DrawLine(gPen, l_rect.Left + partX / 6, l_rect.Top + 5 * partY / 2,
+                    l_rect.Left + partX - partX / 8, l_rect.Top + 5 * partY / 2);
+
+                // draw text sing legend lines
+                sFormat.Alignment = StringAlignment.Near;
+                for (int i = 0; i < legends.Length; i++)
+                    graph.DrawString(legends[i], fLegend, new SolidBrush(borderChart),
+                            new PointF(l_rect.Left + partX,
+                            l_rect.Top + (i + 0.5f) * partY - legendsFS.Height / 2), sFormat);
+            }
 
             // dispose graphics
             gPen.Dispose();
