@@ -531,6 +531,9 @@ namespace Specialized_PDF_Editor
                 tableData[row] = new KeyValuePairTable<int, DateTime, float, bool>(tableData[row].Key,
                         tableData[row].DateTime, tableData[row].Value, canChange);
                 table.Rows[row].Cells["OOR"].Value = canChange;
+
+                // change header
+                analysis.ChangeHeader();
             }
             else
                 table.CurrentCell.Value = tableData[row].Value;
@@ -854,7 +857,7 @@ namespace Specialized_PDF_Editor
         internal static void ClearChart()
             => Chart
             .CreateGraphics()
-            .Clear(Color.LightGray);
+            .Clear(Chart.BackColor);
 
         /// <summary>
         /// Limiting of plot

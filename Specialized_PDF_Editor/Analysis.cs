@@ -314,6 +314,24 @@ namespace Specialized_PDF_Editor
         }
 
         /// <summary>
+        /// Change header text with new data
+        /// </summary>
+        /// <returns>New header</returns>
+        internal void ChangeHeader()
+        {
+            // find string with needed value
+            Regex regex = new Regex(@"Количество нарушений:(\s+\d+)",
+                        RegexOptions.IgnoreCase | RegexOptions.Compiled);
+            Match match = regex.Match(HeadInfo.ToString());
+
+            // calculate count of voluation
+            int count = TableData.Where(i => i.OOR == true).Count();
+
+            // change header
+            HeadInfo.Replace(match.Value, $"Количество нарушений: {count}");
+        }
+
+        /// <summary>
         /// Parsing header of pdf-file
         /// </summary>
         /// <param name="page">Data of page</param>

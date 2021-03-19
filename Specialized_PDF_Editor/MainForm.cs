@@ -154,6 +154,7 @@ namespace Specialized_PDF_Editor
         private void TableMainData_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             Visual.DoingChanges(e.RowIndex, e.ColumnIndex, analysis);
+            Visual.HeaderInfo.Text = analysis.HeadInfo.ToString();
 
             // update area of chart
             Refresh();
