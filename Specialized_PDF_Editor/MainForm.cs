@@ -4,6 +4,7 @@ using iText.Layout.Element;
 
 using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.IO.MemoryMappedFiles;
 using System.Text;
@@ -59,6 +60,11 @@ namespace Specialized_PDF_Editor
             Visual.OxDataTable = tableOxData;
 
             Visual.Chart = mainChart;
+
+            Visual.TempColor = bTempColor;
+            Visual.TopColor = bTopColor;
+            Visual.BottomColor = bBottomColor;
+            Visual.FontText = bFont;
         }
 
         /// <summary>
@@ -108,6 +114,7 @@ namespace Specialized_PDF_Editor
 
         private void ToolAnalysisFile_Click(object sender, EventArgs e)
         {
+            // check file availability
             if (Visual.StreamL == null)
             {
                 status.Text = "The file is invalid or non-available";
@@ -117,10 +124,20 @@ namespace Specialized_PDF_Editor
             Visual.HeaderInfo.Clear();
             analysis = new Analysis(Visual.StreamL);
             analysis.ExtractMetaData();
+
+            // check corected pdf-file
+            if (!analysis.FileValidation())
+            {
+                status.Text = "The file is invalid or non-available";
+                Visual.ClearChart();
+                return;
+            }
+
             analysis.ParsingFile();
 
             Visual.MetaDataInfo.Text = analysis.Metadata.ToString();
             Visual.HeaderInfo.Text = analysis.HeadInfo.ToString();
+
             Visual.ShowMainDataTable(analysis.TableData);
             Visual.ShowOyDataTable(analysis.DataOyAxis);
             Visual.ShowOxDataTable(analysis.DataOxAxis);
@@ -137,12 +154,43 @@ namespace Specialized_PDF_Editor
         private void TableMainData_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             Visual.DoingChanges(e.RowIndex, e.ColumnIndex, analysis);
+
+            // update area of chart
+            Refresh();
         }
 
         private void MainChart_Paint(object sender, PaintEventArgs e)
         {
             if (analysis != null)
                 Visual.ShowChart(analysis, e.Graphics, e.ClipRectangle);
+        }
+
+        private void BTempColor_Click(object sender, EventArgs e)
+        {
+            if (colorChouse.ShowDialog() == DialogResult.OK)
+                bTempColor.BackColor = colorChouse.Color;
+        }
+
+        private void BTopColor_Click(object sender, EventArgs e)
+        {
+            if (colorChouse.ShowDialog() == DialogResult.OK)
+                bTopColor.BackColor = colorChouse.Color;
+        }
+
+        private void BBottomColor_Click(object sender, EventArgs e)
+        {
+            if (colorChouse.ShowDialog() == DialogResult.OK)
+                bBottomColor.BackColor = colorChouse.Color;
+        }
+
+        private void BFont_Click(object sender, EventArgs e)
+        {
+            if (fontChouse.ShowDialog() == DialogResult.OK)
+            {
+                bFont.Text = fontChouse.Font.Name;
+                bFont.Font = new Font(
+                    new Font(fontChouse.Font, FontStyle.Regular).FontFamily, 14f);
+            }
         }
     }
 }

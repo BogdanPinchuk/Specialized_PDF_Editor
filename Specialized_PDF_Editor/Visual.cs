@@ -57,7 +57,26 @@ namespace Specialized_PDF_Editor
         /// Show data in Ox table
         /// </summary>
         internal static DataGridView OxDataTable { get; set; }
+        /// <summary>
+        /// Area for chart
+        /// </summary>
         internal static PictureBox Chart;
+        /// <summary>
+        /// Button for chose color of temperature
+        /// </summary>
+        internal static Button TempColor { get; set; }
+        /// <summary>
+        /// Button for chose color of top limit
+        /// </summary>
+        internal static Button TopColor { get; set; }
+        /// <summary>
+        /// Button for chose color of bottom limit
+        /// </summary>
+        internal static Button BottomColor { get; set; }
+        /// <summary>
+        /// Button for chose font for text
+        /// </summary>
+        internal static Button FontText { get; set; }
 
         /// <summary>
         /// File in RAM
@@ -507,7 +526,7 @@ namespace Specialized_PDF_Editor
                     tableData[row].DateTime, temp, tableData[row].OOR);
 
                 // save result + second using canChange value for save result
-                canChange = (analysis.LimitMin <= temp && temp <= analysis.LimitMax) ? false : true;
+                canChange = !(analysis.LimitMin <= temp && temp <= analysis.LimitMax);
 
                 tableData[row] = new KeyValuePairTable<int, DateTime, float, bool>(tableData[row].Key,
                         tableData[row].DateTime, tableData[row].Value, canChange);
@@ -547,14 +566,20 @@ namespace Specialized_PDF_Editor
                 .Select(t => t.ToString("HH:mm") + "\n" + t.ToString("dd.MM.yyyy")).ToArray();
 
             // value of colours from chart
-            Color temperature = Color.FromArgb(0, 250, 0),
-                topLimit = Color.FromArgb(238, 29, 37),
-                bottomLimit = Color.FromArgb(0, 0, 250),
+            Color temperature = TempColor.BackColor,
+                topLimit = TopColor.BackColor,
+                bottomLimit = BottomColor.BackColor,
                 gridAxis = Color.FromArgb(200, 200, 200),
                 borderChart = Color.FromArgb(0, 0, 0);  // and text
+            //Color temperature = Color.FromArgb(0, 250, 0),
+            //    topLimit = Color.FromArgb(238, 29, 37),
+            //    bottomLimit = Color.FromArgb(0, 0, 250),
+            //    gridAxis = Color.FromArgb(200, 200, 200),
+            //    borderChart = Color.FromArgb(0, 0, 0);  // and text
 
             // instance font and height of text
-            string fontText = "Tahoma";
+            string fontText = FontText.Font.Name;
+            //string fontText = "Tahoma";
             Font fTitle = new Font(fontText, 10.5f, FontStyle.Regular),
                 fAxis = new Font(fontText, 9.75f, FontStyle.Regular),
                 fLegend = new Font(fontText, 10.5f, FontStyle.Regular);
@@ -744,11 +769,12 @@ namespace Specialized_PDF_Editor
                 gPen.Color = temperature;
                 gPen.Width = 2f;
 
-                // draw chart
-                graph.DrawLines(gPen, plot);
+                // draw chart (1-st out of plot area range)
+                //graph.DrawLines(gPen, plot);
+                for (int i = 1; i < plot.Length; i++)
+                    graph.DrawLine(gPen, plot[i-1], plot[i]);
 
                 // draw limit lines
-                //TODO: draw limits of line
                 gPen.Color = topLimit;
                 graph.DrawLine(gPen, plotArea.Left, plotArea.Bottom - kfY * Math.Abs(analysis.LimitMax - minOy),
                     plotArea.Right, plotArea.Bottom - kfY * Math.Abs(analysis.LimitMax - minOy));
@@ -821,6 +847,14 @@ namespace Specialized_PDF_Editor
             // dispose graphics
             gPen.Dispose();
         }
+
+        /// <summary>
+        /// Clear area of chart
+        /// </summary>
+        internal static void ClearChart()
+            => Chart
+            .CreateGraphics()
+            .Clear(Color.LightGray);
 
         /// <summary>
         /// Limiting of plot

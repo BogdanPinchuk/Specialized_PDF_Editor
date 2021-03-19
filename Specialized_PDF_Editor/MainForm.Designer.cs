@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Drawing;
+using System.Windows.Forms;
 
 namespace Specialized_PDF_Editor
 {
@@ -36,6 +37,10 @@ namespace Specialized_PDF_Editor
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -51,10 +56,6 @@ namespace Specialized_PDF_Editor
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menu = new System.Windows.Forms.MenuStrip();
             this.fileMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -88,9 +89,22 @@ namespace Specialized_PDF_Editor
             this.tabChart = new System.Windows.Forms.TabPage();
             this.mainChart = new System.Windows.Forms.PictureBox();
             this.tabParam = new System.Windows.Forms.TabPage();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.bFont = new System.Windows.Forms.Button();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.bBottomColor = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.bTopColor = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.bTempColor = new System.Windows.Forms.Button();
             this.tabTable = new System.Windows.Forms.TabControl();
             this.tabMainData = new System.Windows.Forms.TabPage();
             this.tableMainData = new System.Windows.Forms.DataGridView();
+            this.Key = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OOR = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tabOy = new System.Windows.Forms.TabPage();
             this.tableOyData = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -101,11 +115,8 @@ namespace Specialized_PDF_Editor
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.Key = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OOR = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colorChouse = new System.Windows.Forms.ColorDialog();
+            this.fontChouse = new System.Windows.Forms.FontDialog();
             this.menu.SuspendLayout();
             this.statusM.SuspendLayout();
             this.tabC.SuspendLayout();
@@ -130,6 +141,11 @@ namespace Specialized_PDF_Editor
             this.tabGraph.SuspendLayout();
             this.tabChart.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainChart)).BeginInit();
+            this.tabParam.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.tabTable.SuspendLayout();
             this.tabMainData.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tableMainData)).BeginInit();
@@ -434,7 +450,7 @@ namespace Specialized_PDF_Editor
             // 
             this.splitC2.Panel2.Controls.Add(this.tabTable);
             this.splitC2.Size = new System.Drawing.Size(780, 224);
-            this.splitC2.SplitterDistance = 467;
+            this.splitC2.SplitterDistance = 484;
             this.splitC2.SplitterWidth = 10;
             this.splitC2.TabIndex = 0;
             // 
@@ -446,7 +462,7 @@ namespace Specialized_PDF_Editor
             this.tabGraph.Location = new System.Drawing.Point(0, 0);
             this.tabGraph.Name = "tabGraph";
             this.tabGraph.SelectedIndex = 0;
-            this.tabGraph.Size = new System.Drawing.Size(467, 224);
+            this.tabGraph.Size = new System.Drawing.Size(484, 224);
             this.tabGraph.TabIndex = 0;
             // 
             // tabChart
@@ -456,7 +472,7 @@ namespace Specialized_PDF_Editor
             this.tabChart.Location = new System.Drawing.Point(4, 22);
             this.tabChart.Name = "tabChart";
             this.tabChart.Padding = new System.Windows.Forms.Padding(3);
-            this.tabChart.Size = new System.Drawing.Size(459, 198);
+            this.tabChart.Size = new System.Drawing.Size(476, 198);
             this.tabChart.TabIndex = 0;
             this.tabChart.Text = "Chart";
             this.tabChart.UseVisualStyleBackColor = true;
@@ -467,7 +483,7 @@ namespace Specialized_PDF_Editor
             this.mainChart.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainChart.Location = new System.Drawing.Point(3, 3);
             this.mainChart.Name = "mainChart";
-            this.mainChart.Size = new System.Drawing.Size(453, 192);
+            this.mainChart.Size = new System.Drawing.Size(470, 192);
             this.mainChart.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.mainChart.TabIndex = 0;
             this.mainChart.TabStop = false;
@@ -475,13 +491,123 @@ namespace Specialized_PDF_Editor
             // 
             // tabParam
             // 
+            this.tabParam.AutoScroll = true;
+            this.tabParam.Controls.Add(this.groupBox4);
+            this.tabParam.Controls.Add(this.groupBox3);
+            this.tabParam.Controls.Add(this.groupBox2);
+            this.tabParam.Controls.Add(this.groupBox1);
             this.tabParam.Location = new System.Drawing.Point(4, 22);
             this.tabParam.Name = "tabParam";
-            this.tabParam.Padding = new System.Windows.Forms.Padding(3);
-            this.tabParam.Size = new System.Drawing.Size(459, 198);
+            this.tabParam.Padding = new System.Windows.Forms.Padding(5);
+            this.tabParam.Size = new System.Drawing.Size(476, 198);
             this.tabParam.TabIndex = 1;
             this.tabParam.Text = "Parameters";
             this.tabParam.UseVisualStyleBackColor = true;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.AutoSize = true;
+            this.groupBox4.Controls.Add(this.bFont);
+            this.groupBox4.Location = new System.Drawing.Point(10, 81);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(5);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(5, 5, 5, 20);
+            this.groupBox4.Size = new System.Drawing.Size(400, 71);
+            this.groupBox4.TabIndex = 3;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Font";
+            // 
+            // bFont
+            // 
+            this.bFont.AutoSize = true;
+            this.bFont.BackColor = System.Drawing.Color.White;
+            this.bFont.Dock = System.Windows.Forms.DockStyle.Top;
+            this.bFont.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.bFont.Location = new System.Drawing.Point(5, 18);
+            this.bFont.Name = "bFont";
+            this.bFont.Size = new System.Drawing.Size(390, 33);
+            this.bFont.TabIndex = 0;
+            this.bFont.Text = "Tahoma";
+            this.bFont.UseVisualStyleBackColor = false;
+            this.bFont.Click += new System.EventHandler(this.BFont_Click);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.AutoSize = true;
+            this.groupBox3.Controls.Add(this.bBottomColor);
+            this.groupBox3.Location = new System.Drawing.Point(271, 10);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(5);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(5, 5, 5, 20);
+            this.groupBox3.Size = new System.Drawing.Size(139, 61);
+            this.groupBox3.TabIndex = 2;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Bottom border color";
+            // 
+            // bBottomColor
+            // 
+            this.bBottomColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(250)))));
+            this.bBottomColor.Dock = System.Windows.Forms.DockStyle.Top;
+            this.bBottomColor.Location = new System.Drawing.Point(5, 18);
+            this.bBottomColor.Margin = new System.Windows.Forms.Padding(5);
+            this.bBottomColor.Name = "bBottomColor";
+            this.bBottomColor.Padding = new System.Windows.Forms.Padding(5);
+            this.bBottomColor.Size = new System.Drawing.Size(129, 23);
+            this.bBottomColor.TabIndex = 0;
+            this.bBottomColor.UseVisualStyleBackColor = false;
+            this.bBottomColor.Click += new System.EventHandler(this.BBottomColor_Click);
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.AutoSize = true;
+            this.groupBox2.Controls.Add(this.bTopColor);
+            this.groupBox2.Location = new System.Drawing.Point(157, 10);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(5);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(5, 5, 5, 20);
+            this.groupBox2.Size = new System.Drawing.Size(104, 61);
+            this.groupBox2.TabIndex = 1;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Top border color";
+            // 
+            // bTopColor
+            // 
+            this.bTopColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(29)))), ((int)(((byte)(37)))));
+            this.bTopColor.Dock = System.Windows.Forms.DockStyle.Top;
+            this.bTopColor.Location = new System.Drawing.Point(5, 18);
+            this.bTopColor.Margin = new System.Windows.Forms.Padding(5);
+            this.bTopColor.Name = "bTopColor";
+            this.bTopColor.Padding = new System.Windows.Forms.Padding(5);
+            this.bTopColor.Size = new System.Drawing.Size(94, 23);
+            this.bTopColor.TabIndex = 0;
+            this.bTopColor.UseVisualStyleBackColor = false;
+            this.bTopColor.Click += new System.EventHandler(this.BTopColor_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.AutoSize = true;
+            this.groupBox1.Controls.Add(this.bTempColor);
+            this.groupBox1.Location = new System.Drawing.Point(10, 10);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(5);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(5, 5, 5, 20);
+            this.groupBox1.Size = new System.Drawing.Size(137, 61);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Temperature curve color";
+            // 
+            // bTempColor
+            // 
+            this.bTempColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(250)))), ((int)(((byte)(0)))));
+            this.bTempColor.Dock = System.Windows.Forms.DockStyle.Top;
+            this.bTempColor.Location = new System.Drawing.Point(5, 18);
+            this.bTempColor.Margin = new System.Windows.Forms.Padding(5);
+            this.bTempColor.Name = "bTempColor";
+            this.bTempColor.Padding = new System.Windows.Forms.Padding(5);
+            this.bTempColor.Size = new System.Drawing.Size(127, 23);
+            this.bTempColor.TabIndex = 0;
+            this.bTempColor.UseVisualStyleBackColor = false;
+            this.bTempColor.Click += new System.EventHandler(this.BTempColor_Click);
             // 
             // tabTable
             // 
@@ -492,7 +618,7 @@ namespace Specialized_PDF_Editor
             this.tabTable.Location = new System.Drawing.Point(0, 0);
             this.tabTable.Name = "tabTable";
             this.tabTable.SelectedIndex = 0;
-            this.tabTable.Size = new System.Drawing.Size(303, 224);
+            this.tabTable.Size = new System.Drawing.Size(286, 224);
             this.tabTable.TabIndex = 0;
             // 
             // tabMainData
@@ -501,7 +627,7 @@ namespace Specialized_PDF_Editor
             this.tabMainData.Location = new System.Drawing.Point(4, 22);
             this.tabMainData.Name = "tabMainData";
             this.tabMainData.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMainData.Size = new System.Drawing.Size(295, 198);
+            this.tabMainData.Size = new System.Drawing.Size(278, 198);
             this.tabMainData.TabIndex = 0;
             this.tabMainData.Text = "Main data";
             this.tabMainData.UseVisualStyleBackColor = true;
@@ -550,164 +676,9 @@ namespace Specialized_PDF_Editor
             dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.tableMainData.RowsDefaultCellStyle = dataGridViewCellStyle9;
             this.tableMainData.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.tableMainData.Size = new System.Drawing.Size(289, 192);
+            this.tableMainData.Size = new System.Drawing.Size(272, 192);
             this.tableMainData.TabIndex = 0;
             this.tableMainData.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.TableMainData_CellEndEdit);
-            // 
-            // tabOy
-            // 
-            this.tabOy.Controls.Add(this.tableOyData);
-            this.tabOy.Location = new System.Drawing.Point(4, 22);
-            this.tabOy.Name = "tabOy";
-            this.tabOy.Padding = new System.Windows.Forms.Padding(3);
-            this.tabOy.Size = new System.Drawing.Size(295, 198);
-            this.tabOy.TabIndex = 1;
-            this.tabOy.Text = "Axis Oy";
-            this.tabOy.UseVisualStyleBackColor = true;
-            // 
-            // tableOyData
-            // 
-            this.tableOyData.AllowUserToAddRows = false;
-            this.tableOyData.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.tableOyData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle10;
-            this.tableOyData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.tableOyData.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            this.tableOyData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
-            this.tableOyData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.tableOyData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn4});
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.tableOyData.DefaultCellStyle = dataGridViewCellStyle14;
-            this.tableOyData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableOyData.Location = new System.Drawing.Point(3, 3);
-            this.tableOyData.Name = "tableOyData";
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            this.tableOyData.RowHeadersDefaultCellStyle = dataGridViewCellStyle15;
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.tableOyData.RowsDefaultCellStyle = dataGridViewCellStyle16;
-            this.tableOyData.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.tableOyData.Size = new System.Drawing.Size(289, 192);
-            this.tableOyData.TabIndex = 1;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.Format = "N0";
-            dataGridViewCellStyle12.NullValue = null;
-            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle12;
-            this.dataGridViewTextBoxColumn1.HeaderText = "Номер";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle13.Format = "N0";
-            dataGridViewCellStyle13.NullValue = null;
-            this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle13;
-            this.dataGridViewTextBoxColumn4.HeaderText = "Температура, C";
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            // 
-            // tabOx
-            // 
-            this.tabOx.Controls.Add(this.tableOxData);
-            this.tabOx.Location = new System.Drawing.Point(4, 22);
-            this.tabOx.Name = "tabOx";
-            this.tabOx.Size = new System.Drawing.Size(295, 198);
-            this.tabOx.TabIndex = 2;
-            this.tabOx.Text = "Axis Ox";
-            this.tabOx.UseVisualStyleBackColor = true;
-            // 
-            // tableOxData
-            // 
-            this.tableOxData.AllowUserToAddRows = false;
-            this.tableOxData.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.tableOxData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle17;
-            this.tableOxData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.tableOxData.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle18.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle18.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            this.tableOxData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle18;
-            this.tableOxData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.tableOxData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn2,
-            this.dataGridViewTextBoxColumn5,
-            this.dataGridViewTextBoxColumn3});
-            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle22.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle22.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle22.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle22.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle22.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle22.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.tableOxData.DefaultCellStyle = dataGridViewCellStyle22;
-            this.tableOxData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableOxData.Location = new System.Drawing.Point(0, 0);
-            this.tableOxData.Name = "tableOxData";
-            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle23.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle23.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle23.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle23.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            this.tableOxData.RowHeadersDefaultCellStyle = dataGridViewCellStyle23;
-            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.tableOxData.RowsDefaultCellStyle = dataGridViewCellStyle24;
-            this.tableOxData.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.tableOxData.Size = new System.Drawing.Size(295, 198);
-            this.tableOxData.TabIndex = 1;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle19.Format = "N0";
-            dataGridViewCellStyle19.NullValue = null;
-            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle19;
-            this.dataGridViewTextBoxColumn2.HeaderText = "Номер";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle20.Format = "t";
-            dataGridViewCellStyle20.NullValue = null;
-            this.dataGridViewTextBoxColumn5.DefaultCellStyle = dataGridViewCellStyle20;
-            this.dataGridViewTextBoxColumn5.HeaderText = "Время";
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle21.Format = "d";
-            dataGridViewCellStyle21.NullValue = null;
-            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle21;
-            this.dataGridViewTextBoxColumn3.HeaderText = "Дата";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             // 
             // Key
             // 
@@ -755,6 +726,169 @@ namespace Specialized_PDF_Editor
             this.OOR.ReadOnly = true;
             this.OOR.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
+            // tabOy
+            // 
+            this.tabOy.Controls.Add(this.tableOyData);
+            this.tabOy.Location = new System.Drawing.Point(4, 22);
+            this.tabOy.Name = "tabOy";
+            this.tabOy.Padding = new System.Windows.Forms.Padding(3);
+            this.tabOy.Size = new System.Drawing.Size(278, 198);
+            this.tabOy.TabIndex = 1;
+            this.tabOy.Text = "Axis Oy";
+            this.tabOy.UseVisualStyleBackColor = true;
+            // 
+            // tableOyData
+            // 
+            this.tableOyData.AllowUserToAddRows = false;
+            this.tableOyData.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.tableOyData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle10;
+            this.tableOyData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.tableOyData.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            this.tableOyData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
+            this.tableOyData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.tableOyData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn4});
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.tableOyData.DefaultCellStyle = dataGridViewCellStyle14;
+            this.tableOyData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableOyData.Location = new System.Drawing.Point(3, 3);
+            this.tableOyData.Name = "tableOyData";
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            this.tableOyData.RowHeadersDefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.tableOyData.RowsDefaultCellStyle = dataGridViewCellStyle16;
+            this.tableOyData.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.tableOyData.Size = new System.Drawing.Size(272, 192);
+            this.tableOyData.TabIndex = 1;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle12.Format = "N0";
+            dataGridViewCellStyle12.NullValue = null;
+            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle12;
+            this.dataGridViewTextBoxColumn1.HeaderText = "Номер";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle13.Format = "N0";
+            dataGridViewCellStyle13.NullValue = null;
+            this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle13;
+            this.dataGridViewTextBoxColumn4.HeaderText = "Температура, C";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            // 
+            // tabOx
+            // 
+            this.tabOx.Controls.Add(this.tableOxData);
+            this.tabOx.Location = new System.Drawing.Point(4, 22);
+            this.tabOx.Name = "tabOx";
+            this.tabOx.Size = new System.Drawing.Size(278, 198);
+            this.tabOx.TabIndex = 2;
+            this.tabOx.Text = "Axis Ox";
+            this.tabOx.UseVisualStyleBackColor = true;
+            // 
+            // tableOxData
+            // 
+            this.tableOxData.AllowUserToAddRows = false;
+            this.tableOxData.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.tableOxData.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle17;
+            this.tableOxData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.tableOxData.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle18.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle18.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            this.tableOxData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle18;
+            this.tableOxData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.tableOxData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn2,
+            this.dataGridViewTextBoxColumn5,
+            this.dataGridViewTextBoxColumn3});
+            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle22.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle22.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle22.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle22.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle22.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle22.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.tableOxData.DefaultCellStyle = dataGridViewCellStyle22;
+            this.tableOxData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableOxData.Location = new System.Drawing.Point(0, 0);
+            this.tableOxData.Name = "tableOxData";
+            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle23.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle23.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle23.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle23.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            this.tableOxData.RowHeadersDefaultCellStyle = dataGridViewCellStyle23;
+            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.tableOxData.RowsDefaultCellStyle = dataGridViewCellStyle24;
+            this.tableOxData.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.tableOxData.Size = new System.Drawing.Size(278, 198);
+            this.tableOxData.TabIndex = 1;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle19.Format = "N0";
+            dataGridViewCellStyle19.NullValue = null;
+            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle19;
+            this.dataGridViewTextBoxColumn2.HeaderText = "Номер";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle20.Format = "t";
+            dataGridViewCellStyle20.NullValue = null;
+            this.dataGridViewTextBoxColumn5.DefaultCellStyle = dataGridViewCellStyle20;
+            this.dataGridViewTextBoxColumn5.HeaderText = "Время";
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle21.Format = "d";
+            dataGridViewCellStyle21.NullValue = null;
+            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle21;
+            this.dataGridViewTextBoxColumn3.HeaderText = "Дата";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            // 
+            // colorChouse
+            // 
+            this.colorChouse.FullOpen = true;
+            // 
+            // fontChouse
+            // 
+            this.fontChouse.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            // 
             // MainForm
             // 
             this.AllowDrop = true;
@@ -800,6 +934,13 @@ namespace Specialized_PDF_Editor
             this.tabChart.ResumeLayout(false);
             this.tabChart.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainChart)).EndInit();
+            this.tabParam.ResumeLayout(false);
+            this.tabParam.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
             this.tabTable.ResumeLayout(false);
             this.tabMainData.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tableMainData)).EndInit();
@@ -864,6 +1005,16 @@ namespace Specialized_PDF_Editor
         private DataGridViewTextBoxColumn Time;
         private DataGridViewTextBoxColumn Value;
         private DataGridViewCheckBoxColumn OOR;
+        private GroupBox groupBox3;
+        private Button bBottomColor;
+        private GroupBox groupBox2;
+        private Button bTopColor;
+        private GroupBox groupBox1;
+        private Button bTempColor;
+        private ColorDialog colorChouse;
+        private GroupBox groupBox4;
+        private Button bFont;
+        private FontDialog fontChouse;
     }
 }
 

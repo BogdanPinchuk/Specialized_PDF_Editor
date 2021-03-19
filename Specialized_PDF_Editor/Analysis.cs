@@ -28,7 +28,7 @@ namespace Specialized_PDF_Editor
         /// <summary>
         /// Stream for loaded file
         /// </summary>
-        private MemoryStream stream = new MemoryStream();
+        private readonly MemoryStream stream = new MemoryStream();
         /// <summary>
         /// Information about every page
         /// </summary>
@@ -95,7 +95,7 @@ namespace Specialized_PDF_Editor
         /// <summary>
         /// Block acess to data for multitreading
         /// </summary>
-        private object block = new object();
+        private readonly object block = new object();
 
         /// <summary>
         /// Create instance for analysis
@@ -230,7 +230,7 @@ namespace Specialized_PDF_Editor
 
                     regex = new Regex(@"([+-]?\d+)", RegexOptions.Compiled);
                     MatchCollection matches = regex.Matches(findS);
-                    
+
                     List<float> results = new List<float>();
                     foreach (Match m in matches)
                     {
@@ -270,6 +270,47 @@ namespace Specialized_PDF_Editor
 
                 pdf.Close();
             }
+        }
+
+        /// <summary>
+        /// Check is file corected
+        /// </summary>
+        /// <returns></returns>
+        internal bool FileValidation()
+        {
+            stream.Position = 0;
+
+            // value that show is file corected
+            bool result = true;
+
+            using (var reader = new PdfReader(stream))
+            using (var pdf = new PdfDocument(reader))
+            {
+                reader.SetCloseStream(false);
+
+                PageCount = pdf.GetNumberOfPages();
+
+                // get every page for analyse
+                PdfPage[] pages = Enumerable
+                            .Range(0, PageCount)
+                            .Select(t => pdf.GetPage(t + 1))
+                            .ToArray();
+
+                // data of every page (two diferent variants)
+                for (int i = 0; i < pages.Length; i++)
+                {
+                    HeadInfo = ParsingHeader(pages[i]);
+
+                    Regex regex = new Regex(@"Серийный номер термотестера:",
+                        RegexOptions.IgnoreCase | RegexOptions.Compiled);
+
+                    Match match = regex.Match(HeadInfo.ToString());
+
+                    result &= !string.IsNullOrEmpty(match.Value);
+                }
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -551,8 +592,7 @@ namespace Specialized_PDF_Editor
                 int.TryParse(temp[0], out int key);
                 DateTime.TryParse(temp[1] + " " + temp[2], out DateTime datetime);
                 float.TryParse(temp[3].Replace('.', ','), out float value);
-                bool oor = (temp.Length == 5) ? true : false;
-                data[i] = new KeyValuePairTable<int, DateTime, float, bool>(key, datetime, value, oor);
+                data[i] = new KeyValuePairTable<int, DateTime, float, bool>(key, datetime, value, temp.Length == 5);
             });
 
             return data;
