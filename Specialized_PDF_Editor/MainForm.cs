@@ -130,6 +130,7 @@ namespace Specialized_PDF_Editor
             {
                 status.Text = "The file is invalid or non-available";
                 Visual.ClearChart();
+                analysis = null;
                 return;
             }
 

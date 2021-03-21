@@ -297,14 +297,16 @@ namespace Specialized_PDF_Editor
                             .ToArray();
 
                 // data of every page (two diferent variants)
+                StringBuilder headInfo = new StringBuilder();
+
                 for (int i = 0; i < pages.Length; i++)
                 {
-                    HeadInfo = ParsingHeader(pages[i]);
+                    headInfo = ParsingHeader(pages[i]);
 
                     Regex regex = new Regex(@"С(\s*)е(\s*)р(\s*)и(\s*)й(\s*)н(\s*)ы(\s*)й(\s+)н(\s*)о(\s*)м(\s*)е(\s*)р(\s+)т(\s*)е(\s*)р(\s*)м(\s*)о(\s*)т(\s*)е(\s*)с(\s*)т(\s*)е(\s*)р(\s*)а(\s*):",
                         RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
-                    Match match = regex.Match(HeadInfo.ToString());
+                    Match match = regex.Match(headInfo.ToString());
 
                     result &= !string.IsNullOrEmpty(match.Value);
                 }
