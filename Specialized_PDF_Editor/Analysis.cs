@@ -223,7 +223,7 @@ namespace Specialized_PDF_Editor
 
                 // find the limits
                 {
-                    Regex regex = new Regex(@"Задан диапазон температур между:(\s+[+-]?\d+)°C и(\s+[+-]?\d+)°C",
+                    Regex regex = new Regex(@"З(\s*)а(\s*)д(\s*)а(\s*)н(\s+)д(\s*)и(\s*)а(\s*)п(\s*)а(\s*)з(\s*)о(\s*)н(\s+)т(\s*)е(\s*)м(\s*)п(\s*)е(\s*)р(\s*)а(\s*)т(\s*)у(\s*)р(\s+)м(\s*)е(\s*)ж(\s*)д(\s*)у(\s*):(\s+[+-]?\d+)°C и(\s+[+-]?\d+)°C",
                         RegexOptions.IgnoreCase | RegexOptions.Compiled);
                     Match match = regex.Match(HeadInfo.ToString());
                     string findS = match.Value;
@@ -301,7 +301,7 @@ namespace Specialized_PDF_Editor
                 {
                     HeadInfo = ParsingHeader(pages[i]);
 
-                    Regex regex = new Regex(@"Серийный номер термотестера:",
+                    Regex regex = new Regex(@"С(\s*)е(\s*)р(\s*)и(\s*)й(\s*)н(\s*)ы(\s*)й(\s+)н(\s*)о(\s*)м(\s*)е(\s*)р(\s+)т(\s*)е(\s*)р(\s*)м(\s*)о(\s*)т(\s*)е(\s*)с(\s*)т(\s*)е(\s*)р(\s*)а(\s*):",
                         RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
                     Match match = regex.Match(HeadInfo.ToString());
@@ -320,7 +320,7 @@ namespace Specialized_PDF_Editor
         internal void ChangeHeader()
         {
             // find string with needed value
-            Regex regex = new Regex(@"Количество нарушений:(\s+\d+)",
+            Regex regex = new Regex(@"К(\s*)о(\s*)л(\s*)и(\s*)ч(\s*)е(\s*)с(\s*)т(\s*)в(\s*)о(\s+)н(\s*)а(\s*)р(\s*)у(\s*)ш(\s*)е(\s*)н(\s*)и(\s*)й(\s*):(\s+\d+)",
                         RegexOptions.IgnoreCase | RegexOptions.Compiled);
             Match match = regex.Match(HeadInfo.ToString());
 
