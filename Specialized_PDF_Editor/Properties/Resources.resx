@@ -145,4 +145,43 @@
   <data name="SolutionFolderSwitch_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SolutionFolderSwitch_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="GenericChart_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GenericChart_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="AutosizeStretch_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\AutosizeStretch_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FlagDarkBlue_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FlagDarkBlue_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FlagDarkGreen_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FlagDarkGreen_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FlagDarkPurple_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FlagDarkPurple_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FlagDarkRed_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FlagDarkRed_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FlagGreen_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FlagGreen_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FlagGroup_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FlagGroup_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FlagOutline_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FlagOutline_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FlagPurple_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FlagPurple_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FlagTurquoise_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FlagTurquoise_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Flag_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Flag_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScatterLineChart_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ScatterLineChart_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

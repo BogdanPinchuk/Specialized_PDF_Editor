@@ -194,5 +194,10 @@ namespace Specialized_PDF_Editor
                     new Font(fontChouse.Font, FontStyle.Regular).FontFamily, 14f);
             }
         }
+
+        private void DataScale_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

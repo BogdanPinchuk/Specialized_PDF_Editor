@@ -58,15 +58,6 @@ namespace Specialized_PDF_Editor
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menu = new System.Windows.Forms.MenuStrip();
-            this.fileMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.openMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.exitMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolsAnalysis = new System.Windows.Forms.ToolStripMenuItem();
-            this.analysisFile = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.analyseMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.statusM = new System.Windows.Forms.StatusStrip();
             this.status = new System.Windows.Forms.ToolStripStatusLabel();
             this.nameOfDoc = new System.Windows.Forms.ToolStripStatusLabel();
@@ -87,7 +78,6 @@ namespace Specialized_PDF_Editor
             this.splitC2 = new System.Windows.Forms.SplitContainer();
             this.tabGraph = new System.Windows.Forms.TabControl();
             this.tabChart = new System.Windows.Forms.TabPage();
-            this.mainChart = new System.Windows.Forms.PictureBox();
             this.tabParam = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.bFont = new System.Windows.Forms.Button();
@@ -117,6 +107,30 @@ namespace Specialized_PDF_Editor
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.colorChouse = new System.Windows.Forms.ColorDialog();
             this.fontChouse = new System.Windows.Forms.FontDialog();
+            this.mainChart = new System.Windows.Forms.PictureBox();
+            this.fileMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.openMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.exitMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolsAnalysis = new System.Windows.Forms.ToolStripMenuItem();
+            this.analysisFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.autoCD = new System.Windows.Forms.ToolStripMenuItem();
+            this.dataScale = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.analyseMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.dataRandom = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.dataSRandomS = new System.Windows.Forms.ToolStripMenuItem();
+            this.dataCRandomS = new System.Windows.Forms.ToolStripMenuItem();
+            this.dataMTwister = new System.Windows.Forms.ToolStripMenuItem();
+            this.DataXorshift = new System.Windows.Forms.ToolStripMenuItem();
+            this.dataMcg31m1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.dataMcg59 = new System.Windows.Forms.ToolStripMenuItem();
+            this.dataWH1982 = new System.Windows.Forms.ToolStripMenuItem();
+            this.dataWH2006 = new System.Windows.Forms.ToolStripMenuItem();
+            this.dataMrg32k3a = new System.Windows.Forms.ToolStripMenuItem();
+            this.dataPalf = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.statusM.SuspendLayout();
             this.tabC.SuspendLayout();
@@ -140,7 +154,6 @@ namespace Specialized_PDF_Editor
             this.splitC2.SuspendLayout();
             this.tabGraph.SuspendLayout();
             this.tabChart.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.mainChart)).BeginInit();
             this.tabParam.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -153,6 +166,7 @@ namespace Specialized_PDF_Editor
             ((System.ComponentModel.ISupportInitialize)(this.tableOyData)).BeginInit();
             this.tabOx.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tableOxData)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mainChart)).BeginInit();
             this.SuspendLayout();
             // 
             // menu
@@ -167,84 +181,6 @@ namespace Specialized_PDF_Editor
             this.menu.Size = new System.Drawing.Size(800, 24);
             this.menu.TabIndex = 0;
             this.menu.Text = "menu";
-            // 
-            // fileMenu
-            // 
-            this.fileMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openMenu,
-            this.saveMenu,
-            this.toolStripSeparator1,
-            this.exitMenu});
-            this.fileMenu.Image = global::Specialized_PDF_Editor.Properties.Resources.LocalFileSites_16x;
-            this.fileMenu.Name = "fileMenu";
-            this.fileMenu.Size = new System.Drawing.Size(53, 20);
-            this.fileMenu.Text = "File";
-            // 
-            // openMenu
-            // 
-            this.openMenu.Image = global::Specialized_PDF_Editor.Properties.Resources.OpenFile_16x;
-            this.openMenu.Name = "openMenu";
-            this.openMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openMenu.Size = new System.Drawing.Size(146, 22);
-            this.openMenu.Text = "Open";
-            this.openMenu.Click += new System.EventHandler(this.OpenMenu_Click);
-            // 
-            // saveMenu
-            // 
-            this.saveMenu.Enabled = false;
-            this.saveMenu.Image = global::Specialized_PDF_Editor.Properties.Resources.Save_16x;
-            this.saveMenu.Name = "saveMenu";
-            this.saveMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveMenu.Size = new System.Drawing.Size(146, 22);
-            this.saveMenu.Text = "Save";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(143, 6);
-            // 
-            // exitMenu
-            // 
-            this.exitMenu.Image = global::Specialized_PDF_Editor.Properties.Resources.Close_red_16x;
-            this.exitMenu.Name = "exitMenu";
-            this.exitMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitMenu.Size = new System.Drawing.Size(146, 22);
-            this.exitMenu.Text = "Exit";
-            this.exitMenu.Click += new System.EventHandler(this.ExitMenu_Click);
-            // 
-            // toolsAnalysis
-            // 
-            this.toolsAnalysis.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.analysisFile});
-            this.toolsAnalysis.Image = global::Specialized_PDF_Editor.Properties.Resources.SolutionFolderSwitch_16x;
-            this.toolsAnalysis.Name = "toolsAnalysis";
-            this.toolsAnalysis.Size = new System.Drawing.Size(63, 20);
-            this.toolsAnalysis.Text = "Tools";
-            // 
-            // analysisFile
-            // 
-            this.analysisFile.Image = global::Specialized_PDF_Editor.Properties.Resources.ValidationSummary_16x;
-            this.analysisFile.Name = "analysisFile";
-            this.analysisFile.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.analysisFile.Size = new System.Drawing.Size(176, 22);
-            this.analysisFile.Text = "Analysis pdf file";
-            this.analysisFile.Click += new System.EventHandler(this.ToolAnalysisFile_Click);
-            // 
-            // helpMenu
-            // 
-            this.helpMenu.Image = global::Specialized_PDF_Editor.Properties.Resources.FSHelpApplication_16x;
-            this.helpMenu.Name = "helpMenu";
-            this.helpMenu.Size = new System.Drawing.Size(60, 20);
-            this.helpMenu.Text = "Help";
-            this.helpMenu.Click += new System.EventHandler(this.HelpMenu_Click);
-            // 
-            // analyseMenu
-            // 
-            this.analyseMenu.Image = global::Specialized_PDF_Editor.Properties.Resources.AnalyzeTrace_16x;
-            this.analyseMenu.Name = "analyseMenu";
-            this.analyseMenu.Size = new System.Drawing.Size(76, 20);
-            this.analyseMenu.Text = "Analyse";
-            this.analyseMenu.Click += new System.EventHandler(this.AnalyseMenu_Click);
             // 
             // statusM
             // 
@@ -476,18 +412,6 @@ namespace Specialized_PDF_Editor
             this.tabChart.TabIndex = 0;
             this.tabChart.Text = "Chart";
             this.tabChart.UseVisualStyleBackColor = true;
-            // 
-            // mainChart
-            // 
-            this.mainChart.BackColor = System.Drawing.Color.LightGray;
-            this.mainChart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mainChart.Location = new System.Drawing.Point(3, 3);
-            this.mainChart.Name = "mainChart";
-            this.mainChart.Size = new System.Drawing.Size(470, 192);
-            this.mainChart.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.mainChart.TabIndex = 0;
-            this.mainChart.TabStop = false;
-            this.mainChart.Paint += new System.Windows.Forms.PaintEventHandler(this.MainChart_Paint);
             // 
             // tabParam
             // 
@@ -889,6 +813,208 @@ namespace Specialized_PDF_Editor
             // 
             this.fontChouse.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             // 
+            // mainChart
+            // 
+            this.mainChart.BackColor = System.Drawing.Color.LightGray;
+            this.mainChart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mainChart.Location = new System.Drawing.Point(3, 3);
+            this.mainChart.Name = "mainChart";
+            this.mainChart.Size = new System.Drawing.Size(470, 192);
+            this.mainChart.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.mainChart.TabIndex = 0;
+            this.mainChart.TabStop = false;
+            this.mainChart.Paint += new System.Windows.Forms.PaintEventHandler(this.MainChart_Paint);
+            // 
+            // fileMenu
+            // 
+            this.fileMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openMenu,
+            this.saveMenu,
+            this.toolStripSeparator1,
+            this.exitMenu});
+            this.fileMenu.Image = global::Specialized_PDF_Editor.Properties.Resources.LocalFileSites_16x;
+            this.fileMenu.Name = "fileMenu";
+            this.fileMenu.Size = new System.Drawing.Size(53, 20);
+            this.fileMenu.Text = "File";
+            // 
+            // openMenu
+            // 
+            this.openMenu.Image = global::Specialized_PDF_Editor.Properties.Resources.OpenFile_16x;
+            this.openMenu.Name = "openMenu";
+            this.openMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.openMenu.Size = new System.Drawing.Size(146, 22);
+            this.openMenu.Text = "Open";
+            this.openMenu.Click += new System.EventHandler(this.OpenMenu_Click);
+            // 
+            // saveMenu
+            // 
+            this.saveMenu.Enabled = false;
+            this.saveMenu.Image = global::Specialized_PDF_Editor.Properties.Resources.Save_16x;
+            this.saveMenu.Name = "saveMenu";
+            this.saveMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.saveMenu.Size = new System.Drawing.Size(146, 22);
+            this.saveMenu.Text = "Save";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(143, 6);
+            // 
+            // exitMenu
+            // 
+            this.exitMenu.Image = global::Specialized_PDF_Editor.Properties.Resources.Close_red_16x;
+            this.exitMenu.Name = "exitMenu";
+            this.exitMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
+            this.exitMenu.Size = new System.Drawing.Size(146, 22);
+            this.exitMenu.Text = "Exit";
+            this.exitMenu.Click += new System.EventHandler(this.ExitMenu_Click);
+            // 
+            // toolsAnalysis
+            // 
+            this.toolsAnalysis.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.analysisFile,
+            this.autoCD});
+            this.toolsAnalysis.Image = global::Specialized_PDF_Editor.Properties.Resources.SolutionFolderSwitch_16x;
+            this.toolsAnalysis.Name = "toolsAnalysis";
+            this.toolsAnalysis.Size = new System.Drawing.Size(63, 20);
+            this.toolsAnalysis.Text = "Tools";
+            // 
+            // analysisFile
+            // 
+            this.analysisFile.Image = global::Specialized_PDF_Editor.Properties.Resources.ValidationSummary_16x;
+            this.analysisFile.Name = "analysisFile";
+            this.analysisFile.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.analysisFile.Size = new System.Drawing.Size(181, 22);
+            this.analysisFile.Text = "Analysis pdf file";
+            this.analysisFile.Click += new System.EventHandler(this.ToolAnalysisFile_Click);
+            // 
+            // autoCD
+            // 
+            this.autoCD.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.dataScale,
+            this.dataRandom,
+            this.toolStripSeparator2,
+            this.dataSRandomS,
+            this.dataCRandomS,
+            this.dataMTwister,
+            this.DataXorshift,
+            this.dataMcg31m1,
+            this.dataMcg59,
+            this.dataWH1982,
+            this.dataWH2006,
+            this.dataMrg32k3a,
+            this.dataPalf});
+            this.autoCD.Image = global::Specialized_PDF_Editor.Properties.Resources.GenericChart_16x;
+            this.autoCD.Name = "autoCD";
+            this.autoCD.Size = new System.Drawing.Size(181, 22);
+            this.autoCD.Text = "Auto-changing data";
+            // 
+            // dataScale
+            // 
+            this.dataScale.Image = global::Specialized_PDF_Editor.Properties.Resources.AutosizeStretch_16x;
+            this.dataScale.Name = "dataScale";
+            this.dataScale.Size = new System.Drawing.Size(199, 22);
+            this.dataScale.Text = "Scale";
+            this.dataScale.Click += new System.EventHandler(this.DataScale_Click);
+            // 
+            // helpMenu
+            // 
+            this.helpMenu.Image = global::Specialized_PDF_Editor.Properties.Resources.FSHelpApplication_16x;
+            this.helpMenu.Name = "helpMenu";
+            this.helpMenu.Size = new System.Drawing.Size(60, 20);
+            this.helpMenu.Text = "Help";
+            this.helpMenu.Click += new System.EventHandler(this.HelpMenu_Click);
+            // 
+            // analyseMenu
+            // 
+            this.analyseMenu.Image = global::Specialized_PDF_Editor.Properties.Resources.AnalyzeTrace_16x;
+            this.analyseMenu.Name = "analyseMenu";
+            this.analyseMenu.Size = new System.Drawing.Size(76, 20);
+            this.analyseMenu.Text = "Analyse";
+            this.analyseMenu.Click += new System.EventHandler(this.AnalyseMenu_Click);
+            // 
+            // dataRandom
+            // 
+            this.dataRandom.Image = global::Specialized_PDF_Editor.Properties.Resources.ScatterLineChart_16x;
+            this.dataRandom.Name = "dataRandom";
+            this.dataRandom.Size = new System.Drawing.Size(199, 22);
+            this.dataRandom.Text = "Random";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(196, 6);
+            // 
+            // dataSRandomS
+            // 
+            this.dataSRandomS.Image = global::Specialized_PDF_Editor.Properties.Resources.Flag_16x;
+            this.dataSRandomS.Name = "dataSRandomS";
+            this.dataSRandomS.Size = new System.Drawing.Size(199, 22);
+            this.dataSRandomS.Text = "System Random Source";
+            // 
+            // dataCRandomS
+            // 
+            this.dataCRandomS.Image = global::Specialized_PDF_Editor.Properties.Resources.FlagDarkBlue_16x;
+            this.dataCRandomS.Name = "dataCRandomS";
+            this.dataCRandomS.Size = new System.Drawing.Size(199, 22);
+            this.dataCRandomS.Text = "Crypto Random Source";
+            // 
+            // dataMTwister
+            // 
+            this.dataMTwister.Image = global::Specialized_PDF_Editor.Properties.Resources.FlagDarkGreen_16x;
+            this.dataMTwister.Name = "dataMTwister";
+            this.dataMTwister.Size = new System.Drawing.Size(199, 22);
+            this.dataMTwister.Text = "Mersenne Twister";
+            // 
+            // DataXorshift
+            // 
+            this.DataXorshift.Image = global::Specialized_PDF_Editor.Properties.Resources.FlagDarkPurple_16x;
+            this.DataXorshift.Name = "DataXorshift";
+            this.DataXorshift.Size = new System.Drawing.Size(199, 22);
+            this.DataXorshift.Text = "Xorshift";
+            // 
+            // dataMcg31m1
+            // 
+            this.dataMcg31m1.Image = global::Specialized_PDF_Editor.Properties.Resources.FlagDarkRed_16x;
+            this.dataMcg31m1.Name = "dataMcg31m1";
+            this.dataMcg31m1.Size = new System.Drawing.Size(199, 22);
+            this.dataMcg31m1.Text = "Mcg31m1";
+            // 
+            // dataMcg59
+            // 
+            this.dataMcg59.Image = global::Specialized_PDF_Editor.Properties.Resources.FlagGreen_16x;
+            this.dataMcg59.Name = "dataMcg59";
+            this.dataMcg59.Size = new System.Drawing.Size(199, 22);
+            this.dataMcg59.Text = "Mcg59";
+            // 
+            // dataWH1982
+            // 
+            this.dataWH1982.Image = global::Specialized_PDF_Editor.Properties.Resources.FlagPurple_16x;
+            this.dataWH1982.Name = "dataWH1982";
+            this.dataWH1982.Size = new System.Drawing.Size(199, 22);
+            this.dataWH1982.Text = "WH1982";
+            // 
+            // dataWH2006
+            // 
+            this.dataWH2006.Image = global::Specialized_PDF_Editor.Properties.Resources.FlagTurquoise_16x;
+            this.dataWH2006.Name = "dataWH2006";
+            this.dataWH2006.Size = new System.Drawing.Size(199, 22);
+            this.dataWH2006.Text = "WH2006";
+            // 
+            // dataMrg32k3a
+            // 
+            this.dataMrg32k3a.Image = global::Specialized_PDF_Editor.Properties.Resources.FlagOutline_16x;
+            this.dataMrg32k3a.Name = "dataMrg32k3a";
+            this.dataMrg32k3a.Size = new System.Drawing.Size(199, 22);
+            this.dataMrg32k3a.Text = "Mrg32k3a";
+            // 
+            // dataPalf
+            // 
+            this.dataPalf.Image = global::Specialized_PDF_Editor.Properties.Resources.FlagGroup_16x;
+            this.dataPalf.Name = "dataPalf";
+            this.dataPalf.Size = new System.Drawing.Size(199, 22);
+            this.dataPalf.Text = "Palf";
+            // 
             // MainForm
             // 
             this.AllowDrop = true;
@@ -933,7 +1059,6 @@ namespace Specialized_PDF_Editor
             this.tabGraph.ResumeLayout(false);
             this.tabChart.ResumeLayout(false);
             this.tabChart.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.mainChart)).EndInit();
             this.tabParam.ResumeLayout(false);
             this.tabParam.PerformLayout();
             this.groupBox4.ResumeLayout(false);
@@ -948,6 +1073,7 @@ namespace Specialized_PDF_Editor
             ((System.ComponentModel.ISupportInitialize)(this.tableOyData)).EndInit();
             this.tabOx.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tableOxData)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mainChart)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1015,6 +1141,20 @@ namespace Specialized_PDF_Editor
         private GroupBox groupBox4;
         private Button bFont;
         private FontDialog fontChouse;
+        private ToolStripMenuItem autoCD;
+        private ToolStripMenuItem dataScale;
+        private ToolStripMenuItem dataRandom;
+        private ToolStripSeparator toolStripSeparator2;
+        private ToolStripMenuItem dataSRandomS;
+        private ToolStripMenuItem dataCRandomS;
+        private ToolStripMenuItem dataMTwister;
+        private ToolStripMenuItem DataXorshift;
+        private ToolStripMenuItem dataMcg31m1;
+        private ToolStripMenuItem dataMcg59;
+        private ToolStripMenuItem dataWH1982;
+        private ToolStripMenuItem dataWH2006;
+        private ToolStripMenuItem dataMrg32k3a;
+        private ToolStripMenuItem dataPalf;
     }
 }
 

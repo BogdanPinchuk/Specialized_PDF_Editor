@@ -73,6 +73,16 @@ namespace Specialized_PDF_Editor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap AutosizeStretch_16x {
+            get {
+                object obj = ResourceManager.GetObject("AutosizeStretch_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Close_red_16x {
             get {
                 object obj = ResourceManager.GetObject("Close_red_16x", resourceCulture);
@@ -83,9 +93,119 @@ namespace Specialized_PDF_Editor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Flag_16x {
+            get {
+                object obj = ResourceManager.GetObject("Flag_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FlagDarkBlue_16x {
+            get {
+                object obj = ResourceManager.GetObject("FlagDarkBlue_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FlagDarkGreen_16x {
+            get {
+                object obj = ResourceManager.GetObject("FlagDarkGreen_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FlagDarkPurple_16x {
+            get {
+                object obj = ResourceManager.GetObject("FlagDarkPurple_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FlagDarkRed_16x {
+            get {
+                object obj = ResourceManager.GetObject("FlagDarkRed_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FlagGreen_16x {
+            get {
+                object obj = ResourceManager.GetObject("FlagGreen_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FlagGroup_16x {
+            get {
+                object obj = ResourceManager.GetObject("FlagGroup_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FlagOutline_16x {
+            get {
+                object obj = ResourceManager.GetObject("FlagOutline_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FlagPurple_16x {
+            get {
+                object obj = ResourceManager.GetObject("FlagPurple_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FlagTurquoise_16x {
+            get {
+                object obj = ResourceManager.GetObject("FlagTurquoise_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap FSHelpApplication_16x {
             get {
                 object obj = ResourceManager.GetObject("FSHelpApplication_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap GenericChart_16x {
+            get {
+                object obj = ResourceManager.GetObject("GenericChart_16x", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -126,6 +246,16 @@ namespace Specialized_PDF_Editor.Properties {
         internal static System.Drawing.Bitmap Save_grey_16x {
             get {
                 object obj = ResourceManager.GetObject("Save_grey_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ScatterLineChart_16x {
+            get {
+                object obj = ResourceManager.GetObject("ScatterLineChart_16x", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

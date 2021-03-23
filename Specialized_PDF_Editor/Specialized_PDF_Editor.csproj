@@ -99,6 +99,9 @@
     <Reference Include="itextsharp, Version=5.5.13.2, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
       <HintPath>..\packages\iTextSharp.5.5.13.2\lib\itextsharp.dll</HintPath>
     </Reference>
+    <Reference Include="MathNet.Numerics, Version=4.15.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.4.15.0\lib\net461\MathNet.Numerics.dll</HintPath>
+    </Reference>
     <Reference Include="PdfiumViewer, Version=2.13.0.0, Culture=neutral, PublicKeyToken=91e4789cfb0609e0, processorArchitecture=MSIL">
       <HintPath>..\packages\PdfiumViewer.2.13.0.0\lib\net20\PdfiumViewer.dll</HintPath>
     </Reference>
@@ -107,6 +110,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -156,6 +160,19 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="pdf.ico" />
+    <None Include="Resources\FlagTurquoise_16x.png" />
+    <None Include="Resources\FlagPurple_16x.png" />
+    <None Include="Resources\FlagOutline_16x.png" />
+    <None Include="Resources\FlagGroup_16x.png" />
+    <None Include="Resources\FlagGreen_16x.png" />
+    <None Include="Resources\FlagDarkRed_16x.png" />
+    <None Include="Resources\FlagDarkPurple_16x.png" />
+    <None Include="Resources\FlagDarkGreen_16x.png" />
+    <None Include="Resources\FlagDarkBlue_16x.png" />
+    <None Include="Resources\Flag_16x.png" />
+    <None Include="Resources\ScatterLineChart_16x.png" />
+    <None Include="Resources\AutosizeStretch_16x.png" />
+    <None Include="Resources\GenericChart_16x.png" />
     <None Include="Resources\SolutionFolderSwitch_16x.png" />
     <None Include="Resources\ValidationSummary_16x.png" />
     <None Include="Resources\LocalFileSites_16x.png" />
