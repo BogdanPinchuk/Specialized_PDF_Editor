@@ -869,6 +869,13 @@ namespace Specialized_PDF_Editor
         private static float PlotLimits(float min, float max, float value)
                 => (value < min) ? min : ((value > max) ? max : value);
 
+        /// <summary>
+        /// Scaling data within acceptable limits
+        /// </summary>
+        internal unsafe static void Array_Scale()
+        {
+
+        }
 
         /// <summary>
         /// Unload/clean data from memory but not close

@@ -51,6 +51,10 @@ namespace Specialized_PDF_Editor
         /// </summary>
         internal KeyValuePairTable<int, DateTime, float, bool>[] TableData { get; set; }
         /// <summary>
+        /// Data from tables block
+        /// </summary>
+        internal KeyValuePairTable<int, DateTime, float, bool>[] TableDataBlock { get; private set; }
+        /// <summary>
         /// Data from Oy axis
         /// </summary>
         internal int[] DataOyAxis { get; set; }
@@ -257,6 +261,8 @@ namespace Specialized_PDF_Editor
 
                 // convert string data to real data
                 TableData = ExtractTableData(DataInfo);
+                // save data
+                TableData.CopyTo(TableDataBlock, 0);
 
                 // data of Oy axis
                 OyAxisInfo = ParsingOyAxis(pages[PageCount - 1]);

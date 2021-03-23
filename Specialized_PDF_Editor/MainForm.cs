@@ -197,7 +197,8 @@ namespace Specialized_PDF_Editor
 
         private void DataScale_Click(object sender, EventArgs e)
         {
-
+            if (analysis != null)
+                return;
         }
     }
 }
