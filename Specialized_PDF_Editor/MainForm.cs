@@ -12,6 +12,9 @@ using System.Windows.Forms;
 
 namespace Specialized_PDF_Editor
 {
+    /// <summary>
+    /// Main form for GUI
+    /// </summary>
     public partial class MainForm : Form
     {
         /// <summary>
@@ -198,7 +201,15 @@ namespace Specialized_PDF_Editor
         private void DataScale_Click(object sender, EventArgs e)
         {
             if (analysis != null)
-                return;
+            {
+                Visual.Array_Scale(analysis);
+                Visual.ShowMainDataTable(analysis.TableData);
+                Visual.HeaderInfo.Text = analysis.HeadInfo.ToString();
+
+                // update area of chart
+                Refresh();
+            }
+
         }
     }
 }

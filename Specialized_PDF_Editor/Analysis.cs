@@ -262,6 +262,7 @@ namespace Specialized_PDF_Editor
                 // convert string data to real data
                 TableData = ExtractTableData(DataInfo);
                 // save data
+                TableDataBlock = new KeyValuePairTable<int, DateTime, float, bool>[TableData.Length];
                 TableData.CopyTo(TableDataBlock, 0);
 
                 // data of Oy axis

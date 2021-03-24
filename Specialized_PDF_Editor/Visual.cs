@@ -109,7 +109,6 @@ namespace Specialized_PDF_Editor
         /// Load pdf-file to RAM
         /// </summary>
         /// <param name="Path">Path for file</param>
-        /// <param name="stream">stream for document</param>
         /// <param name="pdfViewer">Component with view the document</param>
         internal static void LoadPdfToMemory(string Path, PdfiumViewer.PdfViewer pdfViewer)
         {
@@ -142,7 +141,6 @@ namespace Specialized_PDF_Editor
         /// <summary>
         /// Load pdf-file to RAM
         /// </summary>
-        /// <param name="Path">Path for file</param>
         /// <param name="stream">stream for document</param>
         /// <param name="pdfViewer">Component with view the document</param>
         internal static void LoadPdfToMemory(Stream stream, PdfiumViewer.PdfViewer pdfViewer)
@@ -314,6 +312,7 @@ namespace Specialized_PDF_Editor
         /// <summary>
         /// Show data in main table
         /// </summary>
+        /// <param name="tableData">Input data for show in table</param>
         internal static void ShowMainDataTable(KeyValuePairTable<int, DateTime, float, bool>[] tableData)
         {
             DataGridView table = MainDataTable;
@@ -344,7 +343,7 @@ namespace Specialized_PDF_Editor
             table.Columns["Date"].DefaultCellStyle.Format = "dd.MM.yyyy";
             //table.Columns["Time"].DefaultCellStyle.Format = "t";
             table.Columns["Time"].DefaultCellStyle.Format = "HH:mm";
-            table.Columns["OOR"].DefaultCellStyle.Format = "N1";
+            table.Columns["Value"].DefaultCellStyle.Format = "N1";
 
             // ability of correcting data
             table.Columns["Key"].ReadOnly = true;
@@ -764,7 +763,7 @@ namespace Specialized_PDF_Editor
                 Parallel.For(0, analysis.TableData.Length, i =>
                     plot[i] = new PointF(PlotLimits(plotArea.Left, plotArea.Right, (float)(plotArea.Left + kfX *
                         (analysis.TableData[i].DateTime - analysis.TableData[0].DateTime).TotalMinutes)),
-                        PlotLimits(plotArea.Top, plotArea.Bottom, 
+                        PlotLimits(plotArea.Top, plotArea.Bottom,
                         (float)(plotArea.Bottom - kfY * (analysis.TableData[i].Value - minOy)))));
 
                 // show chart
@@ -775,7 +774,7 @@ namespace Specialized_PDF_Editor
                 // draw chart (1-st out of plot area range)
                 //graph.DrawLines(gPen, plot);
                 for (int i = 1; i < plot.Length; i++)
-                    graph.DrawLine(gPen, plot[i-1], plot[i]);
+                    graph.DrawLine(gPen, plot[i - 1], plot[i]);
 
                 // draw limit lines
                 gPen.Color = topLimit;
@@ -872,9 +871,125 @@ namespace Specialized_PDF_Editor
         /// <summary>
         /// Scaling data within acceptable limits
         /// </summary>
-        internal unsafe static void Array_Scale()
+        /// <param name="analysis">Data of analysis pdf-file</param>
+        internal unsafe static void Array_Scale(Analysis analysis)
         {
+            // copy from reserve
+            var tableData = analysis.TableDataBlock;
+            float limitMin = analysis.LimitMin + 0.1f,
+                limitMax = analysis.LimitMax - 0.1f;
 
+            // max and min values needed for scale
+            float max_all = analysis.TableDataBlock
+                .AsParallel()
+                .Where(t => (limitMin <= t.Value) && (t.Value <= limitMax))
+                .Select(t => t.Value)
+                .Max(),
+                min_all = analysis.TableDataBlock
+                .AsParallel()
+                .Where(t => (limitMin <= t.Value) && (t.Value <= limitMax))
+                .Select(t => t.Value)
+                .Min();
+
+            // create new array for out of range values
+            var array_temp_min = tableData
+                .AsParallel()
+                .AsOrdered()
+                .Where(t => t.Value <= limitMin)
+                .ToArray();
+            var array_temp_max = tableData
+                .AsParallel()
+                .AsOrdered()
+                .Where(t => t.Value >= limitMax)
+                .ToArray();
+
+            // extract data values of temperature
+            float[] array_temp_values_min = array_temp_min
+                .AsParallel()
+                .AsOrdered()
+                .Select(t => t.Value)
+                .ToArray(),
+                array_temp_values_max = array_temp_max
+                .AsParallel()
+                .AsOrdered()
+                .Select(t => t.Value)
+                .ToArray();
+
+            // analysis out of range up and down
+            bool oor_up = array_temp_values_max.Length > 0,
+                oor_down = array_temp_values_min.Length > 0;
+
+            // scaling
+            if (oor_up)
+            {
+                // max and min values needed for scale
+                float max = array_temp_values_max.Max();
+
+                // array for result
+                float[] res_max = new float[array_temp_values_max.Length];
+
+                // block data in RAM
+                fixed (float* ar = array_temp_values_max, res = res_max)
+                {
+                    // instance values for pointers
+                    float* _ar = ar, _res = res;
+
+                    for (int i = 0; i < res_max.Length; i++, _ar++, _res++)
+                        *_res = (*_ar - min_all) * (limitMax - min_all) / (max - min_all) + min_all;
+                        //*_res = (*_ar - limitMin) * (limitMax - limitMin) / (max - limitMin) + limitMin;
+
+                    // find index
+                    int[] id = array_temp_max
+                        .AsParallel()
+                        .AsOrdered()
+                        .Select(t => t.Key)
+                        .ToArray();
+
+                    // save data
+                    //for (int i = 0; i < id.Length; i++)
+                    //    analysis.TableData[id[i] - 1] =
+                    //        new KeyValuePairTable<int, DateTime, float, bool>(id[i],
+                    //        array_temp_max[i].DateTime, res_max[i], false);
+                    Parallel.For(0, id.Length, i => analysis.TableData[id[i] - 1] =
+                            new KeyValuePairTable<int, DateTime, float, bool>(id[i],
+                            array_temp_max[i].DateTime, res_max[i], false));
+                }
+            }
+
+            if (oor_down)
+            {
+                // max and min values needed for scale
+                float min = array_temp_values_min.Min();
+
+                // array for result
+                float[] res_min = new float[array_temp_values_min.Length];
+
+                // block data in RAM
+                fixed (float* ar = array_temp_values_min, res = res_min)
+                {
+                    // instance values for pointers
+                    float* _ar = ar, _res = res;
+
+                    for (int i = 0; i < res_min.Length; i++, _ar++, _res++)
+                        *_res = max_all - (max_all - *_ar) * (max_all - limitMin) / (max_all - min);
+                        //*_res = limitMax - (limitMax - *_ar) * (limitMax - limitMin) / (limitMax - min);
+
+                    // find index
+                    int[] id = array_temp_min
+                        .AsParallel()
+                        .AsOrdered()
+                        .Select(t => t.Key)
+                        .ToArray();
+
+                    // save data
+                    Parallel.For(0, id.Length, i => analysis.TableData[id[i] - 1] =
+                            new KeyValuePairTable<int, DateTime, float, bool>(id[i],
+                            array_temp_min[i].DateTime, res_min[i], false));
+                }
+            }
+
+            // change header
+            analysis.ChangeHeader();
         }
 
         /// <summary>
