@@ -22,6 +22,24 @@ namespace Specialized_PDF_Editor
     internal static class Visual
     {
         /// <summary>
+        /// Type of random data series
+        /// </summary>
+        private enum TypeOfRandom
+        {
+            dataScale,
+            dataSRandomS,
+            dataCRandomS,
+            dataMTwister,
+            dataXorshift,
+            dataMcg31m1,
+            dataMcg59,
+            dataWH1982,
+            dataWH2006,
+            dataMrg32k3a,
+            dataPalf,
+        }
+
+        /// <summary>
         /// Viewer for loaded pdf file
         /// </summary>
         internal static PdfiumViewer.PdfViewer PdfViewerL { get; set; }
@@ -936,7 +954,6 @@ namespace Specialized_PDF_Editor
 
                     for (int i = 0; i < res_max.Length; i++, _ar++, _res++)
                         *_res = (*_ar - min_all) * (limitMax - min_all) / (max - min_all) + min_all;
-                        //*_res = (*_ar - limitMin) * (limitMax - limitMin) / (max - limitMin) + limitMin;
 
                     // find index
                     int[] id = array_temp_max
@@ -946,10 +963,6 @@ namespace Specialized_PDF_Editor
                         .ToArray();
 
                     // save data
-                    //for (int i = 0; i < id.Length; i++)
-                    //    analysis.TableData[id[i] - 1] =
-                    //        new KeyValuePairTable<int, DateTime, float, bool>(id[i],
-                    //        array_temp_max[i].DateTime, res_max[i], false);
                     Parallel.For(0, id.Length, i => analysis.TableData[id[i] - 1] =
                             new KeyValuePairTable<int, DateTime, float, bool>(id[i],
                             array_temp_max[i].DateTime, res_max[i], false));
@@ -972,7 +985,6 @@ namespace Specialized_PDF_Editor
 
                     for (int i = 0; i < res_min.Length; i++, _ar++, _res++)
                         *_res = max_all - (max_all - *_ar) * (max_all - limitMin) / (max_all - min);
-                        //*_res = limitMax - (limitMax - *_ar) * (limitMax - limitMin) / (limitMax - min);
 
                     // find index
                     int[] id = array_temp_min
@@ -990,6 +1002,100 @@ namespace Specialized_PDF_Editor
 
             // change header
             analysis.ChangeHeader();
+        }
+
+        /// <summary>
+        /// Auto modify data within acceptable limits
+        /// </summary>
+        /// <param name="analysis">Data of analysis pdf-file</param>
+        /// <param name="menuItem">Variant of chose strip menu</param>
+        internal unsafe static void Array_Modify(Analysis analysis, ToolStripMenuItem menuItem)
+        {
+            // variant of strip menu
+            Enum.TryParse(menuItem.Name, out TypeOfRandom varOfSM);
+
+            // copy from reserve
+            var tableData = analysis.TableDataBlock;
+            float limitMin = analysis.LimitMin + 0.1f,
+                limitMax = analysis.LimitMax - 0.1f;
+
+            // max and min values needed for scale
+            float max_all = analysis.TableDataBlock
+                .AsParallel()
+                .Where(t => (limitMin <= t.Value) && (t.Value <= limitMax))
+                .Select(t => t.Value)
+                .Max(),
+                min_all = analysis.TableDataBlock
+                .AsParallel()
+                .Where(t => (limitMin <= t.Value) && (t.Value <= limitMax))
+                .Select(t => t.Value)
+                .Min();
+
+            // create new array for out of range values
+            var array_temp_min = tableData
+                .AsParallel()
+                .AsOrdered()
+                .Where(t => t.Value <= limitMin)
+                .ToArray();
+            var array_temp_max = tableData
+                .AsParallel()
+                .AsOrdered()
+                .Where(t => t.Value >= limitMax)
+                .ToArray();
+
+            // extract data values of temperature
+            float[] array_temp_values_min = array_temp_min
+                .AsParallel()
+                .AsOrdered()
+                .Select(t => t.Value)
+                .ToArray(),
+                array_temp_values_max = array_temp_max
+                .AsParallel()
+                .AsOrdered()
+                .Select(t => t.Value)
+                .ToArray();
+
+            // analysis out of range up and down
+            bool oor_up = array_temp_values_max.Length > 0,
+                oor_down = array_temp_values_min.Length > 0;
+
+            // create random data array
+            // lenght - length of array
+            // type - type of series
+            float[] CreateRDA(int lenght, TypeOfRandom type)
+            {
+                float[] res = new float[lenght];
+
+                switch (type)
+                {
+                    case TypeOfRandom.dataScale:
+                        goto default;
+                    case TypeOfRandom.dataSRandomS:
+                        break;
+                    case TypeOfRandom.dataCRandomS:
+                        break;
+                    case TypeOfRandom.dataMTwister:
+                        break;
+                    case TypeOfRandom.dataXorshift:
+                        break;
+                    case TypeOfRandom.dataMcg31m1:
+                        break;
+                    case TypeOfRandom.dataMcg59:
+                        break;
+                    case TypeOfRandom.dataWH1982:
+                        break;
+                    case TypeOfRandom.dataWH2006:
+                        break;
+                    case TypeOfRandom.dataMrg32k3a:
+                        break;
+                    case TypeOfRandom.dataPalf:
+                        break;
+                    default:
+                        break;
+                }
+
+                return res;
+            }
         }
 
         /// <summary>

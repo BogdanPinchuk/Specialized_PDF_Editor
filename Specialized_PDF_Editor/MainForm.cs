@@ -202,6 +202,7 @@ namespace Specialized_PDF_Editor
         {
             if (analysis != null)
             {
+                Visual.Array_Modify(analysis, dataScale);
                 Visual.Array_Scale(analysis);
                 Visual.ShowMainDataTable(analysis.TableData);
                 Visual.HeaderInfo.Text = analysis.HeadInfo.ToString();
