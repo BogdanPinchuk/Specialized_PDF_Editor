@@ -1026,6 +1026,7 @@ namespace Specialized_PDF_Editor
             var tableData = analysis.TableDataBlock;
             float limitMin = analysis.LimitMin + 0.1f,
                 limitMax = analysis.LimitMax - 0.1f;
+            // for testing
             //float limitMin = 24f,
             //    limitMax = 36f;
 
@@ -1069,6 +1070,9 @@ namespace Specialized_PDF_Editor
             bool oor_up = array_temp_values_max.Length > 0,
                 oor_down = array_temp_values_min.Length > 0;
 
+            // scatter for random
+            float scatter = 1.0f;
+
             // scaling
             if (oor_up)
             {
@@ -1088,7 +1092,7 @@ namespace Specialized_PDF_Editor
                     float* _ar = ar, _c = coef, _res = res;
 
                     for (int i = 0; i < res_max.Length; i++, _ar++, _c++, _res++)
-                        *_res = min_all + *_c * (*_ar - min_all) * (limitMax - min_all) / (max - min_all);
+                        *_res = scatter * (*_c - 1.0f) + min_all + (*_ar - min_all) * (limitMax - min_all) / (max - min_all);
 
                     // find index
                     int[] id = array_temp_max
@@ -1122,7 +1126,7 @@ namespace Specialized_PDF_Editor
                     float* _ar = ar, _c = coef, _res = res;
 
                     for (int i = 0; i < res_min.Length; i++, _ar++, _c++, _res++)
-                        *_res = max_all - *_c * (max_all - *_ar) * (max_all - limitMin) / (max_all - min);
+                        *_res = scatter * (1.0f - *_c) + max_all - (max_all - *_ar) * (max_all - limitMin) / (max_all - min);
 
                     // find index
                     int[] id = array_temp_min
@@ -1137,6 +1141,9 @@ namespace Specialized_PDF_Editor
                             array_temp_min[i].DateTime, res_min[i], false));
                 }
             }
+
+            // change header
+            analysis.ChangeHeader();
 
             // create random data array
             // lenght - length of array
