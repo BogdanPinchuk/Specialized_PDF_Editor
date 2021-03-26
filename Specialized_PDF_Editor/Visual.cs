@@ -2,6 +2,8 @@
 using iText.Layout;
 using iText.Layout.Element;
 
+using MathNet.Numerics.Random;
+
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -27,10 +29,12 @@ namespace Specialized_PDF_Editor
         private enum TypeOfRandom
         {
             dataScale,
+            dataRandomB,
             dataSRandomS,
             dataCRandomS,
             dataMTwister,
             dataXorshift,
+            dataXoshiro256SS,
             dataMcg31m1,
             dataMcg59,
             dataWH1982,
@@ -887,7 +891,7 @@ namespace Specialized_PDF_Editor
                 => (value < min) ? min : ((value > max) ? max : value);
 
         /// <summary>
-        /// Scaling data within acceptable limits
+        /// Scaling data within acceptable limits (first variant for testing)
         /// </summary>
         /// <param name="analysis">Data of analysis pdf-file</param>
         internal unsafe static void Array_Scale(Analysis analysis)
@@ -1012,7 +1016,11 @@ namespace Specialized_PDF_Editor
         internal unsafe static void Array_Modify(Analysis analysis, ToolStripMenuItem menuItem)
         {
             // variant of strip menu
-            Enum.TryParse(menuItem.Name, out TypeOfRandom varOfSM);
+            bool canContinue = Enum.TryParse(menuItem.Name, out TypeOfRandom varOfSM);
+
+            // if value is not corect, method must be exit
+            if (!canContinue)
+                return;
 
             // copy from reserve
             var tableData = analysis.TableDataBlock;
@@ -1059,43 +1067,133 @@ namespace Specialized_PDF_Editor
             bool oor_up = array_temp_values_max.Length > 0,
                 oor_down = array_temp_values_min.Length > 0;
 
+            // scaling
+            if (oor_up)
+            {
+                // max and min values needed for scale
+                float max = array_temp_values_max.Max();
+
+                // array for result
+                float[] res_max = new float[array_temp_values_max.Length];
+
+                // create random coeficient for scaling
+                float[] array_coef = CreateRDA(res_max.Length, varOfSM);
+
+                // block data in RAM
+                fixed (float* ar = array_temp_values_max, coef = array_coef, res = res_max)
+                {
+                    // instance values for pointers
+                    float* _ar = ar, _c = coef, _res = res;
+
+                    for (int i = 0; i < res_max.Length; i++, _ar++, _c++, _res++)
+                        *_res = min_all + *_c * (*_ar - min_all) * (limitMax - min_all) / (max - min_all);
+
+                    // find index
+                    int[] id = array_temp_max
+                        .AsParallel()
+                        .AsOrdered()
+                        .Select(t => t.Key)
+                        .ToArray();
+
+                    // save data
+                    Parallel.For(0, id.Length, i => analysis.TableData[id[i] - 1] =
+                            new KeyValuePairTable<int, DateTime, float, bool>(id[i],
+                            array_temp_max[i].DateTime, res_max[i], false));
+                }
+            }
+
+            if (oor_down)
+            {
+                // max and min values needed for scale
+                float min = array_temp_values_min.Min();
+
+                // array for result
+                float[] res_min = new float[array_temp_values_min.Length];
+
+                // create random coeficient for scaling
+                float[] array_coef = CreateRDA(res_min.Length, varOfSM);
+
+                // block data in RAM
+                fixed (float* ar = array_temp_values_min, coef = array_coef, res = res_min)
+                {
+                    // instance values for pointers
+                    float* _ar = ar, _c = coef, _res = res;
+
+                    for (int i = 0; i < res_min.Length; i++, _ar++, _res++)
+                        *_res = max_all - *_c * (max_all - *_ar) * (max_all - limitMin) / (max_all - min);
+
+                    // find index
+                    int[] id = array_temp_min
+                        .AsParallel()
+                        .AsOrdered()
+                        .Select(t => t.Key)
+                        .ToArray();
+
+                    // save data
+                    Parallel.For(0, id.Length, i => analysis.TableData[id[i] - 1] =
+                            new KeyValuePairTable<int, DateTime, float, bool>(id[i],
+                            array_temp_min[i].DateTime, res_min[i], false));
+                }
+            }
+
             // create random data array
             // lenght - length of array
             // type - type of series
             float[] CreateRDA(int lenght, TypeOfRandom type)
             {
                 float[] res = new float[lenght];
+                double[] array = new double[lenght];
+                var rnd = new Random();
 
                 switch (type)
                 {
                     case TypeOfRandom.dataScale:
+                        Parallel.For(0, lenght, i => array[i] = 1.0);
+                        goto default;
+                    case TypeOfRandom.dataRandomB:
+                         Parallel.For(0, lenght, i => array[i] = rnd.NextDouble());
                         goto default;
                     case TypeOfRandom.dataSRandomS:
-                        break;
+                        array = SystemRandomSource.Doubles(lenght, rnd.Next(lenght));
+                        goto default;
                     case TypeOfRandom.dataCRandomS:
-                        break;
+                        array = CryptoRandomSource.Doubles(lenght);
+                        goto default;
                     case TypeOfRandom.dataMTwister:
-                        break;
+                        array = MersenneTwister.Doubles(lenght, rnd.Next(lenght));
+                        goto default;
                     case TypeOfRandom.dataXorshift:
-                        break;
+                        array = Xorshift.Doubles(lenght, rnd.Next(lenght));
+                        goto default;
+                    case TypeOfRandom.dataXoshiro256SS:
+                        array = Xoshiro256StarStar.Doubles(lenght, rnd.Next(lenght));
+                        goto default;
                     case TypeOfRandom.dataMcg31m1:
-                        break;
+                        array = Mcg31m1.Doubles(lenght, rnd.Next(lenght));
+                        goto default;
                     case TypeOfRandom.dataMcg59:
-                        break;
+                        array = Mcg59.Doubles(lenght, rnd.Next(lenght));
+                        goto default;
                     case TypeOfRandom.dataWH1982:
-                        break;
+                        array = WH1982.Doubles(lenght, rnd.Next(lenght));
+                        goto default;
                     case TypeOfRandom.dataWH2006:
-                        break;
+                        array = WH2006.Doubles(lenght, rnd.Next(lenght));
+                        goto default;
                     case TypeOfRandom.dataMrg32k3a:
-                        break;
+                        array = Mrg32k3a.Doubles(lenght, rnd.Next(lenght));
+                        goto default;
                     case TypeOfRandom.dataPalf:
-                        break;
+                        array = Palf.Doubles(lenght, rnd.Next(lenght));
+                        goto default;
                     default:
+                        Parallel.For(0, lenght, i => res[i] = (float)array[i]);
                         break;
                 }
 
                 return res;
             }
+
         }
 
         /// <summary>

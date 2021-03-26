@@ -67,11 +67,12 @@ namespace Specialized_PDF_Editor
             this.analysisFile = new System.Windows.Forms.ToolStripMenuItem();
             this.autoCD = new System.Windows.Forms.ToolStripMenuItem();
             this.dataScale = new System.Windows.Forms.ToolStripMenuItem();
-            this.dataRandom = new System.Windows.Forms.ToolStripMenuItem();
+            this.dataRandomB = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.dataSRandomS = new System.Windows.Forms.ToolStripMenuItem();
             this.dataCRandomS = new System.Windows.Forms.ToolStripMenuItem();
             this.dataMTwister = new System.Windows.Forms.ToolStripMenuItem();
+            this.dataXoshiro256SS = new System.Windows.Forms.ToolStripMenuItem();
             this.dataXorshift = new System.Windows.Forms.ToolStripMenuItem();
             this.dataMcg31m1 = new System.Windows.Forms.ToolStripMenuItem();
             this.dataMcg59 = new System.Windows.Forms.ToolStripMenuItem();
@@ -249,12 +250,13 @@ namespace Specialized_PDF_Editor
             // 
             this.autoCD.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.dataScale,
-            this.dataRandom,
+            this.dataRandomB,
             this.toolStripSeparator2,
             this.dataSRandomS,
             this.dataCRandomS,
             this.dataMTwister,
             this.dataXorshift,
+            this.dataXoshiro256SS,
             this.dataMcg31m1,
             this.dataMcg59,
             this.dataWH1982,
@@ -270,16 +272,19 @@ namespace Specialized_PDF_Editor
             // 
             this.dataScale.Image = global::Specialized_PDF_Editor.Properties.Resources.AutosizeStretch_16x;
             this.dataScale.Name = "dataScale";
+            this.dataScale.ShortcutKeys = System.Windows.Forms.Keys.F6;
             this.dataScale.Size = new System.Drawing.Size(199, 22);
             this.dataScale.Text = "Scale";
             this.dataScale.Click += new System.EventHandler(this.DataScale_Click);
             // 
-            // dataRandom
+            // dataRandomB
             // 
-            this.dataRandom.Image = global::Specialized_PDF_Editor.Properties.Resources.ScatterLineChart_16x;
-            this.dataRandom.Name = "dataRandom";
-            this.dataRandom.Size = new System.Drawing.Size(199, 22);
-            this.dataRandom.Text = "Random";
+            this.dataRandomB.Image = global::Specialized_PDF_Editor.Properties.Resources.ScatterLineChart_16x;
+            this.dataRandomB.Name = "dataRandomB";
+            this.dataRandomB.ShortcutKeys = System.Windows.Forms.Keys.F7;
+            this.dataRandomB.Size = new System.Drawing.Size(199, 22);
+            this.dataRandomB.Text = "Random";
+            this.dataRandomB.Click += new System.EventHandler(this.DataRandomB_Click);
             // 
             // toolStripSeparator2
             // 
@@ -292,6 +297,7 @@ namespace Specialized_PDF_Editor
             this.dataSRandomS.Name = "dataSRandomS";
             this.dataSRandomS.Size = new System.Drawing.Size(199, 22);
             this.dataSRandomS.Text = "System Random Source";
+            this.dataSRandomS.Click += new System.EventHandler(this.DataSRandomS_Click);
             // 
             // dataCRandomS
             // 
@@ -299,6 +305,7 @@ namespace Specialized_PDF_Editor
             this.dataCRandomS.Name = "dataCRandomS";
             this.dataCRandomS.Size = new System.Drawing.Size(199, 22);
             this.dataCRandomS.Text = "Crypto Random Source";
+            this.dataCRandomS.Click += new System.EventHandler(this.DataCRandomS_Click);
             // 
             // dataMTwister
             // 
@@ -306,6 +313,15 @@ namespace Specialized_PDF_Editor
             this.dataMTwister.Name = "dataMTwister";
             this.dataMTwister.Size = new System.Drawing.Size(199, 22);
             this.dataMTwister.Text = "Mersenne Twister";
+            this.dataMTwister.Click += new System.EventHandler(this.DataMTwister_Click);
+            // 
+            // dataXoshiro256SS
+            // 
+            this.dataXoshiro256SS.Image = global::Specialized_PDF_Editor.Properties.Resources.FlagDarkPurple_16x;
+            this.dataXoshiro256SS.Name = "dataXoshiro256SS";
+            this.dataXoshiro256SS.Size = new System.Drawing.Size(199, 22);
+            this.dataXoshiro256SS.Text = "Xoshiro 256SS";
+            this.dataXoshiro256SS.Click += new System.EventHandler(this.DataXoshiro256SS_Click);
             // 
             // dataXorshift
             // 
@@ -313,6 +329,7 @@ namespace Specialized_PDF_Editor
             this.dataXorshift.Name = "dataXorshift";
             this.dataXorshift.Size = new System.Drawing.Size(199, 22);
             this.dataXorshift.Text = "Xorshift";
+            this.dataXorshift.Click += new System.EventHandler(this.DataXorshift_Click);
             // 
             // dataMcg31m1
             // 
@@ -320,6 +337,7 @@ namespace Specialized_PDF_Editor
             this.dataMcg31m1.Name = "dataMcg31m1";
             this.dataMcg31m1.Size = new System.Drawing.Size(199, 22);
             this.dataMcg31m1.Text = "Mcg31m1";
+            this.dataMcg31m1.Click += new System.EventHandler(this.DataMcg31m1_Click);
             // 
             // dataMcg59
             // 
@@ -327,6 +345,7 @@ namespace Specialized_PDF_Editor
             this.dataMcg59.Name = "dataMcg59";
             this.dataMcg59.Size = new System.Drawing.Size(199, 22);
             this.dataMcg59.Text = "Mcg59";
+            this.dataMcg59.Click += new System.EventHandler(this.DataMcg59_Click);
             // 
             // dataWH1982
             // 
@@ -334,27 +353,31 @@ namespace Specialized_PDF_Editor
             this.dataWH1982.Name = "dataWH1982";
             this.dataWH1982.Size = new System.Drawing.Size(199, 22);
             this.dataWH1982.Text = "WH1982";
+            this.dataWH1982.Click += new System.EventHandler(this.DataWH1982_Click);
             // 
             // dataWH2006
             // 
-            this.dataWH2006.Image = global::Specialized_PDF_Editor.Properties.Resources.FlagTurquoise_16x;
+            this.dataWH2006.Image = global::Specialized_PDF_Editor.Properties.Resources.FlagPurple_16x;
             this.dataWH2006.Name = "dataWH2006";
             this.dataWH2006.Size = new System.Drawing.Size(199, 22);
             this.dataWH2006.Text = "WH2006";
+            this.dataWH2006.Click += new System.EventHandler(this.DataWH2006_Click);
             // 
             // dataMrg32k3a
             // 
-            this.dataMrg32k3a.Image = global::Specialized_PDF_Editor.Properties.Resources.FlagOutline_16x;
+            this.dataMrg32k3a.Image = global::Specialized_PDF_Editor.Properties.Resources.FlagTurquoise_16x;
             this.dataMrg32k3a.Name = "dataMrg32k3a";
             this.dataMrg32k3a.Size = new System.Drawing.Size(199, 22);
             this.dataMrg32k3a.Text = "Mrg32k3a";
+            this.dataMrg32k3a.Click += new System.EventHandler(this.DataMrg32k3a_Click);
             // 
             // dataPalf
             // 
-            this.dataPalf.Image = global::Specialized_PDF_Editor.Properties.Resources.FlagGroup_16x;
+            this.dataPalf.Image = global::Specialized_PDF_Editor.Properties.Resources.FlagOutline_16x;
             this.dataPalf.Name = "dataPalf";
             this.dataPalf.Size = new System.Drawing.Size(199, 22);
             this.dataPalf.Text = "Palf";
+            this.dataPalf.Click += new System.EventHandler(this.DataPalf_Click);
             // 
             // helpMenu
             // 
@@ -1143,7 +1166,7 @@ namespace Specialized_PDF_Editor
         private FontDialog fontChouse;
         private ToolStripMenuItem autoCD;
         private ToolStripMenuItem dataScale;
-        private ToolStripMenuItem dataRandom;
+        private ToolStripMenuItem dataRandomB;
         private ToolStripSeparator toolStripSeparator2;
         private ToolStripMenuItem dataSRandomS;
         private ToolStripMenuItem dataCRandomS;
@@ -1155,6 +1178,7 @@ namespace Specialized_PDF_Editor
         private ToolStripMenuItem dataWH2006;
         private ToolStripMenuItem dataMrg32k3a;
         private ToolStripMenuItem dataPalf;
+        private ToolStripMenuItem dataXoshiro256SS;
     }
 }
 

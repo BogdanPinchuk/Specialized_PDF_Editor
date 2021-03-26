@@ -198,19 +198,61 @@ namespace Specialized_PDF_Editor
             }
         }
 
-        private void DataScale_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Method for analysis who from element did click
+        /// </summary>
+        /// <param name="sender">object which did event</param>
+        private void Scale_Click(object sender)
         {
-            if (analysis != null)
+            if ((sender is ToolStripMenuItem item) && (analysis != null))
             {
-                Visual.Array_Modify(analysis, dataScale);
-                Visual.Array_Scale(analysis);
+                Visual.Array_Modify(analysis, item);
                 Visual.ShowMainDataTable(analysis.TableData);
                 Visual.HeaderInfo.Text = analysis.HeadInfo.ToString();
 
                 // update area of chart
                 Refresh();
             }
-
         }
+
+        private void DataScale_Click(object sender, EventArgs e)
+            => Scale_Click(sender);
+
+        private void DataRandomB_Click(object sender, EventArgs e)
+            => Scale_Click(sender);
+
+        private void DataSRandomS_Click(object sender, EventArgs e)
+            => Scale_Click(sender);
+
+        private void DataCRandomS_Click(object sender, EventArgs e)
+            => Scale_Click(sender);
+
+        private void DataMTwister_Click(object sender, EventArgs e)
+            => Scale_Click(sender);
+
+        private void DataXorshift_Click(object sender, EventArgs e)
+            => Scale_Click(sender);
+
+        private void DataMcg31m1_Click(object sender, EventArgs e)
+            => Scale_Click(sender);
+
+        private void DataMcg59_Click(object sender, EventArgs e)
+            => Scale_Click(sender);
+
+        private void DataWH1982_Click(object sender, EventArgs e)
+            => Scale_Click(sender);
+
+        private void DataWH2006_Click(object sender, EventArgs e)
+            => Scale_Click(sender);
+        
+        private void DataMrg32k3a_Click(object sender, EventArgs e)
+            => Scale_Click(sender);
+        
+        private void DataPalf_Click(object sender, EventArgs e)
+            => Scale_Click(sender);
+
+        private void DataXoshiro256SS_Click(object sender, EventArgs e)
+            => Scale_Click(sender);
+
     }
 }

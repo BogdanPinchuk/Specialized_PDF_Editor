@@ -27,7 +27,7 @@ namespace Specialized_PDF_Editor.Tests
         [ClassInitialize]
         public static void InitializeClass(TestContext _)
         {
-            MainForm form = new MainForm(new string[]
+            new MainForm(new string[]
             {
                 new FileInfo(@"Resources\File_3_pages.pdf").FullName
             });
