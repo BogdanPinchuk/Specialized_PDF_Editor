@@ -1026,6 +1026,8 @@ namespace Specialized_PDF_Editor
             var tableData = analysis.TableDataBlock;
             float limitMin = analysis.LimitMin + 0.1f,
                 limitMax = analysis.LimitMax - 0.1f;
+            //float limitMin = 24f,
+            //    limitMax = 36f;
 
             // max and min values needed for scale
             float max_all = analysis.TableDataBlock
