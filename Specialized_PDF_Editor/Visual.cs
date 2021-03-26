@@ -1119,7 +1119,7 @@ namespace Specialized_PDF_Editor
                     // instance values for pointers
                     float* _ar = ar, _c = coef, _res = res;
 
-                    for (int i = 0; i < res_min.Length; i++, _ar++, _res++)
+                    for (int i = 0; i < res_min.Length; i++, _ar++, _c++, _res++)
                         *_res = max_all - *_c * (max_all - *_ar) * (max_all - limitMin) / (max_all - min);
 
                     // find index
