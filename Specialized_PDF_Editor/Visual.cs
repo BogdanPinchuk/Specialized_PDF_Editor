@@ -376,7 +376,7 @@ namespace Specialized_PDF_Editor
                     Style style = new Style()
                         .SetFont(font)
                         .SetTextAlignment(iText.Layout.Properties.TextAlignment.LEFT)
-                        .SetFontSize(9.75f);
+                        .SetFontSize(8f);
 
                     for (int i = 0; i < texts.Length; i++)
                         texts[i] = new Text(rows[i]).AddStyle(style);
@@ -384,15 +384,15 @@ namespace Specialized_PDF_Editor
                     // position of text
                     RectangleF[] position = new RectangleF[]
                     {
-                        new RectangleF(47.51325f, 18.198f, 2 * 233.73675f, 8.17053f),
-                        new RectangleF(47.84475f, 30.02325f, 2 * 101.67225f, 7.59528f),
-                        new RectangleF(47.84475f, 40.698f, 2 * 330.46125f, 8.17053f),
-                        new RectangleF(47.37675f, 52.41602f, 2 * 286.69875f, 8.17053f),
-                        new RectangleF(47.874f, 64.80676f, 2 * 149.37f, 6.56177f),
+                        new RectangleF(47.51325f, 18.198f, 233.73675f, 8.17053f),
+                        new RectangleF(47.84475f, 30.02325f, 101.67225f, 7.59528f),
+                        new RectangleF(47.84475f, 40.698f, 330.46125f, 8.17053f),
+                        new RectangleF(47.37675f, 52.41602f, 286.69875f, 8.17053f),
+                        new RectangleF(47.874f, 64.80676f, 49.37f, 6.56177f),
                     };
 
                     for (int i = 0; i < texts.Length; i++)
-                        doc.ShowTextAligned(new Paragraph(texts[i]).SetFontSize(position[i].Height),
+                        doc.ShowTextAligned(new Paragraph(texts[i]),
                             position[i].Left,
                             pageSize.GetHeight() - position[i].Bottom,
                             TextAlignment.LEFT);
