@@ -133,25 +133,25 @@ namespace Specialized_PDF_Editor.Tests
             var str = new StringBuilder("\n");
 
             time.Start();
-            Visual.CreateLocalFile();
+            Visual.CreateLocalFile_Testing();
             time.Stop();
-            str.Append($"CreateLocalFile: {time.Elapsed.TotalMilliseconds} ms\n");
+            str.Append($"CreateLocalFile_Testing: {time.Elapsed.TotalMilliseconds} ms\n");
 
             time.Restart();
-            Visual.CreateRAMFile();
+            Visual.CreateRAMFile_Testing();
             time.Stop();
-            str.Append($"CreateRAMFile: {time.Elapsed.TotalMilliseconds} ms\n");
+            str.Append($"CreateRAMFile_Testing: {time.Elapsed.TotalMilliseconds} ms\n");
 
             time.Restart();
-            Visual.CreateRAMData();
+            Visual.CreateRAMData_Testing();
             time.Stop();
-            str.Append($"CreateRAMData: {time.Elapsed.TotalMilliseconds} ms\n");
+            str.Append($"CreateRAMData_Testing: {time.Elapsed.TotalMilliseconds} ms\n");
 
             Trace.WriteLine(str.ToString());
             // My result:
-            // CreateLocalFile: 7933.13 ms
-            // CreateRAMFile:   39.78 ms
-            // CreateRAMData:   2.1 ms
+            // CreateLocalFile_Testing: 7933.13 ms
+            // CreateRAMFile_Testing:   39.78 ms
+            // CreateRAMData_Testing:   2.1 ms
         }
 
 
