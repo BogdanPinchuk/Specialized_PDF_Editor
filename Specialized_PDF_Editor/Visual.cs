@@ -348,8 +348,8 @@ namespace Specialized_PDF_Editor
                 {
                     writer.SetCloseStream(false);
 
-                    var font = PdfFontFactory.CreateRegisteredFont("Tahoma");
-                    var f1 = PdfFontFactory.CreateFont(FontConstants.TIMES_ROMAN);
+                    //var font = PdfFontFactory.CreateRegisteredFont("Tahoma");
+                    //var f1 = PdfFontFactory.CreateFont(FontConstants.TIMES_ROMAN);
                     
 
 
