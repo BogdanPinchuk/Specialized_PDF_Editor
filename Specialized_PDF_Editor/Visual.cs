@@ -1,4 +1,6 @@
-﻿using iText.Kernel.Pdf;
+﻿using iText.IO.Font;
+using iText.Kernel.Font;
+using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
 
@@ -329,6 +331,44 @@ namespace Specialized_PDF_Editor
             LoadPdfToMemory(StreamC, PdfViewerC);
 
             Status.Text = "Analysis is completed";
+        }
+
+        /// <summary>
+        /// Cterate pdf-file for show
+        /// </summary>
+        internal static void CreatePDF()
+        {
+            try
+            {
+                StreamC = new MemoryStream();
+
+                using (var writer = new PdfWriter(StreamC))
+                using (var pdf = new PdfDocument(writer))
+                using (var doc = new Document(pdf))
+                {
+                    writer.SetCloseStream(false);
+
+                    var font = PdfFontFactory.CreateRegisteredFont("Tahoma");
+                    var f1 = PdfFontFactory.CreateFont(FontConstants.TIMES_ROMAN);
+                    
+
+
+
+
+
+                    doc.Flush();
+                    doc.Close();    // write data in RAM after close this
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Status.Text = ex.Message;
+            }
+
+            LoadPdfToMemory(StreamC, PdfViewerC);
+
+            Status.Text = "PDF was ccreated";
         }
 
         /// <summary>
