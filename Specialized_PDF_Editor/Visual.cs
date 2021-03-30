@@ -1,8 +1,10 @@
 ﻿using iText.IO.Font;
+using iText.IO.Font.Constants;
 using iText.Kernel.Font;
 using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
+using iText.Layout.Properties;
 
 using MathNet.Numerics.Random;
 
@@ -336,25 +338,70 @@ namespace Specialized_PDF_Editor
         /// <summary>
         /// Cterate pdf-file for show
         /// </summary>
-        internal static void CreatePDF()
+        /// <param name="analysis">Data of analysis pdf-file</param>
+        internal static void CreatePDF(Analysis analysis)
         {
             try
             {
                 StreamC = new MemoryStream();
 
+                // page size
+                var pageSize = new iText.Kernel.Geom
+                    .PageSize(analysis.Pages[0].Size.Width, analysis.Pages[0].Size.Height);
+
                 using (var writer = new PdfWriter(StreamC))
                 using (var pdf = new PdfDocument(writer))
-                using (var doc = new Document(pdf))
+                using (var doc = new Document(pdf, pageSize))
                 {
                     writer.SetCloseStream(false);
 
-                    //var font = PdfFontFactory.CreateRegisteredFont("Tahoma");
-                    //var f1 = PdfFontFactory.CreateFont(FontConstants.TIMES_ROMAN);
-                    
+                    // set limits of border
+                    doc.SetMargins(0, 0, 0, 0);
+
+                    // embeded fonts
+                    PdfFont font = PdfFontFactory.CreateFont(Properties.Resources.tahomaregular, PdfEncodings.IDENTITY_H, true);
+                    // embeded font partially
+                    font.SetSubset(false);
+
+                    // convert to header array to string
+                    string[] rows = analysis.HeadInfo
+                        .ToString()
+                        .Trim('\n')
+                        .Replace("\r", "")
+                        .Split('\n');
+
+                    // create header
+                    Text[] texts = new Text[rows.Length];
+
+                    Style style = new Style()
+                        .SetFont(font)
+                        .SetTextAlignment(iText.Layout.Properties.TextAlignment.LEFT)
+                        .SetFontSize(9.75f);
+
+                    for (int i = 0; i < texts.Length; i++)
+                        texts[i] = new Text(rows[i]).AddStyle(style);
+
+                    // position of text
+                    RectangleF[] position = new RectangleF[]
+                    {
+                        new RectangleF(47.51325f, 18.198f, 2 * 233.73675f, 8.17053f),
+                        new RectangleF(47.84475f, 30.02325f, 2 * 101.67225f, 7.59528f),
+                        new RectangleF(47.84475f, 40.698f, 2 * 330.46125f, 8.17053f),
+                        new RectangleF(47.37675f, 52.41602f, 2 * 286.69875f, 8.17053f),
+                        new RectangleF(47.874f, 64.80676f, 2 * 149.37f, 6.56177f),
+                    };
+
+                    for (int i = 0; i < texts.Length; i++)
+                        doc.ShowTextAligned(new Paragraph(texts[i]).SetFontSize(position[i].Height),
+                            position[i].Left,
+                            pageSize.GetHeight() - position[i].Bottom,
+                            TextAlignment.LEFT);
 
 
-
-
+                    //doc.Add(new Paragraph()
+                    //    .Add(texts[i])
+                    //    .SetFontSize(position[i].Height)
+                    //    .SetFixedPosition(position[i].Left, position[i].Bottom, position[i].Width));
 
                     doc.Flush();
                     doc.Close();    // write data in RAM after close this
@@ -1200,7 +1247,7 @@ namespace Specialized_PDF_Editor
                         Parallel.For(0, lenght, i => array[i] = 1.0);
                         goto default;
                     case TypeOfRandom.dataRandomB:
-                         Parallel.For(0, lenght, i => array[i] = rnd.NextDouble());
+                        Parallel.For(0, lenght, i => array[i] = rnd.NextDouble());
                         goto default;
                     case TypeOfRandom.dataSRandomS:
                         array = SystemRandomSource.Doubles(lenght, rnd.Next(lenght));

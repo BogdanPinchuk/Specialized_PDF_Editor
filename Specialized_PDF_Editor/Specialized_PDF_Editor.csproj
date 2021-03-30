@@ -155,34 +155,37 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Resources\tahomaregular.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="pdf.ico" />
-    <None Include="Resources\FlagTurquoise_16x.png" />
-    <None Include="Resources\FlagPurple_16x.png" />
-    <None Include="Resources\FlagOutline_16x.png" />
-    <None Include="Resources\FlagGroup_16x.png" />
-    <None Include="Resources\FlagGreen_16x.png" />
-    <None Include="Resources\FlagDarkRed_16x.png" />
-    <None Include="Resources\FlagDarkPurple_16x.png" />
-    <None Include="Resources\FlagDarkGreen_16x.png" />
-    <None Include="Resources\FlagDarkBlue_16x.png" />
-    <None Include="Resources\Flag_16x.png" />
-    <None Include="Resources\ScatterLineChart_16x.png" />
-    <None Include="Resources\AutosizeStretch_16x.png" />
-    <None Include="Resources\GenericChart_16x.png" />
-    <None Include="Resources\SolutionFolderSwitch_16x.png" />
-    <None Include="Resources\ValidationSummary_16x.png" />
-    <None Include="Resources\LocalFileSites_16x.png" />
-    <None Include="Resources\AnalyzeTrace_16x.png" />
-    <None Include="Resources\FSHelpApplication_16x.png" />
-    <None Include="Resources\Close_red_16x.png" />
-    <None Include="Resources\Save_grey_16x.png" />
-    <None Include="Resources\Save_16x.png" />
-    <None Include="Resources\OpenFile_16x.png" />
+    <EmbeddedResource Include="Resources\FlagTurquoise_16x.png" />
+    <EmbeddedResource Include="Resources\FlagPurple_16x.png" />
+    <EmbeddedResource Include="Resources\FlagOutline_16x.png" />
+    <EmbeddedResource Include="Resources\FlagGroup_16x.png" />
+    <EmbeddedResource Include="Resources\FlagGreen_16x.png" />
+    <EmbeddedResource Include="Resources\FlagDarkRed_16x.png" />
+    <EmbeddedResource Include="Resources\FlagDarkPurple_16x.png" />
+    <EmbeddedResource Include="Resources\FlagDarkGreen_16x.png" />
+    <EmbeddedResource Include="Resources\FlagDarkBlue_16x.png" />
+    <EmbeddedResource Include="Resources\Flag_16x.png" />
+    <EmbeddedResource Include="Resources\ScatterLineChart_16x.png" />
+    <EmbeddedResource Include="Resources\AutosizeStretch_16x.png" />
+    <EmbeddedResource Include="Resources\GenericChart_16x.png" />
+    <EmbeddedResource Include="Resources\SolutionFolderSwitch_16x.png" />
+    <EmbeddedResource Include="Resources\tahoma.ttf" />
+    <EmbeddedResource Include="Resources\tahomabd.ttf" />
+    <EmbeddedResource Include="Resources\ValidationSummary_16x.png" />
+    <EmbeddedResource Include="Resources\LocalFileSites_16x.png" />
+    <EmbeddedResource Include="Resources\AnalyzeTrace_16x.png" />
+    <EmbeddedResource Include="Resources\FSHelpApplication_16x.png" />
+    <EmbeddedResource Include="Resources\Close_red_16x.png" />
+    <EmbeddedResource Include="Resources\Save_grey_16x.png" />
+    <EmbeddedResource Include="Resources\Save_16x.png" />
+    <EmbeddedResource Include="Resources\OpenFile_16x.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.8">
