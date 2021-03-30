@@ -95,7 +95,7 @@ namespace Specialized_PDF_Editor
 
         private void AnalyseMenu_Click(object sender, EventArgs e)
         {
-            Visual.CreateRAMData();
+            Visual.CreateRAMData_Testing();
         }
 
         private void MainForm_DragDrop(object sender, DragEventArgs e)

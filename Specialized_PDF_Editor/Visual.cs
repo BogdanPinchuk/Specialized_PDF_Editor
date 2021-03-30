@@ -216,7 +216,7 @@ namespace Specialized_PDF_Editor
         /// <summary>
         /// Create local temp file for save result
         /// </summary>
-        internal static void CreateLocalFile()
+        internal static void CreateLocalFile_Testing()
         {
             if (!string.IsNullOrEmpty(TPath))
                 File.Delete(TPath);
@@ -265,7 +265,7 @@ namespace Specialized_PDF_Editor
         /// <summary>
         /// Create temp file in RAM for save result
         /// </summary>
-        internal static void CreateRAMFile()
+        internal static void CreateRAMFile_Testing()
         {
             string name = "temp " + DateTime.Now.ToString().Replace(":", ".") + ".pdf";
 
@@ -301,7 +301,7 @@ namespace Specialized_PDF_Editor
         /// <summary>
         /// Create data of future file in RAM for save result
         /// </summary>
-        internal static void CreateRAMData()
+        internal static void CreateRAMData_Testing()
         {
             try
             {
