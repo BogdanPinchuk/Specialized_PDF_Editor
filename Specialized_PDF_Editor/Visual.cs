@@ -3,6 +3,7 @@ using iText.IO.Font.Constants;
 using iText.Kernel.Font;
 using iText.Kernel.Pdf;
 using iText.Layout;
+using iText.Layout.Borders;
 using iText.Layout.Element;
 using iText.Layout.Properties;
 
@@ -359,9 +360,10 @@ namespace Specialized_PDF_Editor
                     doc.SetMargins(0, 0, 0, 0);
 
                     // embeded fonts
-                    PdfFont font = PdfFontFactory.CreateFont(Properties.Resources.tahomaregular, PdfEncodings.IDENTITY_H, true);
+                    PdfFont font = PdfFontFactory.CreateFont(Properties.Resources.tahomaregular,
+                        PdfEncodings.IDENTITY_H, PdfFontFactory.EmbeddingStrategy.FORCE_EMBEDDED);
                     // embeded font partially
-                    font.SetSubset(false);
+                    font.SetSubset(true);
 
                     // convert to header array to string
                     string[] rows = analysis.HeadInfo
@@ -370,12 +372,13 @@ namespace Specialized_PDF_Editor
                         .Replace("\r", "")
                         .Split('\n');
 
+                    #region Header
                     // create header
                     Text[] texts = new Text[rows.Length];
 
                     Style style = new Style()
                         .SetFont(font)
-                        .SetTextAlignment(iText.Layout.Properties.TextAlignment.LEFT)
+                        .SetTextAlignment(TextAlignment.LEFT)
                         .SetFontSize(8f);
 
                     for (int i = 0; i < texts.Length; i++)
@@ -396,12 +399,49 @@ namespace Specialized_PDF_Editor
                             position[i].Left,
                             pageSize.GetHeight() - position[i].Bottom,
                             TextAlignment.LEFT);
+                    #endregion
 
+                    // create tables
+                    UnitValue[] uv = UnitValue
+                        .CreatePointArray(new float[] { 32.57f, 45.4f, 31.61f, 24.36f, 24.36f });
+                    //.CreatePointArray(new float[] { 34.5f, 47.25f, 33.75f, 26.25f, 26.25f });
 
-                    //doc.Add(new Paragraph()
-                    //    .Add(texts[i])
-                    //    .SetFontSize(position[i].Height)
-                    //    .SetFixedPosition(position[i].Left, position[i].Bottom, position[i].Width));
+                    Table table = new Table(uv)
+                        .SetFont(font)
+                        .SetFontSize(8f)
+                        //.SetHorizontalAlignment(iText.Layout.Properties.HorizontalAlignment.CENTER)
+                        //.SetVerticalAlignment(VerticalAlignment.MIDDLE)
+                        .SetFixedPosition(46.5f, pageSize.GetTop() - 84f - 19.19f, 158.3f);//160.01
+
+                    // convert to header array to string
+                    string[] cols = analysis.ColumnInfo
+                        .ToString()
+                        .Trim('\n')
+                        .Replace("\r", "")
+                        .Replace(", °", ",_°")
+                        .Replace(" ", "\n")
+                        .Replace("_", " ")
+                        .Split('\n');
+
+                    Cell[] cells = new Cell[cols.Length];
+
+                    // draw table header
+                    for (int i = 0; i < cols.Length; i++)
+                        cells[i] = new Cell()
+                            .Add(new Paragraph(cols[i]))
+                            .SetPadding(0)
+                            .SetMargin(0)
+                            .SetTextAlignment(TextAlignment.CENTER)
+                            .SetVerticalAlignment(VerticalAlignment.MIDDLE)
+                            .SetHeight(16.08f)
+                            .SetBorder(new SolidBorder(1));
+
+                    foreach (var cell in cells)
+                        table.AddHeaderCell(cell);
+
+                    doc.Add(table);
+
+                    // TODO: Continue create pdf-file
 
                     doc.Flush();
                     doc.Close();    // write data in RAM after close this
