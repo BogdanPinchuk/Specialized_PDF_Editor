@@ -401,6 +401,7 @@ namespace Specialized_PDF_Editor
                             TextAlignment.LEFT);
                     #endregion
 
+                    #region Header table
                     // create tables
                     UnitValue[] uv = UnitValue
                         .CreatePointArray(new float[] { 32.57f, 45.4f, 31.61f, 24.36f, 24.36f });
@@ -411,7 +412,8 @@ namespace Specialized_PDF_Editor
                         .SetFontSize(8f)
                         //.SetHorizontalAlignment(iText.Layout.Properties.HorizontalAlignment.CENTER)
                         //.SetVerticalAlignment(VerticalAlignment.MIDDLE)
-                        .SetFixedPosition(46.5f, pageSize.GetTop() - 84f - 19.19f, 158.3f);//160.01
+                        //.SetFixedPosition(46.5f, pageSize.GetTop() - 84f - 19.19f, 158.3f);
+                        .SetFixedPosition(46.5f, pageSize.GetTop() - 100.5f, 158.3f);
 
                     // convert to header array to string
                     string[] cols = analysis.ColumnInfo
@@ -440,6 +442,14 @@ namespace Specialized_PDF_Editor
                         table.AddHeaderCell(cell);
 
                     doc.Add(table);
+                    #endregion
+
+                    // next row
+                    table = new Table(uv)
+                        .SetFont(font)
+                        .SetFontSize(8f)
+                        .SetFixedPosition(46.5f, pageSize.GetTop() - 116.25f, 158.3f);
+
 
                     // TODO: Continue create pdf-file
 
